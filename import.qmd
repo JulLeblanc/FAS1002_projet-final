@@ -33,10 +33,16 @@ library(lubridate)
 library(skimr)
 ```
 
+## Importer les données
+
+#### *Our World in Data* 
+
+J'utilise en premier la banque de données du *Co2 and Greenhouse Gaz Emissions*. Celle-ci sera mis à jour à tous les jours.
+
 ```{r download, cache=TRUE}
 #option cache=TRUE c'est si le code ne change pas, il ne devrait pas redownloader le fichier
 
-URL <- "https://github.com/owid/co2-data/blob/master/owid-co2-data.csv"
+url_owid <- "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"
 
 base_path <- path("data", "raw") # pour que nimporte qui puisse download avec le chemin relatif
 
@@ -44,7 +50,7 @@ fname <- paste(today(), "owid-co2-data.csv", sep = "_") # pour find name
 
 fpath <- path(base_path, fname) # matcher le bon nom dans le bon path
 
-data <- download.file(url = URL, destfile = fpath)
+data <- download.file(url = url_owid, destfile = fpath)
 ```
 
 V1 : Le fichier a été téléchargé ici : `data/raw/2022-12-06_owid-co2-data.csv`
@@ -54,4 +60,20 @@ V2 :V1 : Le fichier a été téléchargé ici : `r fpath` (permet d'update autom
 ```{r extraction}
 
 unzip(zipfile = fpath) # pour changer de directory
+```
+
+#### *Gapminder*
+
+Pour la deuxième banque de données, je fais appel à celle produite par *Gapminder* qui se nomme *Life Expectancy at Birth*. Celle-ci seront re-téléchargé pour une mise à jour à tous les mois.
+
+```{r}
+url_gapminder <- "http://gapm.io/ilex"
+
+base_path <- path("data", "raw")
+
+fname <- paste(today(), "gapm.csv", sep = "_")
+
+fpath <- path(base_path, fname)
+
+data <- download.file(url = url_gapminder, destfile = fpath)
 ```

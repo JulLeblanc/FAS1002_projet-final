@@ -36,44 +36,7 @@ library(skimr)
 ```
 
 ```{r read}
-df <- read_csv(file = "data/raw/2022-12-06_owid-co2-data.csv")
-skim(df)
-```
+df_owid <- read_csv(file = "data/raw/2022-12-06_owid-co2-data.csv")
 
-## Données extrêmes
-
-On peut voir dans la catégorie `age` la personne la plus vieille aurait 97 ans. Est-ce vrai ou est-ce coder pour quelque chose de différent?
-
-```{r}
-# p1 <- ggplot(data = df,
-#        aes(x = Age))
-# 
-# p1 + geom_bar(color = "black",
-#               fill = "#facade")
-```
-
-```{r}
-# df |> 
-#     filter(Age >= 79) |> 
-#     select(Name, Age, Team, Games, Sport, Sex)
-```
-
-## Age vs Sex
-
-```{r}
-# p2 <- ggplot(data = df,
-#              aes(x = Sex,
-#                  y = Age))
-# p2 + geom_boxplot()
-```
-
-## Ration H:F au courant des années
-
-```{r}
-# evolution <- df |> 
-#     group_by(Year, Sex) |> 
-#     summarise(n = n()) |> 
-#     mutate(pourcentage = n/sum(n)*100)
-# 
-# evolution
+df_gapminder <- read_csv(file = "data/raw/2022-12-06_gapm.csv")
 ```
