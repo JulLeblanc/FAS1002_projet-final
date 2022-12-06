@@ -25,17 +25,33 @@ citation: true
 bibliography: references.bib
 ---
 
-Il est maintenant le temps de décrire votre projet avant de passer au document
-suivant, soit l'importation et la manipulation des données.
+```{r echo=FALSE, warning=FALSE,message=FALSE}
 
-Je vous conseille d'écrire cette partie en dernier, une fois que vous aurez
-déjà vos résultats et figures afin d'éviter de réécrire cette page plusieurs
-fois.
+library(tidyverse)
+library(fs)
+library(lubridate)
+library(skimr)
+```
 
-::: callout-important
-N'oubliez pas d'inclure vos références sur chacune des pages!
-:::
+```{r download, cache=TRUE}
+#option cache=TRUE c'est si le code ne change pas, il ne devrait pas redownloader le fichier
 
-Par exemple:
+URL <- "https://github.com/owid/co2-data/blob/master/owid-co2-data.csv"
 
-> Les données proviennent entre autres de @owidenergy.
+base_path <- path("data", "raw") # pour que nimporte qui puisse download avec le chemin relatif
+
+fname <- paste(today(), "owid-co2-data.csv", sep = "_") # pour find name
+
+fpath <- path(base_path, fname) # matcher le bon nom dans le bon path
+
+data <- download.file(url = URL, destfile = fpath)
+```
+
+V1 : Le fichier a été téléchargé ici : `data/raw/2022-12-06_owid-co2-data.csv`
+
+V2 :V1 : Le fichier a été téléchargé ici : `r fpath` (permet d'update automatiquement le nom mis en haut)
+
+```{r extraction}
+
+unzip(zipfile = fpath) # pour changer de directory
+```
