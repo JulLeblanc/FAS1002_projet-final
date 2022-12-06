@@ -36,8 +36,8 @@ library(skimr)
 ```
 
 ```{r read}
-# df <- read_csv(file = "data/raw/athlete_events.csv")
-# skim(df)
+df <- read_csv(file = "data/raw/2022-12-06_owid-co2-data.csv")
+skim(df)
 ```
 
 ## Données extrêmes

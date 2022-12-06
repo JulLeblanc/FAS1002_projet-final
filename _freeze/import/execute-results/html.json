@@ -1,0 +1,14 @@
+{
+  "hash": "9aafb9a6f7d297f1d9485a76802cd5a0",
+  "result": {
+    "markdown": "---\ntitle: \"Titre de votre page d'importation\"\ntitle-block-banner: true\ndescription: | \n  Petite description de cette page.\n# à changer\ndate: \"2022-12-21\"\n# Modifier les détails que vous voulez\nauthor:\n  - name: \"Prénom Nom\"\n    # Votre site web perso ou github\n    url: https://github.com/VOTREUSERNAME\n    # les champs d'affiliation sont optionnels, vous pouvez les\n    # comment out en ajoutant un # devant.\n    affiliation: FAS1002\n    affiliation-url: https://FAS1002.github.io/A22\n    # changer pour votre propre orcid id\n    # https://orcid.org/ pour vous inscrire.\n    orcid: 0000-0000-0000-0000\n\n# TRUE == Générer une citation pour cette page précise. Pour enlever, mettre false.\ncitation: true\n# Inclure les références que vous utilisez dans vos rapports. Je conseille Zotero pour construire\n# ce fichier ou de connecter RStudio directement pour pouvoir citer avec @nom-de-reference.\nbibliography: references.bib\n---\n\n::: {.cell}\n\n:::\n\n::: {.cell hash='import_cache/html/download_4f44adbe6d776394c66c6057282d9c1c'}\n\n```{.r .cell-code}\n#option cache=TRUE c'est si le code ne change pas, il ne devrait pas redownloader le fichier\n\nURL <- \"https://github.com/owid/co2-data/blob/master/owid-co2-data.csv\"\n\nbase_path <- path(\"data\", \"raw\") # pour que nimporte qui puisse download avec le chemin relatif\n\nfname <- paste(today(), \"owid-co2-data.csv\", sep = \"_\") # pour find name\n\nfpath <- path(base_path, fname) # matcher le bon nom dans le bon path\n\ndata <- download.file(url = URL, destfile = fpath)\n```\n:::\n\n\nV1 : Le fichier a été téléchargé ici : `data/raw/2022-12-06_owid-co2-data.csv`\n\nV2 :V1 : Le fichier a été téléchargé ici : data/raw/2022-12-06_owid-co2-data.csv (permet d'update automatiquement le nom mis en haut)\n\n\n::: {.cell}\n\n```{.r .cell-code}\nunzip(zipfile = fpath) # pour changer de directory\n```\n\n::: {.cell-output .cell-output-stderr}\n```\nWarning in unzip(zipfile = fpath): error 1 in extracting from zip file\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
