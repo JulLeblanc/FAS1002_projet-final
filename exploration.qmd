@@ -25,52 +25,55 @@ citation: true
 bibliography: references.bib
 ---
 
-## Un peu d'interactivité pour le plaisir!
+## Réimporter les données
 
-```{r map}
-library(leaflet)
-leaflet() %>%
-    setView(lng=150,
-            lat=-30,
-            zoom = 3) %>%
-    addTiles() %>%
-    addMarkers(lng=174.768,
-               lat=-36.852,
-               popup="Là où R est né") %>%
-    addProviderTiles(providers$Esri.WorldGrayCanvas)
+```{r echo=FALSE, warning=FALSE,message=FALSE}
+
+library(tidyverse)
+library(fs)
+library(lubridate)
+library(skimr)
 ```
 
-## Peut-être que ça vous inspirera!
-
-```{r plotly, message=FALSE, warning=FALSE}
-library(plotly)
-library(gapminder)
-df <- gapminder
-
-fig <- df %>%
-  plot_ly(
-    x = ~ gdpPercap,
-    y = ~ lifeExp,
-    size = ~ pop,
-    color = ~ continent,
-    frame = ~ year,
-    text = ~ country,
-    hoverinfo = "text",
-    type = 'scatter',
-    mode = 'markers',
-    width = "100%",
-    height = 600
-  )
-
-fig <- fig %>% layout(xaxis = list(type = "log"))
-
-fig <- fig %>%
-  animation_button(
-    x = 0, xanchor = "left", y = -0.15, yanchor = "bottom"
-  )
-fig
+```{r read}
+# df <- read_csv(file = "data/raw/athlete_events.csv")
+# skim(df)
 ```
 
--------------------------------------------------------------------------------
+## Données extrêmes
 
-À votre imagination de jouer!
+On peut voir dans la catégorie `age` la personne la plus vieille aurait 97 ans. Est-ce vrai ou est-ce coder pour quelque chose de différent?
+
+```{r}
+# p1 <- ggplot(data = df,
+#        aes(x = Age))
+# 
+# p1 + geom_bar(color = "black",
+#               fill = "#facade")
+```
+
+```{r}
+# df |> 
+#     filter(Age >= 79) |> 
+#     select(Name, Age, Team, Games, Sport, Sex)
+```
+
+## Age vs Sex
+
+```{r}
+# p2 <- ggplot(data = df,
+#              aes(x = Sex,
+#                  y = Age))
+# p2 + geom_boxplot()
+```
+
+## Ration H:F au courant des années
+
+```{r}
+# evolution <- df |> 
+#     group_by(Year, Sex) |> 
+#     summarise(n = n()) |> 
+#     mutate(pourcentage = n/sum(n)*100)
+# 
+# evolution
+```
