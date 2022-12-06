@@ -46,20 +46,34 @@
     "href": "import.html",
     "title": "Titre de votre page d’importation",
     "section": "",
-    "text": "Il est maintenant le temps de décrire votre projet avant de passer au document suivant, soit l’importation et la manipulation des données.\nJe vous conseille d’écrire cette partie en dernier, une fois que vous aurez déjà vos résultats et figures afin d’éviter de réécrire cette page plusieurs fois.\n\n\n\n\n\n\nImportant\n\n\n\nN’oubliez pas d’inclure vos références sur chacune des pages!\n\n\nPar exemple:\n\nLes données proviennent entre autres de Ritchie, Roser, et Rosado (2022).\n\n\n\n\n\nLes références\n\nRitchie, Hannah, Max Roser, et Pablo Rosado. 2022. « Energy ». Our World in Data.\n\nCitationBibTeX@online{nom2023,\n  author = {Prénom Nom},\n  title = {Titre de votre page d’importation},\n  date = {2023-09-12},\n  url = {https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nPrénom Nom. 2023. “Titre de votre page d’importation.”\nSeptember 12, 2023. https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html."
+    "text": "Code\n#option cache=TRUE c'est si le code ne change pas, il ne devrait pas redownloader le fichier\n\nURL <- \"https://github.com/owid/co2-data/blob/master/owid-co2-data.csv\"\n\nbase_path <- path(\"data\", \"raw\") # pour que nimporte qui puisse download avec le chemin relatif\n\nfname <- paste(today(), \"owid-co2-data.csv\", sep = \"_\") # pour find name\n\nfpath <- path(base_path, fname) # matcher le bon nom dans le bon path\n\ndata <- download.file(url = URL, destfile = fpath)\n\n\nV1 : Le fichier a été téléchargé ici : data/raw/2022-12-06_owid-co2-data.csv\nV2 :V1 : Le fichier a été téléchargé ici : data/raw/2022-12-06_owid-co2-data.csv (permet d’update automatiquement le nom mis en haut)\n\n\nCode\nunzip(zipfile = fpath) # pour changer de directory\n\n\nWarning in unzip(zipfile = fpath): error 1 in extracting from zip file\n\n\n\n\n\nCitationBibTeX@online{nom2023,\n  author = {Prénom Nom},\n  title = {Titre de votre page d’importation},\n  date = {2023-09-12},\n  url = {https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nPrénom Nom. 2023. “Titre de votre page d’importation.”\nSeptember 12, 2023. https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html."
   },
   {
     "objectID": "exploration.html",
     "href": "exploration.html",
     "title": "Titre de votre page d’exploration",
     "section": "",
-    "text": "Code\nlibrary(leaflet)\nleaflet() %>%\n    setView(lng=150,\n            lat=-30,\n            zoom = 3) %>%\n    addTiles() %>%\n    addMarkers(lng=174.768,\n               lat=-36.852,\n               popup=\"Là où R est né\") %>%\n    addProviderTiles(providers$Esri.WorldGrayCanvas)"
+    "text": "Code\ndf <- read_csv(file = \"data/raw/2022-12-06_owid-co2-data.csv\")\n\n\nWarning: One or more parsing issues, see `problems()` for details\n\n\nRows: 1188 Columns: 1\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (1): <!DOCTYPE html>\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nCode\nskim(df)\n\n\n\nData summary\n\n\nName\ndf\n\n\nNumber of rows\n1188\n\n\nNumber of columns\n1\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\ncharacter\n1\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: character\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmin\nmax\nempty\nn_unique\nwhitespace\n\n\n\n\n<!DOCTYPE html>\n2\n1\n1\n16505\n0\n702\n0"
   },
   {
-    "objectID": "exploration.html#peut-être-que-ça-vous-inspirera",
-    "href": "exploration.html#peut-être-que-ça-vous-inspirera",
+    "objectID": "exploration.html#données-extrêmes",
+    "href": "exploration.html#données-extrêmes",
     "title": "Titre de votre page d’exploration",
-    "section": "Peut-être que ça vous inspirera!",
-    "text": "Peut-être que ça vous inspirera!\n\n\nCode\nlibrary(plotly)\nlibrary(gapminder)\ndf <- gapminder\n\nfig <- df %>%\n  plot_ly(\n    x = ~ gdpPercap,\n    y = ~ lifeExp,\n    size = ~ pop,\n    color = ~ continent,\n    frame = ~ year,\n    text = ~ country,\n    hoverinfo = \"text\",\n    type = 'scatter',\n    mode = 'markers',\n    width = \"100%\",\n    height = 600\n  )\n\nfig <- fig %>% layout(xaxis = list(type = \"log\"))\n\nfig <- fig %>%\n  animation_button(\n    x = 0, xanchor = \"left\", y = -0.15, yanchor = \"bottom\"\n  )\nfig\n\n\n\n\n\n\n\nÀ votre imagination de jouer!"
+    "section": "Données extrêmes",
+    "text": "Données extrêmes\nOn peut voir dans la catégorie age la personne la plus vieille aurait 97 ans. Est-ce vrai ou est-ce coder pour quelque chose de différent?\n\n\nCode\n# p1 <- ggplot(data = df,\n#        aes(x = Age))\n# \n# p1 + geom_bar(color = \"black\",\n#               fill = \"#facade\")\n\n\n\n\nCode\n# df |> \n#     filter(Age >= 79) |> \n#     select(Name, Age, Team, Games, Sport, Sex)"
+  },
+  {
+    "objectID": "exploration.html#age-vs-sex",
+    "href": "exploration.html#age-vs-sex",
+    "title": "Titre de votre page d’exploration",
+    "section": "Age vs Sex",
+    "text": "Age vs Sex\n\n\nCode\n# p2 <- ggplot(data = df,\n#              aes(x = Sex,\n#                  y = Age))\n# p2 + geom_boxplot()"
+  },
+  {
+    "objectID": "exploration.html#ration-hf-au-courant-des-années",
+    "href": "exploration.html#ration-hf-au-courant-des-années",
+    "title": "Titre de votre page d’exploration",
+    "section": "Ration H:F au courant des années",
+    "text": "Ration H:F au courant des années\n\n\nCode\n# evolution <- df |> \n#     group_by(Year, Sex) |> \n#     summarise(n = n()) |> \n#     mutate(pourcentage = n/sum(n)*100)\n# \n# evolution"
   }
 ]
