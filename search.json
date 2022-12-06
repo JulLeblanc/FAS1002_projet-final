@@ -42,38 +42,17 @@
     "text": "Remerciements\n\nJ’aimerais remercier toute la cohorte du cours FAS1002 de l’automne 2022 pour leur ouverture et efforts tout au long de la session!"
   },
   {
-    "objectID": "import.html",
-    "href": "import.html",
+    "objectID": "import.html#importer-les-données",
+    "href": "import.html#importer-les-données",
     "title": "Titre de votre page d’importation",
-    "section": "",
-    "text": "Code\n#option cache=TRUE c'est si le code ne change pas, il ne devrait pas redownloader le fichier\n\nURL <- \"https://github.com/owid/co2-data/blob/master/owid-co2-data.csv\"\n\nbase_path <- path(\"data\", \"raw\") # pour que nimporte qui puisse download avec le chemin relatif\n\nfname <- paste(today(), \"owid-co2-data.csv\", sep = \"_\") # pour find name\n\nfpath <- path(base_path, fname) # matcher le bon nom dans le bon path\n\ndata <- download.file(url = URL, destfile = fpath)\n\n\nV1 : Le fichier a été téléchargé ici : data/raw/2022-12-06_owid-co2-data.csv\nV2 :V1 : Le fichier a été téléchargé ici : data/raw/2022-12-06_owid-co2-data.csv (permet d’update automatiquement le nom mis en haut)\n\n\nCode\nunzip(zipfile = fpath) # pour changer de directory\n\n\nWarning in unzip(zipfile = fpath): error 1 in extracting from zip file\n\n\n\n\n\nCitationBibTeX@online{nom2023,\n  author = {Prénom Nom},\n  title = {Titre de votre page d’importation},\n  date = {2023-09-12},\n  url = {https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html},\n  langid = {fr}\n}\nVeuillez citer ce travail comme suit :\nPrénom Nom. 2023. “Titre de votre page d’importation.”\nSeptember 12, 2023. https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html."
+    "section": "Importer les données",
+    "text": "Importer les données\n\nOur World in Data\nJ’utilise en premier la banque de données du Co2 and Greenhouse Gaz Emissions. Celle-ci sera mis à jour à tous les jours.\n\n\nCode\n#option cache=TRUE c'est si le code ne change pas, il ne devrait pas redownloader le fichier\n\nurl_owid <- \"https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv\"\n\nbase_path <- path(\"data\", \"raw\") # pour que nimporte qui puisse download avec le chemin relatif\n\nfname <- paste(today(), \"owid-co2-data.csv\", sep = \"_\") # pour find name\n\nfpath <- path(base_path, fname) # matcher le bon nom dans le bon path\n\ndata <- download.file(url = url_owid, destfile = fpath)\n\n\nV1 : Le fichier a été téléchargé ici : data/raw/2022-12-06_owid-co2-data.csv\nV2 :V1 : Le fichier a été téléchargé ici : data/raw/2022-12-06_owid-co2-data.csv (permet d’update automatiquement le nom mis en haut)\n\n\nCode\nunzip(zipfile = fpath) # pour changer de directory\n\n\nWarning in unzip(zipfile = fpath): error 1 in extracting from zip file\n\n\n\n\nGapminder\nPour la deuxième banque de données, je fais appel à celle produite par Gapminder qui se nomme Life Expectancy at Birth. Celle-ci seront re-téléchargé pour une mise à jour à tous les mois.\n\n\nCode\nurl_gapminder <- \"http://gapm.io/ilex\"\n\nbase_path <- path(\"data\", \"raw\")\n\nfname <- paste(today(), \"gapm.csv\", sep = \"_\")\n\nfpath <- path(base_path, fname)\n\ndata <- download.file(url = url_gapminder, destfile = fpath)"
   },
   {
     "objectID": "exploration.html",
     "href": "exploration.html",
     "title": "Titre de votre page d’exploration",
     "section": "",
-    "text": "Code\ndf <- read_csv(file = \"data/raw/2022-12-06_owid-co2-data.csv\")\n\n\nWarning: One or more parsing issues, see `problems()` for details\n\n\nRows: 1188 Columns: 1\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (1): <!DOCTYPE html>\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nCode\nskim(df)\n\n\n\nData summary\n\n\nName\ndf\n\n\nNumber of rows\n1188\n\n\nNumber of columns\n1\n\n\n_______________________\n\n\n\nColumn type frequency:\n\n\n\ncharacter\n1\n\n\n________________________\n\n\n\nGroup variables\nNone\n\n\n\nVariable type: character\n\n\n\n\n\n\n\n\n\n\n\n\n\nskim_variable\nn_missing\ncomplete_rate\nmin\nmax\nempty\nn_unique\nwhitespace\n\n\n\n\n<!DOCTYPE html>\n2\n1\n1\n16505\n0\n702\n0"
-  },
-  {
-    "objectID": "exploration.html#données-extrêmes",
-    "href": "exploration.html#données-extrêmes",
-    "title": "Titre de votre page d’exploration",
-    "section": "Données extrêmes",
-    "text": "Données extrêmes\nOn peut voir dans la catégorie age la personne la plus vieille aurait 97 ans. Est-ce vrai ou est-ce coder pour quelque chose de différent?\n\n\nCode\n# p1 <- ggplot(data = df,\n#        aes(x = Age))\n# \n# p1 + geom_bar(color = \"black\",\n#               fill = \"#facade\")\n\n\n\n\nCode\n# df |> \n#     filter(Age >= 79) |> \n#     select(Name, Age, Team, Games, Sport, Sex)"
-  },
-  {
-    "objectID": "exploration.html#age-vs-sex",
-    "href": "exploration.html#age-vs-sex",
-    "title": "Titre de votre page d’exploration",
-    "section": "Age vs Sex",
-    "text": "Age vs Sex\n\n\nCode\n# p2 <- ggplot(data = df,\n#              aes(x = Sex,\n#                  y = Age))\n# p2 + geom_boxplot()"
-  },
-  {
-    "objectID": "exploration.html#ration-hf-au-courant-des-années",
-    "href": "exploration.html#ration-hf-au-courant-des-années",
-    "title": "Titre de votre page d’exploration",
-    "section": "Ration H:F au courant des années",
-    "text": "Ration H:F au courant des années\n\n\nCode\n# evolution <- df |> \n#     group_by(Year, Sex) |> \n#     summarise(n = n()) |> \n#     mutate(pourcentage = n/sum(n)*100)\n# \n# evolution"
+    "text": "Code\ndf_owid <- read_csv(file = \"data/raw/2022-12-06_owid-co2-data.csv\")\n\n\nRows: 46523 Columns: 74\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): country, iso_code\ndbl (72): year, population, gdp, cement_co2, cement_co2_per_capita, co2, co2...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\nCode\ndf_gapminder <- read_csv(file = \"data/raw/2022-12-06_gapm.csv\")\n\n\nWarning: One or more parsing issues, see `problems()` for details\n\n\nRows: 1001 Columns: 1\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (1): <!doctype html>\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
   }
 ]
