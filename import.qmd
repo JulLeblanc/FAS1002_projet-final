@@ -2,7 +2,7 @@
 title: "Données"
 title-block-banner: true
 description: | 
-  Cette page regroupe la première importation des données à l'état brute. 
+  Cette page regroupe la première importation des données à l'état brute ainsi que les manipulation de bases. 
 # à changer
 date: "2022-12-21"
 # Modifier les détails que vous voulez
@@ -31,14 +31,15 @@ library(tidyverse)
 library(fs)
 library(lubridate)
 library(skimr)
+library(countrycode)
 ```
 
 ## Importer les données
 
 #### *Our World in Data* 
 
-J'utilise en premier la banque de données du *Co2 and Greenhouse Gaz Emissions*. Celle-ci sera mis à jour à tous les jours.
-
+J'utilise en premier la banque de données du *Co2 and Greenhouse Gaz Emissions*. Celle-ci sera mis à jour à tous les jours. 
+Les données proviennent [d'ici](https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv).
 ```{r}
 
 unlink("data/raw/*.csv")
@@ -59,33 +60,64 @@ fname_owid <- paste(today(), "owid-co2-data.csv", sep = "_") # name the file wit
 fpath_owid <- path(base_path, fname_owid) 
 
 data_owid <- download.file(url = url_owid, destfile = fpath_owid)
+
+df_owid <- read_csv(fpath_owid)
 ```
-
-V1 : Le fichier a été téléchargé ici : `data/raw/2022-12-06_owid-co2-data.csv`
-
-
 
 #### *Gapminder*
 
 Pour la deuxième banque de données, je fais appel à celle produite par *Gapminder* qui se nomme *Life Expectancy at Birth*. Celle-ci seront re-téléchargé pour une mise à jour à tous les mois.
+Les données proviennent [d'ici]()
 
 ```{r}
-url_gapminder <- "https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/export?format=xlsx"
+url_gapminder <- "http://gapm.io/ilex"
 
 base_path <- path("data", "raw")
 
-fname_gap <- paste(today(), "gapm.xlsx", sep = "_")
+fname_gap <- paste(today(), "gapm.csv", sep = "_")
 
 fpath_gap <- path(base_path, fname_gap)
 
 data <- download.file(url = url_gapminder, destfile = fpath_gap)
+
+# à changer pas le bon path
+df_gapminder <- read_csv("data/raw/life_expectancy_years.csv")
 ```
 
-Le fichier a été téléchargé ici : `data/raw/2022-12-06_gapm.csv`
+#### Joindre les banques de données
+
+Les deux banques de données contiennent une variable commune, soit la variable des pays. Nous allons donc procéder à combiner cette banque de données par leur variable commune, le pays.
 
 
+```{r}
+df_gapminder <- df_gapminder |> 
+    pivot_longer(cols = c(2:302),
+                 names_to = "year")
+
+df_gapminder <- df_gapminder |> 
+    rename(avr_nb_year = value)
+```
+
+library(countrycode)
+df <- data.frame(country = c("Afghanistan",
+                             "Algeria",
+                             "USA",
+                             "France",
+                             "New Zealand",
+                             "Fantasyland"))
+
+df$continent <- countrycode(sourcevar = df[, "country"],
+                            origin = "country.name",
+                            destination = "continent")
 
 
+Par la suite, nous pouvons regrouper les différents pays ensembles
+```{r}
+df <- df$country
 
+df$continent <- countrycode(sourcevar = df[, "country"],
+                            origin = "country.name",
+                            destination = "continent")
+```
 
 

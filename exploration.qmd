@@ -25,7 +25,7 @@ citation: true
 bibliography: references.bib
 ---
 
-## Importation des données
+
 
 ```{r echo=FALSE, warning=FALSE,message=FALSE}
 
@@ -33,19 +33,8 @@ library(tidyverse)
 library(fs)
 library(lubridate)
 library(skimr)
-library(readxl)
 ```
 
-
-```{r}
-df_owid <- read_csv(fpath)
-```
-
-
-
-```{r read}
-df_gapminder <- read_excel(fpath_gap)
-```
 
 
 
