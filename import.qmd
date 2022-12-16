@@ -32,6 +32,7 @@ library(fs)
 library(lubridate)
 library(skimr)
 library(countrycode)
+library(cronR)
 ```
 
 ## Importer les données
@@ -40,12 +41,10 @@ library(countrycode)
 
 J'utilise en premier la banque de données du *Co2 and Greenhouse Gaz Emissions*. Celle-ci sera mis à jour à tous les jours. 
 Les données proviennent [d'ici](https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv).
-```{r}
 
+À retirer ou ajouter jsp encore:
 unlink("data/raw/*.csv")
 unlink("data/raw/*.xlsx")
-
-```
 
 
 ```{r download, cache=TRUE}
@@ -84,40 +83,26 @@ data <- download.file(url = url_gapminder, destfile = fpath_gap)
 df_gapminder <- read_csv("data/raw/life_expectancy_years.csv")
 ```
 
+
+#### Créer une variable
+
+Dans la banque de données de _Our World in Data_, nous avons créer une variable qui regroupe les différents pays en sous-groupe des 5 continents soit : l'Afrique, l'Amérique, l'Asie, l'Europe et l'Océanie.
+```{r}
+df_owid <- df_owid |> 
+    mutate(continent = countrycode(sourcevar = df_owid$country,
+                                   origin = "country.name",
+                                   destination = "continent"))
+```
+
 #### Joindre les banques de données
 
-Les deux banques de données contiennent une variable commune, soit la variable des pays. Nous allons donc procéder à combiner cette banque de données par leur variable commune, le pays.
-
+Les deux banques de données contiennent une variable commune, soit la variable des pays. Nous allons donc procéder à combiner ces banques de données par leur variable commune, le pays.
 
 ```{r}
-df_gapminder <- df_gapminder |> 
-    pivot_longer(cols = c(2:302),
-                 names_to = "year")
-
-df_gapminder <- df_gapminder |> 
-    rename(avr_nb_year = value)
+dat <- full_join(gapminder,
+                 df_owid,
+                 by = "country")
 ```
 
-library(countrycode)
-df <- data.frame(country = c("Afghanistan",
-                             "Algeria",
-                             "USA",
-                             "France",
-                             "New Zealand",
-                             "Fantasyland"))
-
-df$continent <- countrycode(sourcevar = df[, "country"],
-                            origin = "country.name",
-                            destination = "continent")
-
-
-Par la suite, nous pouvons regrouper les différents pays ensembles
-```{r}
-df <- df$country
-
-df$continent <- countrycode(sourcevar = df[, "country"],
-                            origin = "country.name",
-                            destination = "continent")
-```
 
 

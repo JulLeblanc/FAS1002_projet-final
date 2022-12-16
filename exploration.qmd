@@ -33,8 +33,32 @@ library(tidyverse)
 library(fs)
 library(lubridate)
 library(skimr)
+library(gapminder)
 ```
 
+## Statistiques descriptives
+
+La banque de donnée regroupe deux banques de données ensembles. La première est [*Co2 and Greenhouse Gaz Emissions*](https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv), qui a comme but principal de décrire comment les émissions de Co2 et de gaz à effets de serres évoluent dans chaque pays. 
 
 
+La seconde banque de données est une banque de données qui est compris dans `R` dans la librairie `gapminder`. Nous utiliserons plus précisément une sous banque de donnée qui est inclus dans cette librairie, soit celle du *Life Expectancy at Birth* qui calcul l'espérance de vie moyenne des enfants à la naissance à chaque année.
+
+```{r}
+df_gapminder <- df_gapminder |> 
+    pivot_longer(cols = c(2:302),
+                 names_to = "years")
+
+
+df_gapminder <- df_gapminder |> 
+    mutate(continent = countrycode(sourcevar = df_gapminder$country,
+                                   origin = "country.name",
+                                   destination = "continent"))
+
+df_gapminder$years <- as.numeric(df_gapminder$years)
+
+ggplot(data = df_gapminder,
+       aes(x = years,
+           y = value)) +
+    geom_line(alpha = 0.3)
+```
 
