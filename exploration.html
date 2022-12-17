@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.280">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Juliette Leblanc">
-<meta name="description" content="Petite description de cette page.">
+<meta name="description" content="Cette page présente une exploration des différentes données ainsi qu’une analyse descriptive et statistique des ces différentes variables.">
 
-<title>FAS1002_projet-final-pratique - Titre de votre page d’exploration</title>
+<title>FAS1002_projet-final-pratique - Exploration et analyse</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,17 +160,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./import.html">
- <span class="menu-text">Titre à changer</span></a>
+ <span class="menu-text">Données</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./exploration.html" aria-current="page">
- <span class="menu-text">Titre de votre page d’exploration</span></a>
+ <span class="menu-text">Exploration et analyse</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="./a-propos.html">
- <span class="menu-text">Page à droite</span></a>
+ <span class="menu-text">Index</span></a>
   </li>  
 </ul>
               <div class="quarto-toggle-container">
@@ -195,7 +195,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#importation-des-données" id="toc-importation-des-données" class="nav-link active" data-scroll-target="#importation-des-données">Importation des données</a></li>
+  <li><a href="#statistiques-descriptives" id="toc-statistiques-descriptives" class="nav-link active" data-scroll-target="#statistiques-descriptives">Statistiques descriptives</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/VOTREUSERNAME/VOTRE-RÉPERTOIRE/edit/main/exploration.qmd" class="toc-action">Modifier cette page</a></p><p><a href="https://github.com/VOTREUSERNAME/VOTRE-RÉPERTOIRE/issues/new" class="toc-action">Faire part d'un problème</a></p><p><a href="https://github.com/VOTREUSERNAME/VOTRE-RÉPERTOIRE/blob/main/exploration.qmd" class="toc-action">Voir la source</a></p></div></div></nav>
     </div>
@@ -204,12 +204,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Titre de votre page d’exploration</h1>
+<h1 class="title">Exploration et analyse</h1>
 </div>
 
 <div>
   <div class="description">
-    <p>Petite description de cette page.</p>
+    <p>Cette page présente une exploration des différentes données ainsi qu’une analyse descriptive et statistique des ces différentes variables.</p>
   </div>
 </div>
 
@@ -245,21 +245,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="importation-des-données" class="level2">
-<h2 class="anchored" data-anchor-id="importation-des-données">Importation des données</h2>
-<div class="cell">
-
-</div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df_owid <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/raw/2022-12-06_owid-co2-data.csv"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>Rows: 46523 Columns: 74
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.3.5     ✔ purrr   0.3.4
+✔ tibble  3.1.8     ✔ dplyr   1.0.7
+✔ tidyr   1.2.1     ✔ stringr 1.4.0
+✔ readr   2.1.2     ✔ forcats 0.5.1
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fs)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'lubridate'
+
+The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(countrycode)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cronR)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>df_owid <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/processed/df_owid.csv"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 46523 Columns: 75
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: ","
-chr  (2): country, iso_code
+chr  (3): country, iso_code, continent
 dbl (72): year, population, gdp, cement_co2, cement_co2_per_capita, co2, co2...
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
@@ -267,19 +294,54 @@ dbl (72): year, population, gdp, cement_co2, cement_co2_per_capita, co2, co2...
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_gapminder <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/raw/2022-12-06_gapm.csv"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_gapminder <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/processed/df_gapminder.csv"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: One or more parsing issues, see `problems()` for details</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 1001 Columns: 1
+<pre><code>Rows: 58695 Columns: 4
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: ","
-chr (1): &lt;!doctype html&gt;
+chr (2): country, continent
+dbl (2): years, value
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<section id="statistiques-descriptives" class="level2">
+<h2 class="anchored" data-anchor-id="statistiques-descriptives">Statistiques descriptives</h2>
+<p>La banque de donnée regroupe deux banques de données ensembles. La première est <a href="https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"><em>Co2 and Greenhouse Gaz Emissions</em></a>, qui a comme but principal de décrire comment les émissions de Co2 et de gaz à effets de serres évoluent dans chaque pays.</p>
+<p>La seconde banque de données est une banque de données qui est compris dans <code>R</code> dans la librairie <code>gapminder</code>. Nous utiliserons plus précisément une sous banque de donnée qui est inclus dans cette librairie, soit celle du <em>Life Expectancy at Birth</em> qui calcul l’espérance de vie moyenne des enfants à la naissance à chaque année.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>graph <span class="ot">&lt;-</span> df_gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(continent,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>             years) <span class="sc">|&gt;</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(value, <span class="at">na.rm =</span> T))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'continent'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> graph,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.numeric</span>(years),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> mean,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>     <span class="fu">scale_x_continuous</span>(<span class="at">n.breaks =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>     <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>     <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Évolution de l'espérance de vie"</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">subtitle =</span> <span class="st">"Par continents"</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">source =</span> <span class="st">"https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions"</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">x =</span> <span class="st">" "</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="st">" "</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>p1</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="exploration_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
@@ -288,14 +350,14 @@ chr (1): &lt;!doctype html&gt;
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{leblanc2023,
   author = {Juliette Leblanc},
-  title = {Titre de votre page d’exploration},
+  title = {Exploration et analyse},
   date = {2023-09-12},
   url = {https://VOTREUSERNAME.github.io/FAS1002_projet-final//exploration.html},
   langid = {fr}
 }
 </code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">Veuillez citer ce travail comme suit&nbsp;:</div><div id="ref-leblanc2023" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Juliette Leblanc. 2023. <span>“Titre de votre page
-d’exploration.”</span> September 12, 2023. <a href="https://VOTREUSERNAME.github.io/FAS1002_projet-final//exploration.html">https://VOTREUSERNAME.github.io/FAS1002_projet-final//exploration.html</a>.
+Juliette Leblanc. 2023. <span>“Exploration et analyse.”</span> September
+12, 2023. <a href="https://VOTREUSERNAME.github.io/FAS1002_projet-final//exploration.html">https://VOTREUSERNAME.github.io/FAS1002_projet-final//exploration.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -552,7 +614,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       <div class="nav-footer-center">
         <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="mailto:VOTRECOURRIEL@example.com">VOTRE NOM</a>
+    <a class="nav-link" href="mailto:juliette.leblanc.1@umontreal.ca">Juliette Leblanc</a>
   </li>  
 </ul>
       </div>
