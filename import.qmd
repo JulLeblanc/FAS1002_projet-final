@@ -1,11 +1,10 @@
 ---
-title: "Données"
+title: "What are we talking about?"
 author: "Cécile Amadoro"
 url: 
 title-block-banner: false
 description: | 
   Petite description de cette page.
-# à changer
 date: "2022-12-20"
 # Modifier les détails que vous voulez
 
@@ -75,12 +74,12 @@ La base de données "*Life Expectancy at Birth*" est utilisée. Elle permet auss
 ```{r importation des données gapminder}
 
 #Données gapminder
-url_gap = "http://gapm.io/ilex"
-basepath2 = path("data", "raw")
-fname2 = paste(today(), "gapminder.csv", sep = "_")
-fpath2 = path(basepath2, fname2)
+#url_gap = "http://gapm.io/ilex"
+#basepath2 = path("data", "raw")
+#fname2 = paste(today(), "gapminder.csv", sep = "_")
+#fpath2 = path(basepath2, fname2)
 
-dat = download.file(url = url_gap, destfile = fpath2)
+#dat = download.file(url = url_gap, destfile = fpath2)
 
 
 
@@ -90,15 +89,10 @@ dat = download.file(url = url_gap, destfile = fpath2)
 #cron_rstudioaddin()
 
 
-URL2 <- "https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/export?format=xlsx"
-basepath2 = path("data", "raw")
-fname2 <- paste(today(), "gapminder.xlsx", sep = "_")
-fpath2 <- path(basepath2, fname2)
-dataowid = download.file(url = URL2, destfile = fpath2 )
-dat_owid = read_csv(fpath2)
-
-df2 <- readxl::read_xlsx(path = fpath, sheet = "data-for-countries-etc-by-year")
-
+#URL2 <- "https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/export?format=xlsx"
+#basepath2 = path("data", "raw")
+#fname2 <- paste(today(), "gapminder.xlsx", sep = "_")
+#
 
 ```
 
