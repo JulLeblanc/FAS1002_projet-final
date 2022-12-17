@@ -1,22 +1,14 @@
 ---
-title: "Titre de votre page d'importation"
-title-block-banner: true
+title: "Données"
+author: "Cécile Amadoro"
+url: 
+title-block-banner: false
 description: | 
   Petite description de cette page.
 # à changer
-date: "2022-12-21"
+date: "2022-12-20"
 # Modifier les détails que vous voulez
-author:
-  - name: "Prénom Nom"
-    # Votre site web perso ou github
-    url: https://github.com/VOTREUSERNAME
-    # les champs d'affiliation sont optionnels, vous pouvez les
-    # comment out en ajoutant un # devant.
-    affiliation: FAS1002
-    affiliation-url: https://FAS1002.github.io/A22
-    # changer pour votre propre orcid id
-    # https://orcid.org/ pour vous inscrire.
-    orcid: 0000-0000-0000-0000
+
 
 # TRUE == Générer une citation pour cette page précise. Pour enlever, mettre false.
 citation: true
@@ -25,17 +17,111 @@ citation: true
 bibliography: references.bib
 ---
 
-Il est maintenant le temps de décrire votre projet avant de passer au document
-suivant, soit l'importation et la manipulation des données.
+Il est maintenant le temps de décrire votre projet avant de passer au document suivant, soit l'importation et la manipulation des données.
 
-Je vous conseille d'écrire cette partie en dernier, une fois que vous aurez
-déjà vos résultats et figures afin d'éviter de réécrire cette page plusieurs
-fois.
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(fs)
+library(lubridate)
+library(tidyverse)
+library(readr)
+library(skimr)
+library(cronR)
+library(readr)
+library(readxl)
+```
+
+### [**I. Importation quotidienne des données Energy (Our World in Data)**]{.underline}
+
+```{r importation des données owid}
+
+#Données Energy
+URL = "https://nyc3.digitaloceanspaces.com/owid-public/data/energy/owid-energy-data.csv"
+
+basepath = path("data", "raw")
+
+fname = paste0(today(), "energydata.csv")
+fpath = path(basepath, fname)
+
+download.file(url = URL, destfile = fpath)
+
+#Automatisation du script avec cronR
+
+cronR::cron_rstudioaddin()
+
+
+## cronR job
+## id:   job_fcb01c2444f4e736bc46e778b5a84f36
+## tags: 
+## desc: Hi! I can download data all by myself!
+#0 10 * * * /Library/Frameworks/R.framework/Resources/bin/Rscript '/Users/cecile/Documents/Cours 1er cycle/AUTOMNE 2022/FAS 1002 - Initiation à la programmation en science sociale/FAS1002_projet_pratique/import.qmd'  >> '/Users/cecile/Documents/Cours 1er cycle/AUTOMNE 2022/FAS 1002 - Initiation à la programmation en science sociale/FAS1002_projet_pratique/import.log' 2>&1#
+
+
+
+
+
+```
+
+### [**II. Importation mensuelle des données Gapminder**]{.underline}
+
+```{r importation des données gapminder}
+
+#Données gapminder
+URL2 = "https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/export?format=xlsx"
+
+basepath2 = path("data", "raw")
+
+fname2 = paste0(today(), "gapminder.csv")
+fpath2 = path(basepath2, fname2)
+
+download.file(url = URL2, destfile = fpath2)
+
+#Automatisation du script avec cronR
+
+#Trouver solution ici
+#cron_rstudioaddin()
+
+
+countries = read_excel("lex-by-gapminder.xlsx",
+                       sheet = "countries_and_territories")
+
+
+regions = read_excel("lex-by-gapminder.xlsx",
+                     sheet = "four_regions")
+
+
+world = read_excel("lex-by-gapminder.xlsx",
+                   sheet = "world_total")
+
+
+
+as_tibble(countries)
+as_tibble(world)
+as_tibble(regions)
+
+
+```
+
+### [**III. Manipulation des données**]{.underline} 
+
+La base de données Energy contient 22.555 observations regroupé en 129 variables.
+
+```{r lecture et assemblage des données}
+
+#Ouverture des données Energy
+datenergy = read_csv("data/raw/2022-12-16energydata.csv")
+
+#Transformation des données en tibble
+as_tibble(datenergy)
+
+summary(datenergy)
+
+
+
+
+```
 
 ::: callout-important
 N'oubliez pas d'inclure vos références sur chacune des pages!
 :::
-
-Par exemple:
 
 > Les données proviennent entre autres de @owidenergy.
