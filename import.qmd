@@ -17,8 +17,6 @@ citation: true
 bibliography: references.bib
 ---
 
-Il est maintenant le temps de décrire votre projet avant de passer au document suivant, soit l'importation et la manipulation des données.
-
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(fs)
 library(lubridate)
@@ -28,25 +26,34 @@ library(skimr)
 library(cronR)
 library(readr)
 library(readxl)
+library(RCurl)
 ```
 
-### [**I. Importation quotidienne des données Energy (Our World in Data)**]{.underline}
+### [Introduction]{.underline}
+
+Le présent projet travaille avec deux bases de données : La première est issue de Our World in Data, un site qui publie gratuitement des bases de données et de la recherche sur les enjeux contemporains que le monde traverse (économie, écologie, climat, énergie, conflits etc). \
+La deuxième base de donnée est issue de Gapminder, une OBNL suèdoise, qui propose en libre accès d'importantes bases de données aussi sur les enjeux actuels, dans le but de prévenir et lutter contre la mésinformation.
+
+### [**I. Importation quotidienne des données CO2 (Our World in Data)**]{.underline}
+
+La base de donnée "*CO2 & Greenhouse Gas Emissions*" est utilisée. Elle permet de faire différentes explorations statistiques sur les émissions de CO2 dans 207 pays depuis le 19ème siècle.
 
 ```{r importation des données owid}
 
-#Données Energy
-URL = "https://nyc3.digitaloceanspaces.com/owid-public/data/energy/owid-energy-data.csv"
+#Données CO2 d'OWID
 
-basepath = path("data", "raw")
+urlowid = "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"
+basepath =  path("data", "raw") 
+fnameowid = paste(today(), "owid-co2-data.csv", sep = "_") 
+fpathowid = path(basepath, fnameowid) 
+dataowid = download.file(url = urlowid, destfile = fpathowid)
 
-fname = paste0(today(), "energydata.csv")
-fpath = path(basepath, fname)
+dat_owid = read_csv(fpathowid)
 
-download.file(url = URL, destfile = fpath)
 
 #Automatisation du script avec cronR
 
-cronR::cron_rstudioaddin()
+#cronR::cron_rstudioaddin()
 
 
 ## cronR job
@@ -63,17 +70,19 @@ cronR::cron_rstudioaddin()
 
 ### [**II. Importation mensuelle des données Gapminder**]{.underline}
 
+La base de données "*Life Expectancy at Birth*" est utilisée. Elle permet aussi de faire des analyses statistiques sur la question de l'espérance de vie depuis le 19ème siècle. L'espérance de vie est aujourd'hui un des meilleurs indicateurs de développement d'un pays ainsi qu'une solide mesure de projection économique et démographique.
+
 ```{r importation des données gapminder}
 
 #Données gapminder
-URL2 = "https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/export?format=xlsx"
-
+url_gap = "http://gapm.io/ilex"
 basepath2 = path("data", "raw")
-
-fname2 = paste0(today(), "gapminder.csv")
+fname2 = paste(today(), "gapminder.csv", sep = "_")
 fpath2 = path(basepath2, fname2)
 
-download.file(url = URL2, destfile = fpath2)
+dat = download.file(url = url_gap, destfile = fpath2)
+
+
 
 #Automatisation du script avec cronR
 
@@ -81,47 +90,61 @@ download.file(url = URL2, destfile = fpath2)
 #cron_rstudioaddin()
 
 
-countries = read_excel("lex-by-gapminder.xlsx",
-                       sheet = "countries_and_territories")
+URL2 <- "https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/export?format=xlsx"
+basepath2 = path("data", "raw")
+fname2 <- paste(today(), "gapminder.xlsx", sep = "_")
+fpath2 <- path(basepath2, fname2)
+dataowid = download.file(url = URL2, destfile = fpath2 )
+dat_owid = read_csv(fpath2)
 
-
-regions = read_excel("lex-by-gapminder.xlsx",
-                     sheet = "four_regions")
-
-
-world = read_excel("lex-by-gapminder.xlsx",
-                   sheet = "world_total")
-
-
-
-as_tibble(countries)
-as_tibble(world)
-as_tibble(regions)
+df2 <- readxl::read_xlsx(path = fpath, sheet = "data-for-countries-etc-by-year")
 
 
 ```
 
-### [**III. Manipulation des données**]{.underline} 
+### [**III. Manipulation des données**]{.underline}
 
-La base de données Energy contient 22.555 observations regroupé en 129 variables.
+La base de données CO2 contient 46.523 observations regroupé en 74 variables. Cette base de données propose de mieux comprendre les sources d'énergies dans 207 pays.\
+Pour obtenir une meilleure lecture et analyse des données, il est apparu plus simple de traiter la base de données CO2 avec quelques variables et non dans sa totalité. Au total, 18 sur 74 variables ont été selctionnées.
+
+Pour mieux comprendre les variables, le tableau suivant propose le codebook suivant, adapté du [codebook original](https://github.com/owid/co2-data/blob/master/owid-co2-codebook.csv) .
+
+| Variable              | Description + Type                                                                                                                                                                                                                                         |
+|------------------------------------|------------------------------------|
+| Country               | pays (character)                                                                                                                                                                                                                                           |
+| Year                  | année de l'observation (numérique)                                                                                                                                                                                                                         |
+| Iso_code              | code du pays selon la codification internationale 3166-1 (character)                                                                                                                                                                                       |
+| Population            | Nombre total de la population selon le pays (numérique)                                                                                                                                                                                                    |
+| GDP (PIB)             | Produit interieur brut mesuré en dollars (numérique)                                                                                                                                                                                                       |
+| CO2                   | Mesure annuelle de la production totale de CO2 par pays, mesuré en en millions de tonnes et excluant l'[UTCATF](https://fr.wikipedia.org/wiki/Utilisation_des_terres,_changement_d'affectation_des_terres_et_foresterie) (numérique)                       |
+| Cement_CO2_per_capita | Mesure annuelle de la production totale de CO2 générée par le ciment, par personne, en millions de tonnes (numérique)                                                                                                                                      |
+| CO2_per_gdp           | Mesure annuelle de la production totale de CO2 selon le PIB, excluant l'UTCATF (numérique)                                                                                                                                                                 |
+| coal_co2              | Mesure annuelle par pays de la production de CO2 générée par le charbon, en millions de tonnes (numérique)                                                                                                                                                 |
+| coal_co2_per_capita   | Mesure annuelle de la production de CO2 générée par le charbon, mesurée en million de tonnes par personnes (numérique)                                                                                                                                     |
+| methane               | Total annuel des émissions de méthane par pays, incluant l'UTCATF, mesuré en millions de tonnes (numérique)                                                                                                                                                |
+| methane_per_capita    | Total annuel des émissions de méthane par habitant, incluant l'UTCATF, mesuré en millions de tonnes (numérique)                                                                                                                                            |
+| oil_co2               | Mesure annuelle par pays de la production de CO2 générée par le pétrole, en millions de tonnes (numérique)                                                                                                                                                 |
+| oil_co2_per_capita    | Mesure annuelle de la production de CO2 générée par le pétrole, mesurée en million de tonnes par personnes (numérique)                                                                                                                                     |
+| ghg_per_capita        | Total des émissions de gas à effet de serres par personne, mesuré en tonne de de millions, incluant l'UTCATF (numérique)                                                                                                                                   |
+| trade_co2             | Total annuel des émissions de C02, issu du commerce, mesuré en million de tonne. (Ici une valeur positive veut dire qu'un pays est un importeur net d'émission de CO2 ; une valeur négative veut dire qu'un pays est un exporteur net d'émission de CO2).  |
 
 ```{r lecture et assemblage des données}
 
-#Ouverture des données Energy
-datenergy = read_csv("data/raw/2022-12-16energydata.csv")
 
 #Transformation des données en tibble
-as_tibble(datenergy)
-
-summary(datenergy)
+as.tibble(dat_owid)
 
 
+#Filtrage du tibble
+
+dat_owid1 = dat_owid %>% 
+    select(country, year, iso_code, population, gdp, co2, cement_co2_per_capita, 
+           co2_per_gdp, coal_co2, coal_co2_per_capita, gas_co2, gas_co2_per_capita,
+           methane, methane_per_capita, oil_co2, oil_co2_per_capita, ghg_per_capita, trade_co2)
 
 
 ```
 
-::: callout-important
 N'oubliez pas d'inclure vos références sur chacune des pages!
-:::
 
 > Les données proviennent entre autres de @owidenergy.
