@@ -85,13 +85,24 @@ df_gapminder <- read_csv("data/raw/life_expectancy_years.csv")
 
 #### Créer une variable
 
-Dans la banque de données de _Our World in Data_, nous avons créer une variable qui regroupe les différents pays en sous-groupe des 5 continents soit : l'Afrique, l'Amérique, l'Asie, l'Europe et l'Océanie.
+Dans la banque de données de _Our World in Data_, nous avons créer une variable qui regroupe les différents pays en sous-groupe des 5 continents soit : l'Afrique, l'Amérique, l'Asie, l'Europe et l'Océanie. Mais également pour la banque de données du _Life Expectancy_.
 ```{r}
 df_owid <- df_owid |> 
     mutate(continent = countrycode(sourcevar = df_owid$country,
                                    origin = "country.name",
                                    destination = "continent"))
+
+df_gapminder <- df_gapminder |> 
+     pivot_longer(cols = c(2:302),
+                  names_to = "years")
+
+df_gapminder <- df_gapminder |> 
+    mutate(continent = countrycode(sourcevar = df_gapminder$country,
+                                   origin = "country.name",
+                                   destination = "continent"))
 ```
+
+
 
 #### Joindre les banques de données
 
@@ -103,5 +114,13 @@ dat <- full_join(df_gapminder,
                  by = "country")
 ```
 
+## Exporter
+Exporter les données traitées dans le dossier data/processed
+
+```{r}
+write_csv(df_owid,file = "data/processed/df_owid.csv")
+
+write_csv(df_gapminder, file = "data/processed/df_gapminder.csv")
+```
 
 

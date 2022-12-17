@@ -28,11 +28,11 @@ website:
         text: Page d'accueil
       - intro.qmd
       - href: import.qmd
-        text: Titre à changer
+        text: Données
       - exploration.qmd
     right:
       - href: a-propos.qmd
-        text: Page à droite 
+        text: Index 
 
 # footer
   page-footer:

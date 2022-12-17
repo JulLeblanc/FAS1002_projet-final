@@ -33,7 +33,12 @@ library(fs)
 library(lubridate)
 library(skimr)
 library(gapminder)
+library(countrycode)
+library(cronR)
 
+df_owid <- read_csv("data/processed/df_owid.csv")
+
+df_gapminder <- read_csv("data/processed/df_gapminder.csv")
 ```
 
 ## Statistiques descriptives
@@ -44,17 +49,12 @@ La banque de donnée regroupe deux banques de données ensembles. La première e
 La seconde banque de données est une banque de données qui est compris dans `R` dans la librairie `gapminder`. Nous utiliserons plus précisément une sous banque de donnée qui est inclus dans cette librairie, soit celle du *Life Expectancy at Birth* qui calcul l'espérance de vie moyenne des enfants à la naissance à chaque année.
 
 ```{r}
- df_gapminder <- df_gapminder |>
-     pivot_longer(cols = c(2:302),
-                  names_to = "years")
-
-
 graph <- df_gapminder |> 
     group_by(continent,
              years) |> 
     summarise(mean = mean(value, na.rm = T))
 
-p1 <- ggplot(data = graph_2,
+p1 <- ggplot(data = graph,
         aes(x = as.numeric(years),
             y = mean,
             color = continent)) +
@@ -69,4 +69,6 @@ p1 <- ggplot(data = graph_2,
 
 p1
 ```
+
+
 
