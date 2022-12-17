@@ -1,0 +1,14 @@
+{
+  "hash": "25ffc5d78dd911a4f827e30f211af5f7",
+  "result": {
+    "markdown": "---\ntitle: \"Données\"\ntitle-block-banner: true\ndescription: | \n  Cette page regroupe la première importation des données à l'état brute. \n# à changer\ndate: \"2022-12-21\"\n# Modifier les détails que vous voulez\nauthor:\n  - name: \"Juliette Leblanc\"\n    # Votre site web perso ou github\n    url: https://github.com/JulLeblanc\n    # les champs d'affiliation sont optionnels, vous pouvez les\n    # comment out en ajoutant un # devant.\n    affiliation: FAS1002\n    affiliation-url: https://FAS1002.github.io/A22\n    # changer pour votre propre orcid id\n    # https://orcid.org/ pour vous inscrire.\n    # orcid: 0000-0000-0000-0000\n\n# TRUE == Générer une citation pour cette page précise. Pour enlever, mettre false.\ncitation: true\n# Inclure les références que vous utilisez dans vos rapports. Je conseille Zotero pour construire\n# ce fichier ou de connecter RStudio directement pour pouvoir citer avec @nom-de-reference.\nbibliography: references.bib\n---\n\n::: {.cell}\n\n:::\n\n\n## Importer les données\n\n#### *Our World in Data* \n\nJ'utilise en premier la banque de données du *Co2 and Greenhouse Gaz Emissions*. Celle-ci sera mis à jour à tous les jours.\n\n\n::: {.cell hash='import_cache/html/download_e0a2aa61ef73ee6c7bfa5ea3c89bba4a'}\n\n```{.r .cell-code}\n#option cache=TRUE c'est si le code ne change pas, il ne devrait pas redownloader le fichier\n\nurl_owid <- \"https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv\"\n\nbase_path <- path(\"data\", \"raw\") # pour que nimporte qui puisse download avec le chemin relatif\n\nfname <- paste(today(), \"owid-co2-data.csv\", sep = \"_\") # pour find name\n\nfpath <- path(base_path, fname) # matcher le bon nom dans le bon path\n\ndata <- download.file(url = url_owid, destfile = fpath)\n```\n:::\n\n\nV1 : Le fichier a été téléchargé ici : `data/raw/2022-12-06_owid-co2-data.csv`\n\n\n::: {.cell}\n\n```{.r .cell-code}\nunzip(zipfile = fpath) # pour changer de directory\n```\n\n::: {.cell-output .cell-output-stderr}\n```\nWarning in unzip(zipfile = fpath): error 1 in extracting from zip file\n```\n:::\n:::\n\n\n#### *Gapminder*\n\nPour la deuxième banque de données, je fais appel à celle produite par *Gapminder* qui se nomme *Life Expectancy at Birth*. Celle-ci seront re-téléchargé pour une mise à jour à tous les mois.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nurl_gapminder <- \"http://gapm.io/ilex\"\n\nbase_path <- path(\"data\", \"raw\")\n\nfname <- paste(today(), \"gapm.csv\", sep = \"_\")\n\nfpath <- path(base_path, fname)\n\ndata <- download.file(url = url_gapminder, destfile = fpath)\n```\n:::\n\n\nLe fichier a été téléchargé ici : `data/raw/2022-12-06_gapm.csv`\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

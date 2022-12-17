@@ -27,8 +27,7 @@ bibliography: references.bib
 
 
 
-```{r echo=FALSE, warning=FALSE,message=FALSE}
-
+```{r warning=FALSE, error=FALSE}
 library(tidyverse)
 library(fs)
 library(lubridate)
@@ -45,21 +44,29 @@ La banque de donnée regroupe deux banques de données ensembles. La première e
 La seconde banque de données est une banque de données qui est compris dans `R` dans la librairie `gapminder`. Nous utiliserons plus précisément une sous banque de donnée qui est inclus dans cette librairie, soit celle du *Life Expectancy at Birth* qui calcul l'espérance de vie moyenne des enfants à la naissance à chaque année.
 
 ```{r}
-df_gapminder <- df_gapminder |> 
-    pivot_longer(cols = c(2:302),
-                 names_to = "years")
+ df_gapminder <- df_gapminder |>
+     pivot_longer(cols = c(2:302),
+                  names_to = "years")
 
 
-df_gapminder <- df_gapminder |> 
-    mutate(continent = countrycode(sourcevar = df_gapminder$country,
-                                   origin = "country.name",
-                                   destination = "continent"))
+graph <- df_gapminder |> 
+    group_by(continent,
+             years) |> 
+    summarise(mean = mean(value, na.rm = T))
 
-df_gapminder$years <- as.numeric(df_gapminder$years)
+p1 <- ggplot(data = graph_2,
+        aes(x = as.numeric(years),
+            y = mean,
+            color = continent)) +
+     geom_line(stat = "identity") +
+     scale_x_continuous(n.breaks = 12) +
+     theme_bw() +
+     labs(title = "Évolution de l'espérance de vie",
+          subtitle = "Par continents",
+          source = "https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions",
+          x = " ",
+          y = " ")
 
-ggplot(data = df_gapminder,
-       aes(x = years,
-           y = value)) +
-    geom_line(alpha = 0.3)
+p1
 ```
 

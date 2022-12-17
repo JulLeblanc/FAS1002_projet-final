@@ -1,0 +1,16 @@
+{
+  "hash": "dabf598d18c536a48d20222e7470cd39",
+  "result": {
+    "markdown": "---\ntitle: \"Exploration et analyse\"\ntitle-block-banner: false\ndescription: | \n  Cette page présente une exploration des différentes données ainsi qu'une analyse descriptive et statistique des ces différentes variables.\n# à changer\ndate: \"2022-12-21\"\n# Modifier les détails que vous voulez\nauthor:\n  - name: \"Juliette Leblanc\"\n    # Votre site web perso ou github\n    url: https://github.com/JulLeblanc\n    # les champs d'affiliation sont optionnels, vous pouvez les\n    # comment out en ajoutant un # devant.\n    affiliation: FAS1002\n    affiliation-url: https://FAS1002.github.io/A22\n    # changer pour votre propre orcid id\n    # https://orcid.org/ pour vous inscrire.\n    # orcid: 0000-0000-0000-0000\n\n# TRUE == Générer une citation pour cette page précise. Pour enlever, mettre false.\ncitation: true\n# Inclure les références que vous utilisez dans vos rapports. Je conseille Zotero pour construire\n# ce fichier ou de connecter RStudio directement pour pouvoir citer avec @nom-de-reference.\nbibliography: references.bib\n---\n\n\n## Importation des données\n\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\ndf_owid <- read_csv(file = \"data/raw/2022-12-06_owid-co2-data.csv\")\n```\n\n::: {.cell-output .cell-output-stderr}\n```\nRows: 46523 Columns: 74\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): country, iso_code\ndbl (72): year, population, gdp, cement_co2, cement_co2_per_capita, co2, co2...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n```\n:::\n\n```{.r .cell-code}\ndf_gapminder <- read_csv(file = \"data/raw/2022-12-06_gapm.csv\")\n```\n\n::: {.cell-output .cell-output-stderr}\n```\nWarning: One or more parsing issues, see `problems()` for details\n```\n:::\n\n::: {.cell-output .cell-output-stderr}\n```\nRows: 1001 Columns: 1\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (1): <!doctype html>\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n```\n:::\n:::\n",
+    "supporting": [
+      "exploration_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
