@@ -36,6 +36,15 @@ library(cronR)
 library(gsheet)
 ```
 
+
+Consignes manquantes:
+Pour l’importation des données, vous aurez à les télécharger de plusieurs sources (GitHub, Google Sheet ou Excel). Il y a plusieurs stratégies possibles, à vous de jouer!
+○ Cependant, vous devrez faire plus que de seulement importer les données. Puisque tout peut disparaître sur Internet ou être mis à jour sans préavis, vous devrez également télécharger les données. Par contre, il n’est pas optimal de procéder aux téléchargements à chaque fois que nous roulons le code. Les données brutes devront être téléchargées dans le dossier data/raw/ en respectant les conditions:
+■ Ainsi, pour les données qui proviennent de Our World in Data, vous devrez développer du code pour télécharger et sauvegarder les fichiers avec la date à laquelle le téléchargement a lieu. La fréquence du téléchargement devrait être quotidienne puisque les données sont mises à jour fréquemment. Pour vous simplifier la tâche, pensez à programmer également la suppression de l’ancien fichier une fois que le nouveau est téléchargé. En d’autres mots, ces données ne devraient être téléchargées qu’une seule fois par jour lorsque votre rapport est produit.
+■ Pour les données des autres sources, le principe est le même, mais la fréquence du téléchargement devra être mensuelle, donc à chaque mois seulement.
+■ ex: data/raw/owid
+
+
 ## Importer les données
 
 #### *Our World in Data*
@@ -44,7 +53,7 @@ J'utilise en premier la banque de données du *Co2 and Greenhouse Gaz Emissions*
 
 À retirer ou ajouter jsp encore: unlink("data/raw/*.csv") unlink("data/raw/*.xlsx")
 
-```{r download co2, cache=TRUE, warning=FALSE, error=FALSE}
+```{r download co2, cache=TRUE, warning=FALSE, error=FALSE, show_col_types=FALSE}
 #option cache=TRUE c'est si le code ne change pas, il ne devrait pas redownloader le fichier
 
 url_owid <- "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"
@@ -65,7 +74,6 @@ df_owid <- read_csv(fpath_owid)
 Pour la deuxième banque de données, je fais appel à celle produite par *Gapminder* qui se nomme *Life Expectancy at Birth*. Celle-ci seront re-téléchargé pour une mise à jour à tous les mois. Les données proviennent [d'ici]()
 
 ```{r download lifeexpectancy, cache=TRUE, warning=FALSE, error=FALSE}
-
 url_gapminder <-  gsheet2tbl("https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=176703676")
 
 base_path <- path("data", "raw")
@@ -74,10 +82,9 @@ fname_gap <- paste(today(), "gapm.csv", sep = "_")
 
 fpath_gap <- path(base_path, fname_gap)
 
-write_csv(x = datcountries, file = fpath_gap)
+write_csv(x = url_gapminder, file = fpath_gap)
 
 df_gapminder <- read_csv(fpath_gap)
-
 ```
 
 #### Créer une variable
@@ -107,7 +114,7 @@ df_gapminder <- df_gapminder |>
 ```
 
 
-#### Joindre les banques de données
+## Joindre les banques de données
 
 Les deux banques de données contiennent une variable commune, soit la variable des pays. Nous allons donc procéder à combiner ces banques de données par leur variable commune, le pays.
 

@@ -25,7 +25,7 @@ citation: true
 bibliography: references.bib
 ---
 
-```{r importing processed, warning=FALSE, error=FALSE}
+```{r importing processed, warning=FALSE, error=FALSE, show_col_types=FALSE}
 library(tidyverse)
 library(fs)
 library(lubridate)
@@ -41,13 +41,25 @@ df_gapminder <- read_csv("data/processed/df_gapminder.csv")
 
 ## Statistiques descriptives
 
-La banque de données est une banque de données qui est compris dans `R` dans la librairie `gapminder`. Nous utiliserons plus précisément une sous banque de donnée qui est inclus dans cette librairie, soit celle du *Life Expectancy at Birth* qui calcul l'espérance de vie moyenne des enfants à la naissance à chaque année.
+La banque de données est une banque de données qui est compris dans `R` dans la librairie `gapminder`. Nous utiliserons plus précisément une sous banque de donnée qui est inclus dans cette librairie, soit celle du *Life Expectancy at Birth* qui calcul l'évoluation des l'espérance de vie par pays et à chaque année.
+
+La banque de données comprend 5 variables sous 56616 observations et il est possible de présenter différentes valeurs de celles-ci.
+
+-   Les données sont calculées pour 195 pays
+
+-   Celles-ci sont calculées depuis 1800 et estiment l'espérance de vie moyenne pour les différents pays jusqu'en 2100.
+
+-   La banque de donnée regroupe les pays sous les 5 continents principaux soit l'Afrique, les Amériques, l'Asie, l'Europe et l'Océanie.
+
+```{r}
+skim(df_gapminder)
+```
 
 ```{r graph for life expectancy, warning=FALSE, error=FALSE}
 graph <- df_gapminder |> 
     group_by(continent,
              year) |> 
-    summarise(mean = mean(value, na.rm = T))
+    summarise(mean = mean(`Life expectancy`, na.rm = T))
 
 p1 <- ggplot(data = graph,
              aes(x = as.numeric(year),
@@ -70,7 +82,8 @@ p1 <- ggplot(data = graph,
 p1
 ```
 
-La banque de données est [*@owid*](https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv), qui a comme but principal de décrire comment les émissions de Co2 et de gaz à effets de serres évoluent dans le temps.
+La banque de données est [*\@owid*](https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv), qui a comme but principal de décrire comment les émissions de Co2 et de gaz à effets de serres évoluent dans le temps.
+
 ```{r graph for co2 emission, warning=FALSE, error=FALSE}
 graph_owid <- df_owid |> 
     filter(is.na (continent) == FALSE) |> 
@@ -92,4 +105,6 @@ p2 <- ggplot(data = graph_owid,
 p2
 ```
 
+```{r descriptives, warning=FALSE, error=FALSE}
 
+```
