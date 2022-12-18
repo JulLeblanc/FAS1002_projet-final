@@ -28,7 +28,7 @@ website:
         text: Page d'accueil
       - intro.qmd
       - href: import.qmd
-        text: What are we talking about?
+        text: What are we dealing with?
       - exploration.qmd
     right:
       - href: a-propos.qmd
