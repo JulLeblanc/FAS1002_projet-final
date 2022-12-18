@@ -1,5 +1,5 @@
 ---
-title: "Exploration et analyse"
+title: "Exploration"
 title-block-banner: false
 description: | 
   Cette page présente une exploration des différentes données ainsi qu'une analyse descriptive et statistique des ces différentes variables.
@@ -25,7 +25,9 @@ citation: true
 bibliography: references.bib
 ---
 
-```{r importing processed, warning=FALSE, error=FALSE, show_col_types=FALSE}
+NB : Ouvrir la bribe de code pour voir les `packages` nécessaires à l'importation et la manipulation des données.
+
+```{r importing processed, warning=FALSE, error=FALSE, message=FALSE}
 library(tidyverse)
 library(fs)
 library(lubridate)
@@ -33,29 +35,36 @@ library(skimr)
 library(gapminder)
 library(countrycode)
 library(cronR)
+library(modelsummary)
 
-df_owid <- read_csv("data/processed/df_owid.csv")
+df_owid <- read_csv("data/processed/df_owid.csv", show_col_types = FALSE)
 
-df_gapminder <- read_csv("data/processed/df_gapminder.csv")
+df_gapminder <- read_csv("data/processed/df_gapminder.csv", show_col_types = FALSE)
 ```
 
 ## Statistiques descriptives
 
-La banque de données est une banque de données qui est compris dans `R` dans la librairie `gapminder`. Nous utiliserons plus précisément une sous banque de donnée qui est inclus dans cette librairie, soit celle du *Life Expectancy at Birth* qui calcul l'évoluation des l'espérance de vie par pays et à chaque année.
+### *Life Expectancy at Birth*
 
-La banque de données comprend 5 variables sous 56616 observations et il est possible de présenter différentes valeurs de celles-ci.
+La première est celle du *Life Expectancy* qui comprend au total 5 variables et plus de 56616 observations. Cette banque de données et mis à jour régulièrement et continent des observations pour :
 
--   Les données sont calculées pour 195 pays
+-   Un total de 195 pays
 
--   Celles-ci sont calculées depuis 1800 et estiment l'espérance de vie moyenne pour les différents pays jusqu'en 2100.
+-   Calculées depuis 1800 et estiment l'espérance de vie moyenne pour les différents pays jusqu'en 2100.
 
 -   La banque de donnée regroupe les pays sous les 5 continents principaux soit l'Afrique, les Amériques, l'Asie, l'Europe et l'Océanie.
+
+Voici notamment un récapitulatif des données.
 
 ```{r}
 skim(df_gapminder)
 ```
 
-```{r graph for life expectancy, warning=FALSE, error=FALSE}
+Il est possible aussi d'observer l'évolution de l'espérance de vie moyenne en fonction des continents. Les grandes cassures dans le temps peuvent être attribuables à différentes périodes historiques.
+
+Notamment, la grand cassure avant les années 1920 peuvent être à la fois attribuables à la Première Guerre mondiale, mais également à l'épidémie de la Grippe espagnole. La même tendance est observable dans les années 1940 pour la Seconde Guerre mondiale et plus récemment, la légère fracture pour la pandémie de la COVID-19.
+
+```{r graph for life expectancy, warning=FALSE, error=FALSE, message=FALSE}
 graph <- df_gapminder |> 
     group_by(continent,
              year) |> 
@@ -82,9 +91,46 @@ p1 <- ggplot(data = graph,
 p1
 ```
 
+### *Our World in Data, Co2*
+
 La banque de données est [*\@owid*](https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv), qui a comme but principal de décrire comment les émissions de Co2 et de gaz à effets de serres évoluent dans le temps.
 
-```{r graph for co2 emission, warning=FALSE, error=FALSE}
+La banque de données présentent plus de :
+
+-   75 variables comme le PIB, le nombre d'habitants dans le pays, l'année et une variable qui a été ajouté et celle qui regroupe les pays sous les 5 continents,
+
+-   Différentes mesures pour le Co2 comme l'émissions brutes, l'accumulation ou bien le rendement par énergie dépensé, etc.
+
+-   Les données enregistrées sont mise à jour de manière presqu'hebdomadaire et ont des observations débutants en 1750.
+
+Puisque la banque de données regroupent de nombreuses variables, une sélection des plus importantes pour les analyses qui suivront a été fait. Les variables qui ont été retenues sont celles du :
+
+-   Pays `country`,
+
+-   Années `year`,
+
+-   Continents `continent`,
+
+-   PIB `gdp`,
+
+-   Nombre d'habitants total `population`,
+
+-   Co2 `co2`,
+
+-   
+
+```{r}
+owid <- df_owid |> 
+    select(country,
+           year,
+           continent,
+           gdp,
+           population,
+           co2)
+
+```
+
+```{r graph for co2 emission, warning=FALSE, error=FALSE, message=FALSE}
 graph_owid <- df_owid |> 
     filter(is.na (continent) == FALSE) |> 
     group_by(continent,
@@ -105,6 +151,11 @@ p2 <- ggplot(data = graph_owid,
 p2
 ```
 
-```{r descriptives, warning=FALSE, error=FALSE}
+```{r descriptives, warning=FALSE, error=FALSE, message=FALSE}
+dat <- inner_join(owid,
+                  df_gapminder)
 
+lm(co2 ~ life_exp + population + year, data = dat)
 ```
+
+

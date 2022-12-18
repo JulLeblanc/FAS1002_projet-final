@@ -1,8 +1,8 @@
 ---
-title: "Données"
+title: "Importation"
 title-block-banner: true
 description: | 
-  Cette page regroupe la première importation des données à l'état brute ainsi que les manipulation de bases. 
+  Cette page regroupe la première importation des données à l'état brute ainsi que les manipulation de bases.
 # à changer
 date: "2022-12-21"
 # Modifier les détails que vous voulez
@@ -45,13 +45,13 @@ Pour l’importation des données, vous aurez à les télécharger de plusie
 ■ ex: data/raw/owid
 
 
-## Importer les données
+#Importer les données
 
-#### *Our World in Data*
+## *Our World in Data*
 
 J'utilise en premier la banque de données du *Co2 and Greenhouse Gaz Emissions*. Celle-ci sera mis à jour à tous les jours. Les données proviennent [d'ici](https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv).
 
-À retirer ou ajouter jsp encore: unlink("data/raw/*.csv") unlink("data/raw/*.xlsx")
+
 
 ```{r download co2, cache=TRUE, warning=FALSE, error=FALSE, show_col_types=FALSE}
 #option cache=TRUE c'est si le code ne change pas, il ne devrait pas redownloader le fichier
@@ -66,12 +66,12 @@ fpath_owid <- path(base_path, fname_owid)
 
 data_owid <- download.file(url = url_owid, destfile = fpath_owid)
 
-df_owid <- read_csv(fpath_owid)
+df_owid <- read_csv(fpath_owid,  show_col_types = FALSE)
 ```
 
-#### *Gapminder*
+## *Gapminder*
 
-Pour la deuxième banque de données, je fais appel à celle produite par *Gapminder* qui se nomme *Life Expectancy at Birth*. Celle-ci seront re-téléchargé pour une mise à jour à tous les mois. Les données proviennent [d'ici]()
+Pour la deuxième banque de données, je fais appel à celle produite par *Gapminder* qui se nomme *Life Expectancy at Birth*. Celle-ci seront re-téléchargé pour une mise à jour à tous les mois. Les données proviennent [d'ici]("https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=176703676")
 
 ```{r download lifeexpectancy, cache=TRUE, warning=FALSE, error=FALSE}
 url_gapminder <-  gsheet2tbl("https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=176703676")
@@ -84,12 +84,12 @@ fpath_gap <- path(base_path, fname_gap)
 
 write_csv(x = url_gapminder, file = fpath_gap)
 
-df_gapminder <- read_csv(fpath_gap)
+df_gapminder <- read_csv(fpath_gap, show_col_types = FALSE)
 ```
 
-#### Créer une variable
+# Variable continent
 
-Dans la banque de données de *Our World in Data*, nous avons créer une variable qui regroupe les différents pays en sous-groupe des 5 continents soit : l'Afrique, l'Amérique, l'Asie, l'Europe et l'Océanie. Mais également pour la banque de données du *Life Expectancy*.
+Dans les deux banques de données que nous utilisons, j'ai créé une variable qui regroupe les différents pays en sous-groupe des 5 continents soit : l'Afrique, l'Amérique, l'Asie, l'Europe et l'Océanie. Ceci me permettra de faire des comparaisons plus large en me référant au continent et non au pays.
 
 ```{r variable for continents, warning=FALSE, error=FALSE}
 df_owid <- df_owid |> 
@@ -103,32 +103,26 @@ df_gapminder <- df_gapminder |>
                                    destination = "continent"))
 ```
 
-#### Recoder certaines variables
+# Recoder certaines variables
 
-Les variables des deux banques de données n'ont pas nécessairement les mêmes noms de colonne. Je vais donc commencer par uniformiser ceci, notamment en renommant les colonnes des pays pour `country`et pour l'année `year`.
+Dans les banques de données que nous utilisons, des variables qui regroupent le même type d'information n'ont pas nécessairement le même nom.
+
+Notamment, dans la banque de données 
+r par uniformiser ceci, notamment en renommant les colonnes des pays pour `country`et pour l'année `year`.
 
 ```{r recode variables, warning=FALSE, error=FALSE}
 df_gapminder <- df_gapminder |> 
     rename(country = name,
-           year = time)
+           year = time,
+           life_exp = `Life expectancy`)
 ```
-
-
-## Joindre les banques de données
-
-Les deux banques de données contiennent une variable commune, soit la variable des pays. Nous allons donc procéder à combiner ces banques de données par leur variable commune, le pays.
-
-```{r join two datasets, warning=FALSE, error=FALSE}
-# dat <- full_join(df_gapminder,
-#                  df_owid,
-#                  by = "country")
-```
-
 
 
 ## Exporter
 
-Exporter les données traitées dans le dossier data/processed
+Maintenant qu'une première manipulation des données a été fait, nous pouvons exporter celles-ci comme étant des données traitées dans le dossier `data/processed`.
+
+Les prochaines analyses auront comme point de départ les données traitées, donc qui ont été exportées dans le chemin relatif ci-dessus. 
 
 ```{r exporting data to processed, warning=FALSE, error=FALSE}
 write_csv(df_owid,file = "data/processed/df_owid.csv")

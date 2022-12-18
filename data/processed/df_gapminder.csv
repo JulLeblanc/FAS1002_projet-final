@@ -1,4 +1,4 @@
-geo,country,year,Life expectancy,continent
+geo,country,year,life_exp,continent
 afg,Afghanistan,1800,28.21,Asia
 afg,Afghanistan,1801,28.2,Asia
 afg,Afghanistan,1802,28.19,Asia
