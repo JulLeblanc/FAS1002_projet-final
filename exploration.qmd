@@ -25,9 +25,7 @@ citation: true
 bibliography: references.bib
 ---
 
-
-
-```{r warning=FALSE, error=FALSE}
+```{r importing processed, warning=FALSE, error=FALSE}
 library(tidyverse)
 library(fs)
 library(lubridate)
@@ -43,32 +41,55 @@ df_gapminder <- read_csv("data/processed/df_gapminder.csv")
 
 ## Statistiques descriptives
 
-La banque de donnée regroupe deux banques de données ensembles. La première est [*Co2 and Greenhouse Gaz Emissions*](https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv), qui a comme but principal de décrire comment les émissions de Co2 et de gaz à effets de serres évoluent dans chaque pays. 
+La banque de données est une banque de données qui est compris dans `R` dans la librairie `gapminder`. Nous utiliserons plus précisément une sous banque de donnée qui est inclus dans cette librairie, soit celle du *Life Expectancy at Birth* qui calcul l'espérance de vie moyenne des enfants à la naissance à chaque année.
 
-
-La seconde banque de données est une banque de données qui est compris dans `R` dans la librairie `gapminder`. Nous utiliserons plus précisément une sous banque de donnée qui est inclus dans cette librairie, soit celle du *Life Expectancy at Birth* qui calcul l'espérance de vie moyenne des enfants à la naissance à chaque année.
-
-```{r}
+```{r graph for life expectancy, warning=FALSE, error=FALSE}
 graph <- df_gapminder |> 
     group_by(continent,
-             years) |> 
+             year) |> 
     summarise(mean = mean(value, na.rm = T))
 
 p1 <- ggplot(data = graph,
-        aes(x = as.numeric(years),
-            y = mean,
-            color = continent)) +
-     geom_line(stat = "identity") +
-     scale_x_continuous(n.breaks = 12) +
-     theme_bw() +
-     labs(title = "Évolution de l'espérance de vie",
-          subtitle = "Par continents",
-          source = "https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions",
-          x = " ",
-          y = " ")
+             aes(x = as.numeric(year),
+                 y = mean,
+                 color = continent)) +
+    geom_line(stat = "identity") +
+    scale_x_continuous(n.breaks = 12) +
+    scale_color_discrete(name = "Continents",
+                         labels = c("Afrique",
+                                    "Amériques",
+                                    "Asie",
+                                    "Europe",
+                                    "Océanie")) +
+    theme_bw() + 
+    labs(title = "Évolution de l'espérance de vie",
+         source = "https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions",
+         x = " ",
+         y = " ")
 
 p1
 ```
 
+La banque de données est [*@owid*](https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv), qui a comme but principal de décrire comment les émissions de Co2 et de gaz à effets de serres évoluent dans le temps.
+```{r graph for co2 emission, warning=FALSE, error=FALSE}
+graph_owid <- df_owid |> 
+    filter(is.na (continent) == FALSE) |> 
+    group_by(continent,
+             year) |> 
+    select(co2)
+
+p2 <- ggplot(data = graph_owid,
+             aes(x = year,
+                 y = co2,
+                 color = continent)) +
+    geom_line(stat = "identity") +
+    scale_color_discrete(name = "Continents",
+                         labels = c("Afrique",
+                                    "Amériques",
+                                    "Asie",
+                                    "Europe",
+                                    "Océanie"))
+p2
+```
 
 
