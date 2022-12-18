@@ -1,13 +1,12 @@
 ---
-title: "What are we talking about?"
+title: "What are we dealing with?"
 author: "Cécile Amadoro"
 url: 
 title-block-banner: false
 description: | 
-  Petite description de cette page.
+  Cette partie présente rapidement les deux bases de données utilisées ainsi que la méthode d'importation.
+ 
 date: "2022-12-20"
-# Modifier les détails que vous voulez
-
 
 # TRUE == Générer une citation pour cette page précise. Pour enlever, mettre false.
 citation: true
@@ -53,16 +52,18 @@ dat_owid = read_csv(fpathowid)
 
 
 
-#Automatisation du script avec cronR
+#Automatisation du script avec cronR, fréquence de téléchargement quotidienne
 
-#cronR::cron_rstudioaddin()
+cronR::cron_add(download.file(urlowid, destfile = fpathowid), frequency = "daily", at = "9AM")
 
-
+#Confirmation de l'automatisation dans la console. 
+#Are you sure you want to add the specified cron job: '0'? [y/n]: 1: y 
+#Adding cronjob:
 ## cronR job
-## id:   job_fcb01c2444f4e736bc46e778b5a84f36
+## id:   d2f75e2df797c02be775f141f081109f
 ## tags: 
-## desc: Hi! I can download data all by myself!
-#0 10 * * * /Library/Frameworks/R.framework/Resources/bin/Rscript '/Users/cecile/Documents/Cours 1er cycle/AUTOMNE 2022/FAS 1002 - Initiation à la programmation en science sociale/FAS1002_projet_pratique/import.qmd'  >> '/Users/cecile/Documents/Cours 1er cycle/AUTOMNE 2022/FAS 1002 - Initiation à la programmation en science sociale/FAS1002_projet_pratique/import.log' 2>&1#
+## desc: 
+
 
 
 
@@ -72,40 +73,45 @@ dat_owid = read_csv(fpathowid)
 
 ### [**II. Importation mensuelle des données Gapminder**]{.underline}
 
-La base de données "*Life Expectancy at Birth*" est utilisée. Elle permet aussi de faire des analyses statistiques sur la question de l'espérance de vie depuis le 19ème siècle. L'espérance de vie est aujourd'hui un des meilleurs indicateurs de développement d'un pays ainsi qu'une solide mesure de projection économique et démographique.
+La base de données "*Life Expectancy at Birth*" est utilisée. Elle permet aussi de faire des analyses statistiques sur la question de l'espérance de vie depuis le 19ème siècle. L'espérance de vie est aujourd'hui un des meilleurs indicateurs de développement d'un pays ainsi qu'une solide mesure de projection économique et démographique.\
+Cette base de données contient au total 1505 observations
 
 ```{r importation des données gapminder}
 
 #Données gapminder
-url_gap = "https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/export?format=xlsx"
-basepath2 = path("data", "raw")
-fname2 = paste(today(), "gapminder.xlsx", sep = "_")
-fpath2 = path(basepath2, fname2)
-
-dat = download.file(url = url_gap, destfile = fpath2)
-
-
-
-#Automatisation du script avec cronR
-
-#Trouver solution ici
-#cron_rstudioaddin()
-
 library(gsheet)
 
-datworld = gsheet2tbl("https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=569008164")
+#Utilisation de la fonction gsheet2tbl du package gsheet qui permet de convertir facilement une sheet google en dataframe
 
-datregions = gsheet2tbl("https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=1003383399")
+urlgapminder =  gsheet2tbl("https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=176703676")
 
-datcountries = gsheet2tbl("https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=176703676")
+#incorporation dans data/raw
+basepathgm = path("data", "raw")
 
-datultimate = full_join(datworld, datregions, datworld, by = "geo")
+fnamegm = paste(today(), "gapm.csv", sep = "_")
+
+fpathgm = path(basepathgm, fnamegm)
+
+write_csv(x = urlgapminder, file = fpathgm)
+
+datgm = read_csv(fpathgm)
 
 
 
 
+#Automatisation du script avec cronR, fréquence de téléchargement mensuelle
 
-#test 
+#cronR::cron_add(gsheet2tbl("https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=176703676") %>%
+                    #path("data", "raw") %>%
+                    #paste(today(), "gapm.csv", sep = "_") %>%
+                    #path(basepathgm, fnamegm) %>% 
+                    #write_csv(x = urlgapminder, file = fpathgm),
+        #frequency = "monthly",
+        #at = "9AM")
+
+
+#Corriger bug : Error in path_tidy(.Call(fs_path_, lapply(args, function(x) enc2utf8(as.character(x))),  :  Total path length must be less than PATH_MAX: 1024
+
 
 
 
@@ -119,7 +125,7 @@ Pour obtenir une meilleure lecture et analyse des données, il est apparu plus s
 Pour mieux comprendre les variables, le tableau suivant propose le codebook suivant, adapté du [codebook original](https://github.com/owid/co2-data/blob/master/owid-co2-codebook.csv) .
 
 | Variable              | Description + Type                                                                                                                                                                                                                                        |
-|------------------------------------|------------------------------------|
+|----------------|--------------------------------------------------------|
 | Country               | pays (character)                                                                                                                                                                                                                                          |
 | Year                  | année de l'observation (numérique)                                                                                                                                                                                                                        |
 | Iso_code              | code du pays selon la codification internationale 3166-1 (character)                                                                                                                                                                                      |
@@ -139,17 +145,21 @@ Pour mieux comprendre les variables, le tableau suivant propose le codebook suiv
 
 ```{r lecture et assemblage des données}
 
-
 #Transformation des données en tibble
 as.tibble(dat_owid)
 
 
 #Filtrage du tibble
 
-dat_owid1 = dat_owid %>% 
+dat_CO2 = dat_owid %>% 
     select(country, year, iso_code, population, gdp, co2, cement_co2_per_capita, 
            co2_per_gdp, coal_co2, coal_co2_per_capita, gas_co2, gas_co2_per_capita,
            methane, methane_per_capita, oil_co2, oil_co2_per_capita, ghg_per_capita, trade_co2)
+
+
+#Ajout dans de dat_CO2 data/processed 
+
+write_csv(dat_CO2, file = "data/processed/dat_CO2.csv")
 
 
 ```
