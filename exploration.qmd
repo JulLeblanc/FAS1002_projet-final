@@ -68,7 +68,7 @@ Notamment, la grand cassure avant les années 1920 peuvent être à la fois attr
 graph <- df_gapminder |> 
     group_by(continent,
              year) |> 
-    summarise(mean = mean(`Life expectancy`, na.rm = T))
+    summarise(mean = mean(life_exp, na.rm = T))
 
 p1 <- ggplot(data = graph,
              aes(x = as.numeric(year),
@@ -117,7 +117,6 @@ Puisque la banque de données regroupent de nombreuses variables, une sélection
 
 -   Co2 `co2`,
 
--   
 
 ```{r}
 owid <- df_owid |> 
@@ -127,12 +126,36 @@ owid <- df_owid |>
            gdp,
            population,
            co2)
+```
+
+```{r}
+skim(owid)
+```
+
+```{r co2 evolution world}
+graph_owid_world <- df_owid |> 
+    filter(country == "World") |> 
+    select(co2,
+           year,
+           country)
+
+ggplot(data = graph_owid_world,
+       aes(x = year,
+           y = co2)) +
+    geom_line() +
+    scale_x_continuous(n.breaks = 12) +
+    scale_y_continuous(n.breaks = 5) +
+    geom_point(size = 0.3) +
+    labs(title = "Co2 total mondial") +
+    theme_bw()
 
 ```
 
+
 ```{r graph for co2 emission, warning=FALSE, error=FALSE, message=FALSE}
 graph_owid <- df_owid |> 
-    filter(is.na (continent) == FALSE) |> 
+    filter(is.na (continent) == FALSE,
+           is.na (co2) == FALSE) |> 
     group_by(continent,
              year) |> 
     select(co2)
@@ -147,15 +170,40 @@ p2 <- ggplot(data = graph_owid,
                                     "Amériques",
                                     "Asie",
                                     "Europe",
-                                    "Océanie"))
+                                    "Océanie")) +
+    theme_bw()
 p2
 ```
 
-```{r descriptives, warning=FALSE, error=FALSE, message=FALSE}
+```{r}
+ggplot(data = graph_owid,
+       aes(x = year,
+           y = co2,
+           colour = continent)) +
+    geom_point(size = 0.3)
+```
+
+
+## Combinaison
+
+On peut également entreprendre des analyses via la combinaison des deux banques de données puisqu'elles ont comme variables communes les années, les continents ainsi que la majorité des pays observés.
+
+```{r inner join, warning=FALSE, error=FALSE, message=FALSE}
 dat <- inner_join(owid,
                   df_gapminder)
 
-lm(co2 ~ life_exp + population + year, data = dat)
+skim(dat)
+
 ```
+
+```{r}
+
+ggplot(data = dat,
+       aes(x = year)) +
+    geom_line()
+
+
+```
+
 
 

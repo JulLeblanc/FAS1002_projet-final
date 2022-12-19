@@ -91,11 +91,18 @@ df_gapminder <- read_csv(fpath_gap, show_col_types = FALSE)
 
 Dans les deux banques de données que nous utilisons, j'ai créé une variable qui regroupe les différents pays en sous-groupe des 5 continents soit : l'Afrique, l'Amérique, l'Asie, l'Europe et l'Océanie. Ceci me permettra de faire des comparaisons plus large en me référant au continent et non au pays.
 
+
+
 ```{r variable for continents, warning=FALSE, error=FALSE}
 df_owid <- df_owid |> 
-    mutate(continent = countrycode(sourcevar = df_owid$country,
-                                   origin = "country.name",
-                                   destination = "continent"))
+    mutate(continent = case_when(country == "Europe" ~ "Europe",
+                                 country == "Africa" ~"Afrique",
+                                 country == "Asia" ~ "Asie",
+                                 country == "Oceania" ~ "Océanie",
+                                 country == "South America" ~ "Amériques",
+                                 country == "North America" ~ "Amériques",
+                                 country == "Central America \\(GCP)" ~ "Amériques"))
+
 
 df_gapminder <- df_gapminder |> 
     mutate(continent = countrycode(sourcevar = df_gapminder$name,
@@ -117,6 +124,7 @@ df_gapminder <- df_gapminder |>
            life_exp = `Life expectancy`)
 ```
 
+On peut également uniformiser pour la variable Co2 de la banque de donnée _Our World in Data_, notamment qui
 
 ## Exporter
 
