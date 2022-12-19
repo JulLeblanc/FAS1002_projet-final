@@ -36,6 +36,7 @@ library(gapminder)
 library(countrycode)
 library(cronR)
 library(modelsummary)
+library(patchwork)
 
 df_owid <- read_csv("data/processed/df_owid.csv", show_col_types = FALSE)
 
@@ -64,17 +65,22 @@ Il est possible aussi d'observer l'évolution de l'espérance de vie moyenne en 
 
 Notamment, la grand cassure avant les années 1920 peuvent être à la fois attribuables à la Première Guerre mondiale, mais également à l'épidémie de la Grippe espagnole. La même tendance est observable dans les années 1940 pour la Seconde Guerre mondiale et plus récemment, la légère fracture pour la pandémie de la COVID-19.
 
+
 ```{r graph for life expectancy, warning=FALSE, error=FALSE, message=FALSE}
 graph <- df_gapminder |> 
     group_by(continent,
              year) |> 
-    summarise(mean = mean(life_exp, na.rm = T))
+    mutate(mean_continent = mean(life_exp, na.rm = TRUE)) |> 
+    ungroup() |> 
+    group_by(year) |> 
+    mutate(mean_world = mean(life_exp, na.rm = TRUE))
+    
 
-p1 <- ggplot(data = graph,
-             aes(x = as.numeric(year),
-                 y = mean,
+p1 <- ggplot() +
+    geom_line(data = graph,
+             aes(x = year,
+                 y = mean_continent,
                  color = continent)) +
-    geom_line(stat = "identity") +
     scale_x_continuous(n.breaks = 12) +
     scale_color_discrete(name = "Continents",
                          labels = c("Afrique",
@@ -86,9 +92,24 @@ p1 <- ggplot(data = graph,
     labs(title = "Évolution de l'espérance de vie",
          source = "https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions",
          x = " ",
+         y = " ") 
+p1
+
+
+
+p2 <-  ggplot(data = graph,
+              aes(x = year,
+                      y = mean_world)) +
+    geom_line() +
+    scale_x_continuous(n.breaks = 12) +
+    theme_bw() + 
+    labs(title = "Évolution de l'espérance de vie mondiale",
+         source = "https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions",
+         x = " ",
          y = " ")
 
-p1
+p2
+
 ```
 
 ### *Our World in Data, Co2*
@@ -160,7 +181,7 @@ graph_owid <- df_owid |>
              year) |> 
     select(co2)
 
-p2 <- ggplot(data = graph_owid,
+p3 <- ggplot(data = graph_owid,
              aes(x = year,
                  y = co2,
                  color = continent)) +
@@ -172,7 +193,7 @@ p2 <- ggplot(data = graph_owid,
                                     "Europe",
                                     "Océanie")) +
     theme_bw()
-p2
+p3
 ```
 
 ```{r}
@@ -180,7 +201,79 @@ ggplot(data = graph_owid,
        aes(x = year,
            y = co2,
            colour = continent)) +
-    geom_point(size = 0.3)
+    geom_point(size = 0.3) +
+    theme_bw()
+```
+
+Plus de CO2 en 2021
+```{r}
+df_owid |> 
+    filter(year == 2021) |> 
+    select(country,
+           co2) |> 
+    arrange(desc(co2))
+
+```
+
+co2 en 2021 : world is 37 milliards de tonnes?
+Chine - 11 millards (Asie 21)
+USA - 5007
+
+
+
+```{r}
+top_5 <- df_owid |> 
+    filter(country == c("China",
+                        "United States",
+                        "India",
+                        "Russia")) |> 
+    select(year,
+           co2,
+           country)
+
+
+ggplot(top_5) +
+    aes(x = year,
+        y = co2,
+        fill = country) +
+    geom_area(alpha = 0.4) +
+    scale_fill_hue(direction = 1) +
+    geom_line(data = graph_owid_world,
+              aes(x = year,
+                  y = co2,
+                  fill = country),
+              alpha = 0.5) +
+    theme_bw() 
+    
+```
+
+Pays riches qui produisent le plus de co2 ? apparently yes
+```{r}
+rich <- df_owid |> 
+    filter (country == c("Upper-middle-income countries",
+                         "High-income countries",
+                         "Lower-middle-income countries",
+                         "Low-income countries")) |> 
+    select(country,
+           co2,
+           year,
+           gdp)
+
+ggplot(data = rich,
+       aes(x = year,
+           y = co2,
+           fill = country)) +
+    geom_area(alpha = 0.3) +
+        geom_line(data = graph_owid_world,
+              aes(x = year,
+                  y = co2,
+                  fill = country),
+              alpha = 0.5) +
+    theme_bw()
+```
+Industrie plus émettrices
+```{r}
+
 ```
 
 
@@ -189,21 +282,15 @@ ggplot(data = graph_owid,
 On peut également entreprendre des analyses via la combinaison des deux banques de données puisqu'elles ont comme variables communes les années, les continents ainsi que la majorité des pays observés.
 
 ```{r inner join, warning=FALSE, error=FALSE, message=FALSE}
-dat <- inner_join(owid,
-                  df_gapminder)
+
+dat <- inner_join(x = df_gapminder,
+                  y = owid)
 
 skim(dat)
 
 ```
 
-```{r}
 
-ggplot(data = dat,
-       aes(x = year)) +
-    geom_line()
-
-
-```
 
 
 

@@ -26,7 +26,6 @@ bibliography: references.bib
 ---
 
 ```{r librairies, echo=FALSE, warning=FALSE,message=FALSE}
-
 library(tidyverse)
 library(fs)
 library(lubridate)
@@ -87,10 +86,13 @@ write_csv(x = url_gapminder, file = fpath_gap)
 df_gapminder <- read_csv(fpath_gap, show_col_types = FALSE)
 ```
 
-# Variable continent
+
+
+# Variables d'intérêts
+
+## Continent
 
 Dans les deux banques de données que nous utilisons, j'ai créé une variable qui regroupe les différents pays en sous-groupe des 5 continents soit : l'Afrique, l'Amérique, l'Asie, l'Europe et l'Océanie. Ceci me permettra de faire des comparaisons plus large en me référant au continent et non au pays.
-
 
 
 ```{r variable for continents, warning=FALSE, error=FALSE}
@@ -125,6 +127,28 @@ df_gapminder <- df_gapminder |>
 ```
 
 On peut également uniformiser pour la variable Co2 de la banque de donnée _Our World in Data_, notamment qui
+
+## Temps
+
+Il est également intéressant de voir le temps écoulé entre la production de se rapport et la première année que des données ont été récoltées pour chacun des pays qui se trouvent dans le jeu de données de _Life Expectancy at Birth_.
+
+Cette variable prendra le nom de `time` dans la banque de données.
+```{r}
+# df_gapminder <- df_gapminder |>
+#     mutate(time_since = as.Date(year, format = "%Y"))
+
+    
+    
+    
+ # mutate(jour_mois = "-01-01") %>% #ajouter une colonne avec -MM-DD
+ #     unite(time, jour_mois, col = time, sep = "") %>% #combiner les deux colonnes
+ #     mutate(year_as_date = as.Date(time, format = "%Y-%m-%d")) #transformer en format de date
+ #     
+ # as.numeric(difftime(as.POSIXct(today()), 
+ #                     as.POSIXct(as.Date(min(LifeExDate$year_as_date), format = "%Y-%m-%d"))))
+
+```
+
 
 ## Exporter
 
