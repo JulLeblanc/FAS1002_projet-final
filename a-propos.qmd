@@ -23,9 +23,9 @@ Il s'agit d'un cours d'introduction à la programmation en sciences sociales ave
 
 Ce projet a été crée par deux étudiantes, Cécile Amadoro et Juliette Leblanc dans le cadre du cours FAS1002 et a été supervisé par Samuel Guay.
 
-Cécile est étudiante au baccalauréat en science politique et au microprogramme en analyse des mégadonnées en sciences humaines et sociales à l'Unviersité de Montréal. Ses recherches portent principalement sur les questions de sécurité internationale, et de la gouvernance numérique. Actuellement, avec l'aide de méthodes d'IA, elle travaille sur le discours haineux comme menace à la sécurité nationale et sur l'analyse des stratégies de cyberdéfense russe.
+**Cécile** est étudiante au baccalauréat en science politique et au microprogramme en analyse des mégadonnées en sciences humaines et sociales à l'Unviersité de Montréal. Ses recherches portent principalement sur les questions de sécurité internationale, et de la gouvernance numérique. Actuellement, avec l'aide de méthodes d'IA, elle travaille sur le discours haineux comme menace à la sécurité nationale et sur l'analyse des stratégies de cyberdéfense russe.
 
-Juliette est étudiante à la maîtrise en science politique et au microprogramme en analyse des mégadonnées en science humaines et sociales à l'Université de Montréal. Ses recherches portent sur l'influence potentielle des réseaux sociaux comme source d'information, notamment sur les plus jeunes membres de l'électorat. Elle s'intéresse également aux comportements électoraux, à l'opinion publiques et aux différentes méthodes de recherche, principalement quantitatives et expérimentales.
+**Juliette** est étudiante à la maîtrise en science politique et au microprogramme en analyse des mégadonnées en science humaines et sociales à l'Université de Montréal. Ses recherches portent sur l'influence potentielle des réseaux sociaux comme source d'information, notamment sur les plus jeunes membres de l'électorat. Elle s'intéresse également aux comportements électoraux, à l'opinion publiques et aux différentes méthodes de recherche, principalement quantitatives et expérimentales.
 
 ## Contact
 
