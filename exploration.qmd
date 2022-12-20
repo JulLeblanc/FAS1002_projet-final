@@ -119,7 +119,6 @@ skim(dat_join)
 
 ## _Life Expectancy_
 
-
 Manipulation pour calculer la moyenne mondiale et par continent.
 ```{r life expectancy average, warning=FALSE, error=FALSE, message=FALSE }
 life_exp_world <- df_gapminder |> 
