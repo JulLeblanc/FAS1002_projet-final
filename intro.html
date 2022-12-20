@@ -193,8 +193,12 @@ div.csl-indent {
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
   <li><a href="#life-expectancy" id="toc-life-expectancy" class="nav-link" data-scroll-target="#life-expectancy"><em>Life Expectancy</em></a></li>
+  <li><a href="#our-world-in-data" id="toc-our-world-in-data" class="nav-link" data-scroll-target="#our-world-in-data"><em>Our World in Data</em></a></li>
+  <li><a href="#données-combinées" id="toc-données-combinées" class="nav-link" data-scroll-target="#données-combinées">Données combinées</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/JulLeblanc/FAS1002_projet-final/edit/main/intro.qmd" class="toc-action">Modifier cette page</a></p><p><a href="https://github.com/JulLeblanc/FAS1002_projet-final/issues/new" class="toc-action">Faire part d'un problème</a></p><p><a href="https://github.com/JulLeblanc/FAS1002_projet-final/blob/main/intro.qmd" class="toc-action">Voir la source</a></p></div></div></nav>
     </div>
@@ -204,13 +208,15 @@ div.csl-indent {
 
 
 
+<p>MANQUE RÉFÉRENCES À INCLURE</p>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-</section>
-<section id="life-expectancy" class="level1">
-<h1><em>Life Expectancy</em></h1>
-<p>Pour commencer, nous pouvons observer l’évolution de l’espérance de vie mondial.</p>
-<p>La banque de données qui a commencé à cummuler des données en 1800.</p>
+<p>Le document ci-dessous présente une analyse visuelle et descriptives des banques de données utilisées. En premier lieu, une analyse des banques de données de manière séparées pour terminer avec une courte analyse des banques de données mise ensemble.</p>
+<p>À noter que la répartition des pays en continent peut présenter un biais. Notamment puisqu’entre l’Amérique du Nord, central et du Sud, il peut y avoir des disparités au niveau du développement, émissions de co2, etc. La même logique s’applique pour l’Asie ainsi que pour l’Océanie qui ne compte que l’Australie et la Nouvelle-Zélande.</p>
+<section id="life-expectancy" class="level2">
+<h2 class="anchored" data-anchor-id="life-expectancy"><em>Life Expectancy</em></h2>
+<p>Pour commencer, nous pouvons observer l’évolution de l’espérance de vie mondiale.</p>
+<p>La banque de données qui a commencé à cummuler des données en 1800 et fait des prédictions basées sur la tendance actuelle jusqu’à 2100.</p>
 <p><img src="figures/graph_life_world.png" class="img-fluid"></p>
 <p>Ayant fait une moyenne de ceci, on s’aperçoit que l’espérance de vie moyenne mondiale à cette époque était d’environ 31 ans. L’augmentation de l’espérance de vie moyenne a été très lente, mais a augmenté drastiquement en à peine 100 ans passant de 35 ans en 1920 à plus de 80 ans en 2021.</p>
 <p>Il est aussi possible d’observer certaines périodes historiques dans l’espérance de vie. Notamment la première cassure peut être associé à la période de la Premiere Guerre mondiale où l’espérance de vie moyenne a chuté de manière importante entre les années 1914 et 1920. De plus, suivant la Première Guerre mondiale, des nombreuses populations ont été touché par l’épidémie de la Grippe espagnole qui a également pu abaissé l’espérance de vie moyenne.</p>
@@ -218,19 +224,22 @@ div.csl-indent {
 <p>On peut également observé la tendance par continent. Est-ce que la population de certains continents vit plus longtemps que les autres et est-ce que cette tendance a changé dans le temps?</p>
 <p>On remarque qu’ici, la tendance d’augmentation générale de l’espérance de vie moyenne est aussi valable pour tous les continents. Par contre, certains se démarquent davantage que les autres.</p>
 <p><img src="figures/graph_life_continent.png" class="img-fluid"></p>
-<div class="callout-important callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>N’oubliez pas d’inclure vos références sur chacune des pages!</p>
-</div>
-</div>
+<p>Notamment l’Europe qui semble avoir la meilleure espérance de vie et ce, même dans les prédictions. L’Afrique se retrouve au dernier rang, mais a connu une espérance de vie plus grande que les autres continents lors de la première cassure, soit la période de 1914 à 1920.</p>
+</section>
+<section id="our-world-in-data" class="level2">
+<h2 class="anchored" data-anchor-id="our-world-in-data"><em>Our World in Data</em></h2>
+<p>Par la suite, nous pouvons regarder la banque de données produites par <em>Our Wold in Data</em>, notamment celle qui capture des données sur les émissions de Co2.</p>
+<p>Celle-ci enmagasine des données de 1750 à aujourd’hui et est mise à jour régulièrement.</p>
+<p>Similairement à la démarche émise pour les données du <em>Life Expectancy</em> nous commençons par démontrer l’évolution des émissions de Co2 à un niveau planétaire.</p>
+<p><img src="figures/graph_co2_world.png" class="img-fluid"></p>
+<p>L’échelle située à la droite du graphique estime l’émission de Co2 en milliard de tonnes. Similairement à la tendance observée pour l’espérance de vie moyenne, l’émission de Co2 était relativement stable de 1750 jusqu’au début du 20e siècle. Elle a quadruplée en 55 ans, passant d’environ 2,5 millards de tonne en 1900 à plus de 10 milliards de tonne dans les années 1960.</p>
+<p>L’augmentation de l’émission de Co2 mondiale a ensuite été rapide en peu de temps, comptabilisant aujourd’hui plus de 37 milliards de tonne de Co2 mondialement par année.</p>
+<p>Ton comme par l’espérance de vie, certains continents vont se démarquer des autres.</p>
+<p><img src="figures/graph_co2_continent.png" class="img-fluid"></p>
+<p>On remarque ici que l’Asie a notamment connu un essort important et rapide, dépassant l’Europe et les Amériques alors qu’ils étaient ceux enregistrant les plus fortes émissions auparavant. L’Asie regroupe également 2 des 5 plus grands pollueurs du monde en 2021 soit la Chine et l’Inde.</p>
+</section>
+<section id="données-combinées" class="level2">
+<h2 class="anchored" data-anchor-id="données-combinées">Données combinées</h2>
 <p>Par exemple:</p>
 <blockquote class="blockquote">
 <p>Les données proviennent entre autres de <span class="citation" data-cites="owidenergy">Ritchie, Roser, et Rosado (<a href="#ref-owidenergy" role="doc-biblioref">2022</a>)</span>.</p>
@@ -238,6 +247,7 @@ Important
 
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Les références</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
