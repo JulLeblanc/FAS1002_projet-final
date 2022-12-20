@@ -12,7 +12,7 @@ website:
 # URL de votre site une fois publié - <VOTREUSERNAME> à changer 
   site-url: https://VOTREUSERNAME.github.io/FAS1002_projet-final/
 # URL de votre répertoire - VOTREUSERNAME/VOTRE-RÉPERTOIRE à changer
-  repo-url: https://github.com/VOTREUSERNAME/VOTRE-RÉPERTOIRE/
+  repo-url: https://github.com/JulLeblanc/FAS1002_projet-final/
   repo-actions: [edit, issue, source]
   
 # Options à changer pour le menu ou la barre de navigation
@@ -40,7 +40,7 @@ website:
       [Propulsé par des logiciels libres 💖](https://github.com/FAS1002/A22){.nav-link}
     center:
     # Changer VOTRE NOM pour ce que vous voulez
-      - text: "Juliette Leblanc"
+      - text: "Cécile Amadoro et Juliette Leblanc"
         href: mailto:juliette.leblanc.1@umontreal.ca
     right:
       - icon: github

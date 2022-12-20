@@ -41,6 +41,8 @@ library(patchwork)
 df_owid <- read_csv("data/processed/dat_CO2.csv", show_col_types = FALSE)
 
 df_gapminder <- read_csv("data/processed/datgm.csv", show_col_types = FALSE)
+
+dat_join <- read_csv("data/processed/datultimate.csv", show_col_types = FALSE)
 ```
 
 ## Statistiques descriptives
@@ -153,7 +155,7 @@ owid <- df_owid |>
 skim(owid)
 ```
 
-```{r co2 evolution world}
+```{r co2 evolution world, warning=FALSE, error=FALSE, message=FALSE}
 graph_owid_world <- df_owid |> 
     filter(country == "World") |> 
     select(co2,
@@ -221,7 +223,7 @@ USA - 5007
 
 
 
-```{r}
+```{r, warning=FALSE, error=FALSE, message=FALSE}
 top_5 <- df_owid |> 
     filter(country == c("China",
                         "United States",
@@ -248,7 +250,7 @@ ggplot(top_5) +
     
 ```
 Sommes
-```{r}
+```{r, warning=FALSE, error=FALSE, message=FALSE}
 pourcentage <-  df_owid |> 
     filter(country == c("China",
                         "United States",
@@ -270,7 +272,7 @@ ggplot(pourcentage,
 
 
 Pays riches qui produisent le plus de co2 ? apparently yes
-```{r}
+```{r, warning=FALSE, error=FALSE, message=FALSE}
 rich <- df_owid |> 
     filter (country == c("Upper-middle-income countries",
                          "High-income countries",
@@ -294,7 +296,7 @@ ggplot(data = rich,
     theme_bw()
 ```
 
-```{r}
+```{r, warning=FALSE, error=FALSE, message=FALSE}
 life_exp_co2 <- df_gapminder |> 
     filter (country == c("China",
                         "United States",

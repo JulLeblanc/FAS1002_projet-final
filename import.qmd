@@ -213,7 +213,13 @@ Cette variable prendra le nom de `time` dans la banque de données.
 
 ```
 
-## Exporter
+# Joindre les banques de données
+```{r joindre les banques de données, warning=FALSE, error=FALSE, message=FALSE}
+datultimate = inner_join(dat_CO2, datgm)
+```
+
+
+# Exporter
 
 Maintenant qu'une première manipulation des données a été fait, nous pouvons exporter celles-ci comme étant des données traitées dans le dossier `data/processed`.
 
@@ -223,4 +229,6 @@ Les prochaines analyses auront comme point de départ les données traitées, do
 write_csv(dat_CO2,file = "data/processed/dat_CO2.csv")
 
 write_csv(datgm, file = "data/processed/datgm.csv")
+
+write_csv(datultimate, file = "data/processed/datultimate.csv")
 ```
