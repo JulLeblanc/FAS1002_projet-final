@@ -37,16 +37,21 @@ library(readxl)
 library(RCurl)
 library(googlesheets4)
 library(gsheet)
+library(countrycode)
 ```
 
-### [Introduction]{.underline}
+# Introduction
 
 Le présent projet travaille avec deux bases de données : La première est issue de Our World in Data, un site qui publie gratuitement des bases de données et de la recherche sur les enjeux contemporains que le monde traverse (économie, écologie, climat, énergie, conflits etc).\
 La deuxième base de donnée est issue de Gapminder, une OBNL suèdoise, qui propose en libre accès d'importantes bases de données aussi sur les enjeux actuels, dans le but de prévenir et lutter contre la mésinformation.
 
-## [**I. Importation quotidienne des données CO2 (Our World in Data)**]{.underline}
+# Importation quotidienne
 
-La base de donnée "*CO2 & Greenhouse Gas Emissions*" est utilisée. Elle permet de faire différentes explorations statistiques sur les émissions de CO2 dans 207 pays depuis le 19ème siècle.
+## Jeu de données CO2 _Our World in Data_
+
+La base de donnée _CO2 & Greenhouse Gas Emissions_ est utilisée. Elle permet de faire différentes explorations statistiques sur les émissions de CO2 dans 207 pays depuis le 19ème siècle.
+
+Ajouter lien web 
 
 ```{r download co2, cache=TRUE, warning=FALSE, error=FALSE, show_col_types=FALSE}
 
@@ -65,7 +70,8 @@ dat_owid = read_csv(fpathowid)
 if (!file.exists(fpathowid)) {
     file.remove(junk)
     download.file(url = urlowid,
-                  destfile = fpathowid)
+                  destfile = fpathowid,
+                  show_col_types = FALSE)
     paste("Le fichier",
           fpathowid,
           "n'existait pas, il a donc été téléchargé à l'instant.")
@@ -77,7 +83,7 @@ if (!file.exists(fpathowid)) {
 
 ```
 
-II. Importation mensuelle des données Gapminder
+## Jeu de données _Gapminder_
 
 La base de données "Life Expectancy at Birth" est utilisée. Elle permet aussi de faire des analyses statistiques sur la question de l'espérance de vie depuis le 19ème siècle. L'espérance de vie est aujourd'hui un des meilleurs indicateurs de développement d'un pays ainsi qu'une solide mesure de projection économique et démographique.Cette base de données contient au total 1505 observations
 
@@ -116,11 +122,11 @@ if (!file.exists(fpathgm)) {
 ) }
 ```
 
-III. Manipulation des données
+# Manipulation des données
 
-A. Données CO2
+## Données CO2
 
-La base de données CO2 contient 46.523 observations regroupé en 74 variables. Cette base de données propose de mieux comprendre les sources d'énergies dans 207 pays.Pour obtenir une meilleure lecture et analyse des données, il est apparu plus simple de traiter la base de données CO2 avec quelques variables et non dans sa totalité. Au total, 18 sur 74 variables ont été selctionnées.
+La base de données CO2 contient 46.523 observations regroupé en 74 variables. Cette base de données propose de mieux comprendre les sources d'énergies dans 207 pays.Pour obtenir une meilleure lecture et analyse des données, il est apparu plus simple de traiter la base de données CO2 avec quelques variables et non dans sa totalité. Au total, 18 sur 74 variables ont été sélectionnées.
 
 Pour mieux comprendre les variables, le tableau suivant propose le codebook suivant, adapté du [codebook original](https://github.com/owid/co2-data/blob/master/owid-co2-codebook.csv) .
 
@@ -160,9 +166,7 @@ dat_CO2 = dat_owid %>%
 
 ```
 
-# Variables d'intérêts
-
-## Continent
+## Classement par continent
 
 Dans les deux banques de données que nous utilisons, j'ai créé une variable qui regroupe les différents pays en sous-groupe des 5 continents soit : l'Afrique, l'Amérique, l'Asie, l'Europe et l'Océanie. Ceci me permettra de faire des comparaisons plus large en me référant au continent et non au pays.
 
@@ -178,6 +182,27 @@ datgm <-  datgm %>%
                                    destination = "continent"))
 ```
 
+## Temps écoulé
+
+Il est également intéressant de voir le temps écoulé entre la production de se rapport et la première année que des données ont été récoltées pour chacun des pays qui se trouvent dans le jeu de données de *Life Expectancy at Birth*.
+
+Cette variable prendra le nom de `time` dans la banque de données.
+
+```{r}
+# datgm <- datgm |> 
+#     mutate(time_since = time) 
+# 
+# 
+# as.Date, format = "%Y")
+# 
+# 
+# 
+#  as.numeric(difftime(as.POSIXct(today()),
+#                      as.POSIXct(as.Date(min(LifeExDate$time_since), format = "%Y-%m-%d"))))
+
+```
+
+
 # Recoder certaines variables
 
 Dans les banques de données que nous utilisons, des variables qui regroupent le même type d'information n'ont pas nécessairement le même nom.
@@ -191,27 +216,7 @@ datgm <- datgm |>
            life_exp = `Life expectancy`)
 ```
 
-## Temps
 
-Il est également intéressant de voir le temps écoulé entre la production de se rapport et la première année que des données ont été récoltées pour chacun des pays qui se trouvent dans le jeu de données de *Life Expectancy at Birth*.
-
-Cette variable prendra le nom de `time` dans la banque de données.
-
-```{r}
-# df_gapminder <- df_gapminder |>
-#     mutate(time_since = as.Date(year, format = "%Y"))
-
-    
-    
-    
- # mutate(jour_mois = "-01-01") %>% #ajouter une colonne avec -MM-DD
- #     unite(time, jour_mois, col = time, sep = "") %>% #combiner les deux colonnes
- #     mutate(year_as_date = as.Date(time, format = "%Y-%m-%d")) #transformer en format de date
- #     
- # as.numeric(difftime(as.POSIXct(today()), 
- #                     as.POSIXct(as.Date(min(LifeExDate$year_as_date), format = "%Y-%m-%d"))))
-
-```
 
 # Joindre les banques de données
 ```{r joindre les banques de données, warning=FALSE, error=FALSE, message=FALSE}

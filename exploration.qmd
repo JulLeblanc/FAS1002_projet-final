@@ -114,6 +114,7 @@ p2
 
 ```
 
+
 ### *Our World in Data, Co2*
 
 La banque de données est [*\@owid*](https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv), qui a comme but principal de décrire comment les émissions de Co2 et de gaz à effets de serres évoluent dans le temps.
@@ -187,7 +188,8 @@ p3 <- ggplot(data = graph_owid,
              aes(x = year,
                  y = co2,
                  color = continent)) +
-    geom_line(stat = "identity") +
+    geom_line(stat = "identity",
+              alpha = 0.4) +
     # scale_color_discrete(name = "Continents",
     #                      labels = c("Afrique",
     #                                 "Amériques",
@@ -319,15 +321,35 @@ ggplot(data = life_exp_co2,
 On peut également entreprendre des analyses via la combinaison des deux banques de données puisqu'elles ont comme variables communes les années, les continents ainsi que la majorité des pays observés.
 
 ```{r inner join, warning=FALSE, error=FALSE, message=FALSE}
+skim(dat_join)
 
-dat <- inner_join(x = df_gapminder,
-                  y = owid)
-
-skim(dat)
-
+```
+```{r}
+rich_life <- dat_join|>
+    filter(year == c(1900:2021),
+           continent == c("Africa",
+                          "Asia",
+                          "Americas",
+                          "Europe",
+                          "Oceania")) |> 
+    group_by(year) |> 
+    select(year,
+           life_exp,
+           continent,
+           co2) |> 
+    summarise(mean_co2 = mean(co2, na.rm = T),
+              mean_life_exp = mean(life_exp, na.rm = T))
 ```
 
 
+
+```{r}
+# ggplot() +
+#     geom_area(data = rich_life,
+#               aes(x = year,
+#                   y = mean_life_exp,
+#                   fill = continent))
+```
 
 
 
