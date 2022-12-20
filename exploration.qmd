@@ -38,9 +38,9 @@ library(cronR)
 library(modelsummary)
 library(patchwork)
 
-df_owid <- read_csv("data/processed/df_owid.csv", show_col_types = FALSE)
+df_owid <- read_csv("data/processed/dat_CO2.csv", show_col_types = FALSE)
 
-df_gapminder <- read_csv("data/processed/df_gapminder.csv", show_col_types = FALSE)
+df_gapminder <- read_csv("data/processed/datgm.csv", show_col_types = FALSE)
 ```
 
 ## Statistiques descriptives
@@ -93,7 +93,7 @@ p1 <- ggplot() +
          source = "https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions",
          x = " ",
          y = " ") 
-p1
+p1 
 
 
 
@@ -186,12 +186,12 @@ p3 <- ggplot(data = graph_owid,
                  y = co2,
                  color = continent)) +
     geom_line(stat = "identity") +
-    scale_color_discrete(name = "Continents",
-                         labels = c("Afrique",
-                                    "Amériques",
-                                    "Asie",
-                                    "Europe",
-                                    "Océanie")) +
+    # scale_color_discrete(name = "Continents",
+    #                      labels = c("Afrique",
+    #                                 "Amériques",
+    #                                 "Asie",
+    #                                 "Europe",
+    #                                 "Océanie")) +
     theme_bw()
 p3
 ```
@@ -226,7 +226,8 @@ top_5 <- df_owid |>
     filter(country == c("China",
                         "United States",
                         "India",
-                        "Russia")) |> 
+                        "Russia",
+                        "India")) |> 
     select(year,
            co2,
            country)
@@ -246,6 +247,27 @@ ggplot(top_5) +
     theme_bw() 
     
 ```
+Sommes
+```{r}
+pourcentage <-  df_owid |> 
+    filter(country == c("China",
+                        "United States",
+                        "India",
+                        "Russia",
+                        "India"),
+           year >= 2000) |>
+        group_by(year) |> 
+    select(year,
+           co2,
+           country) |> 
+    mutate(sum = sum(co2, na.rm = TRUE))
+
+ggplot(pourcentage,
+       aes(x = year,
+           y = sum)) +
+    geom_line()
+```
+
 
 Pays riches qui produisent le plus de co2 ? apparently yes
 ```{r}
@@ -271,11 +293,24 @@ ggplot(data = rich,
               alpha = 0.5) +
     theme_bw()
 ```
-Industrie plus émettrices
+
 ```{r}
+life_exp_co2 <- df_gapminder |> 
+    filter (country == c("China",
+                        "United States",
+                        "India",
+                        "Russia")) |> 
+    select(life_exp,
+           country,
+           year)
 
+ggplot(data = life_exp_co2,
+       aes(x = year,
+           y = life_exp,
+            color = country)) +
+    geom_line() +
+    theme_bw() 
 ```
-
 
 ## Combinaison
 

@@ -13,3 +13,6 @@ skimr
 countrycode
 cronR
 gsheet
+readxl
+RCurl
+googlesheets4

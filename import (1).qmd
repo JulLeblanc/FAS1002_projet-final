@@ -1,22 +1,12 @@
 ---
-title: "Importation"
-title-block-banner: true
+title: "What are we dealing with?"
+author: "Cécile Amadoro"
+url: 
+title-block-banner: false
 description: | 
-  Cette page regroupe la première importation des données à l'état brute ainsi que les manipulation de bases.
-# à changer
-date: "2022-12-21"
-# Modifier les détails que vous voulez
-author:
-  - name: "Juliette Leblanc"
-    # Votre site web perso ou github
-    url: https://github.com/JulLeblanc
-    # les champs d'affiliation sont optionnels, vous pouvez les
-    # comment out en ajoutant un # devant.
-    affiliation: FAS1002
-    affiliation-url: https://FAS1002.github.io/A22
-    # changer pour votre propre orcid id
-    # https://orcid.org/ pour vous inscrire.
-    # orcid: 0000-0000-0000-0000
+  Cette partie présente rapidement les deux bases de données utilisées ainsi que la méthode d'importation.
+ 
+date: "2022-12-20"
 
 # TRUE == Générer une citation pour cette page précise. Pour enlever, mettre false.
 citation: true
@@ -44,11 +34,11 @@ library(gsheet)
 Le présent projet travaille avec deux bases de données : La première est issue de Our World in Data, un site qui publie gratuitement des bases de données et de la recherche sur les enjeux contemporains que le monde traverse (économie, écologie, climat, énergie, conflits etc).\
 La deuxième base de donnée est issue de Gapminder, une OBNL suèdoise, qui propose en libre accès d'importantes bases de données aussi sur les enjeux actuels, dans le but de prévenir et lutter contre la mésinformation.
 
-## [**I. Importation quotidienne des données CO2 (Our World in Data)**]{.underline}
+### [**I. Importation quotidienne des données CO2 (Our World in Data)**]{.underline}
 
 La base de donnée "*CO2 & Greenhouse Gas Emissions*" est utilisée. Elle permet de faire différentes explorations statistiques sur les émissions de CO2 dans 207 pays depuis le 19ème siècle.
 
-```{r download co2, cache=TRUE, warning=FALSE, error=FALSE, show_col_types=FALSE}
+```{r importation des données owid}
 
 #Données CO2 d'OWID
 
@@ -75,13 +65,16 @@ if (!file.exists(fpathowid)) {
                 "existe déjà, il ne sera pas téléchargé à nouveau.")
 ) }
 
+
 ```
 
-II. Importation mensuelle des données Gapminder
+### [**II. Importation mensuelle des données Gapminder**]{.underline}
 
-La base de données "Life Expectancy at Birth" est utilisée. Elle permet aussi de faire des analyses statistiques sur la question de l'espérance de vie depuis le 19ème siècle. L'espérance de vie est aujourd'hui un des meilleurs indicateurs de développement d'un pays ainsi qu'une solide mesure de projection économique et démographique.Cette base de données contient au total 1505 observations
+La base de données "*Life Expectancy at Birth*" est utilisée. Elle permet aussi de faire des analyses statistiques sur la question de l'espérance de vie depuis le 19ème siècle. L'espérance de vie est aujourd'hui un des meilleurs indicateurs de développement d'un pays ainsi qu'une solide mesure de projection économique et démographique.\
+Cette base de données contient au total 1505 observations
 
-```{r download lifeexpectancy, cache=TRUE, warning=FALSE, error=FALSE}
+```{r importation des données gapminder}
+
 #Données gapminder
 library(gsheet)
 
@@ -100,6 +93,9 @@ write_csv(x = urlgapminder, file = fpathgm)
 
 datgm = read_csv(fpathgm)
 
+
+
+
 #Automatisation du script, fréquence de téléchargement mensuelle
 
 if (!file.exists(fpathgm)) {
@@ -114,18 +110,25 @@ if (!file.exists(fpathgm)) {
                 fpathowid,
                 "existe déjà, il ne sera pas téléchargé à nouveau.")
 ) }
+
+
+
+
+
+
 ```
 
-III. Manipulation des données
+### [**III. Manipulation des données**]{.underline}
 
-A. Données CO2
+#### *A. Données CO2*
 
-La base de données CO2 contient 46.523 observations regroupé en 74 variables. Cette base de données propose de mieux comprendre les sources d'énergies dans 207 pays.Pour obtenir une meilleure lecture et analyse des données, il est apparu plus simple de traiter la base de données CO2 avec quelques variables et non dans sa totalité. Au total, 18 sur 74 variables ont été selctionnées.
+La base de données CO2 contient 46.523 observations regroupé en 74 variables. Cette base de données propose de mieux comprendre les sources d'énergies dans 207 pays.\
+Pour obtenir une meilleure lecture et analyse des données, il est apparu plus simple de traiter la base de données CO2 avec quelques variables et non dans sa totalité. Au total, 18 sur 74 variables ont été selctionnées.
 
 Pour mieux comprendre les variables, le tableau suivant propose le codebook suivant, adapté du [codebook original](https://github.com/owid/co2-data/blob/master/owid-co2-codebook.csv) .
 
 | Variable              | Description + Type                                                                                                                                                                                                                                        |
-|----------------|--------------------------------------------------------|
+|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Country               | pays (character)                                                                                                                                                                                                                                          |
 | Year                  | année de l'observation (numérique)                                                                                                                                                                                                                        |
 | Iso_code              | code du pays selon la codification internationale 3166-1 (character)                                                                                                                                                                                      |
@@ -143,30 +146,26 @@ Pour mieux comprendre les variables, le tableau suivant propose le codebook suiv
 | ghg_per_capita        | Total des émissions de gas à effet de serres par personne, mesuré en tonne de de millions, incluant l'UTCATF (numérique)                                                                                                                                  |
 | trade_co2             | Total annuel des émissions de C02, issu du commerce, mesuré en million de tonne. (Ici une valeur positive veut dire qu'un pays est un importeur net d'émission de CO2 ; une valeur négative veut dire qu'un pays est un exporteur net d'émission de CO2). |
 
-```{r lecture et assemblage des données, warning=FALSE, message=FALSE, error=FALSE}
-#Transformation des données en tibble
+```{r lecture et assemblage des données}
 
+#Transformation des données en tibble
 as.tibble(dat_owid)
 
+
 #Filtrage du tibble
-
 dat_CO2 = dat_owid %>% 
-
     select(country, year, iso_code, population, gdp, co2, cement_co2_per_capita, 
-
            co2_per_gdp, coal_co2, coal_co2_per_capita, gas_co2, gas_co2_per_capita,
-
            methane, methane_per_capita, oil_co2, oil_co2_per_capita, ghg_per_capita, trade_co2)
+
 
 ```
 
-# Variables d'intérêts
+#### *B. Création de la variable "continent"*
 
-## Continent
+```{r variable continent, warning=FALSE}
 
-Dans les deux banques de données que nous utilisons, j'ai créé une variable qui regroupe les différents pays en sous-groupe des 5 continents soit : l'Afrique, l'Amérique, l'Asie, l'Europe et l'Océanie. Ceci me permettra de faire des comparaisons plus large en me référant au continent et non au pays.
-
-```{r variable for continents, warning=FALSE, error=FALSE}
+library(countrycode)
 
 dat_CO2 <-  dat_CO2 %>% 
     mutate(continent = countrycode(sourcevar = dat_owid$country,
@@ -178,49 +177,23 @@ datgm <-  datgm %>%
                                    destination = "continent"))
 ```
 
-# Recoder certaines variables
+#### *C. Nettoyage des données et ajout dans processed.*
 
-Dans les banques de données que nous utilisons, des variables qui regroupent le même type d'information n'ont pas nécessairement le même nom.
+Pour une meilleure lecture des données, il est important de les nettoyer. Suite à cette étape, pour effectuer un bon suivi, il est aussi important des les incorporer dans le fichier processed qui se trouve dans le fichier data.
 
-Notamment, dans la banque de données r par uniformiser ceci, notamment en renommant les colonnes des pays pour `country`et pour l'année `year`.
+```{r nettoyage & data/processed}
 
-```{r recode variables, warning=FALSE, error=FALSE}
+#Nettoyage des données CO2-OWID (dat_CO2)
+
 datgm <- datgm |> 
     rename(country = name,
            year = time,
            life_exp = `Life expectancy`)
+
+
+
+#Ajout dans de dat_CO2 data/processed 
+write_csv(dat_CO2, file = "data/processed/dat_CO2.csv")
 ```
 
-## Temps
-
-Il est également intéressant de voir le temps écoulé entre la production de se rapport et la première année que des données ont été récoltées pour chacun des pays qui se trouvent dans le jeu de données de *Life Expectancy at Birth*.
-
-Cette variable prendra le nom de `time` dans la banque de données.
-
-```{r}
-# df_gapminder <- df_gapminder |>
-#     mutate(time_since = as.Date(year, format = "%Y"))
-
-    
-    
-    
- # mutate(jour_mois = "-01-01") %>% #ajouter une colonne avec -MM-DD
- #     unite(time, jour_mois, col = time, sep = "") %>% #combiner les deux colonnes
- #     mutate(year_as_date = as.Date(time, format = "%Y-%m-%d")) #transformer en format de date
- #     
- # as.numeric(difftime(as.POSIXct(today()), 
- #                     as.POSIXct(as.Date(min(LifeExDate$year_as_date), format = "%Y-%m-%d"))))
-
-```
-
-## Exporter
-
-Maintenant qu'une première manipulation des données a été fait, nous pouvons exporter celles-ci comme étant des données traitées dans le dossier `data/processed`.
-
-Les prochaines analyses auront comme point de départ les données traitées, donc qui ont été exportées dans le chemin relatif ci-dessus.
-
-```{r exporting data to processed, warning=FALSE, error=FALSE}
-write_csv(dat_CO2,file = "data/processed/dat_CO2.csv")
-
-write_csv(datgm, file = "data/processed/datgm.csv")
-```
+> Les données proviennent entre autres de @owidenergy.
