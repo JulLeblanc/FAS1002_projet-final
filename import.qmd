@@ -52,17 +52,24 @@ dat_owid = read_csv(fpathowid)
 
 
 
-#Automatisation du script avec cronR, fréquence de téléchargement quotidienne
+#Automatisation du script
 
-cronR::cron_add(download.file(urlowid, destfile = fpathowid), frequency = "daily", at = "9AM")
+if (!file.exists(fpathowid)) {
+    file.remove(junk)
+    download.file(url = urlowid,
+                  destfile = fpathowid)
+    paste("Le fichier",
+          fpathowid,
+          "n'existait pas, il a donc été téléchargé à l'instant.")
+  } else {
+    print(paste("Le fichier",
+                fpathowid,
+                "existe déjà, il ne sera pas téléchargé à nouveau.")
+) }
 
-#Confirmation de l'automatisation dans la console. 
-#Are you sure you want to add the specified cron job: '0'? [y/n]: 1: y 
-#Adding cronjob:
-## cronR job
-## id:   d2f75e2df797c02be775f141f081109f
-## tags: 
-## desc: 
+
+
+
 
 
 
@@ -99,18 +106,22 @@ datgm = read_csv(fpathgm)
 
 
 
-#Automatisation du script avec cronR, fréquence de téléchargement mensuelle
+#Automatisation du script, fréquence de téléchargement mensuelle
 
-#cronR::cron_add(gsheet2tbl("https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=176703676") %>%
-                    #path("data", "raw") %>%
-                    #paste(today(), "gapm.csv", sep = "_") %>%
-                    #path(basepathgm, fnamegm) %>% 
-                    #write_csv(x = urlgapminder, file = fpathgm),
-        #frequency = "monthly",
-        #at = "9AM")
+if (!file.exists(fpathgm)) {
+    file.remove(junk)
+    download.file(url = url,
+                  destfile = fpathowid)
+    paste("Le fichier",
+          fpathowid,
+          "n'existait pas, il a donc été téléchargé à l'instant.")
+  } else {
+    print(paste("Le fichier",
+                fpathowid,
+                "existe déjà, il ne sera pas téléchargé à nouveau.")
+) }
 
 
-#Corriger bug : Error in path_tidy(.Call(fs_path_, lapply(args, function(x) enc2utf8(as.character(x))),  :  Total path length must be less than PATH_MAX: 1024
 
 
 
@@ -119,13 +130,15 @@ datgm = read_csv(fpathgm)
 
 ### [**III. Manipulation des données**]{.underline}
 
+#### *A. Données CO2*
+
 La base de données CO2 contient 46.523 observations regroupé en 74 variables. Cette base de données propose de mieux comprendre les sources d'énergies dans 207 pays.\
 Pour obtenir une meilleure lecture et analyse des données, il est apparu plus simple de traiter la base de données CO2 avec quelques variables et non dans sa totalité. Au total, 18 sur 74 variables ont été selctionnées.
 
 Pour mieux comprendre les variables, le tableau suivant propose le codebook suivant, adapté du [codebook original](https://github.com/owid/co2-data/blob/master/owid-co2-codebook.csv) .
 
 | Variable              | Description + Type                                                                                                                                                                                                                                        |
-|----------------|--------------------------------------------------------|
+|-------------|-----------------------------------------------------------|
 | Country               | pays (character)                                                                                                                                                                                                                                          |
 | Year                  | année de l'observation (numérique)                                                                                                                                                                                                                        |
 | Iso_code              | code du pays selon la codification internationale 3166-1 (character)                                                                                                                                                                                      |
@@ -150,20 +163,54 @@ as.tibble(dat_owid)
 
 
 #Filtrage du tibble
-
 dat_CO2 = dat_owid %>% 
     select(country, year, iso_code, population, gdp, co2, cement_co2_per_capita, 
            co2_per_gdp, coal_co2, coal_co2_per_capita, gas_co2, gas_co2_per_capita,
            methane, methane_per_capita, oil_co2, oil_co2_per_capita, ghg_per_capita, trade_co2)
 
 
-#Ajout dans de dat_CO2 data/processed 
-
-write_csv(dat_CO2, file = "data/processed/dat_CO2.csv")
-
 
 ```
 
-N'oubliez pas d'inclure vos références sur chacune des pages!
+#### *B. Création de la variable "continent"*
+
+```{r variable continent, warning=FALSE}
+
+library(countrycode)
+
+dat_CO2 = dat_CO2 %>% 
+    mutate(continent = countrycode(sourcevar = dat_owid$country,
+                                   origin = "country.name",
+                                   destination = "continent"))
+datgm = datgm %>%
+    mutate(continent = countrycode(sourcevar = datgm$name,
+                                   origin = "country.name",
+                                   destination = "continent"))
+```
+
+#### *C. Nettoyage des données et ajout dans processed.*
+
+Pour une meilleure lecture des données, il est important de les nettoyer. Suite à cette étape, pour effectuer un bon suivi, il est aussi important des les incorporer dans le fichier processed qui se trouve dans le fichier data.
+
+```{r nettoyage & data/processed}
+
+#Nettoyage des données CO2-OWID (dat_CO2)
+
+dat_owid = dat_owid %>% 
+    mutate(country = s)
+
+
+datultimate = inner_join(dat_owid, datgm, by = "country")
+
+
+
+
+
+
+
+
+#Ajout dans de dat_CO2 data/processed 
+write_csv(dat_CO2, file = "data/processed/dat_CO2.csv")
+```
 
 > Les données proviennent entre autres de @owidenergy.
