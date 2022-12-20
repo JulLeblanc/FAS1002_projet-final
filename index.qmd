@@ -1,12 +1,24 @@
 ---
 title: "Projet final du cours FAS1002"
 ---
+## Présentation
 
-Vous pouvez faire le résumé de votre projet directement sur cette page et utiliser le document [intro](intro.qmd) pour décrire votre projet.
+Dans le cadre de ce travail final [^1], nous avons exploré deux banques de données, provenant de deux sources distinctes, _Our World in Data_ et _GapMinder_.
 
-Chaque page est en fait un fichier Quarto standard. [^1]
+[^1]:Le travail a été réalisé en collaboration entre Cécile Amadoro et Juliette Leblanc
 
-[^1]: Avec des petits trucs sympa comme des notes de bas de page. Ces documents sont les mêmes que nous avons utilisés tout au long de la session.
+Provenance des données:
+
+> La première banque de données provient de @owidenergy et se trouvent [ici](https://ourworldindata.org/co2-emissions)
+
+> La seconde provient de @gmlifeexpectancy et se trouvent [ici](https://www.gapminder.org/)
+
+Les autres pages du site web sont consacrées première à [l'analyse](intro.qmd), [l'importation](import.qmd) et la [manipualtion des données](exploration.qmd) pour créer les stastistiques descriptives ainsi que les analyses qui seront présentées dans la section [analyse](intro.qmd).
+
+Si vous souhaitez reproduire les analyses, tout le matériel à cet effet est disponible. Nous vous recommandons de commencer par l'importation des données et ensuite l'exploration pour en arrivé finalement à l'analyse. 
+
+NB : Le code utilisé se trouve dans les bribes, il ne suffit que de les ouvrir pour voir la démarche. Le code a été produit en `R`.
+
 
 ## Vous pourrez inclure des graphiques
 
@@ -24,10 +36,8 @@ pie(
 
 <aside>Quand même très cool, non? Vous pouvez mettre des annotations sur le côté!</aside>
 
-### Toujours très important de mettre les bons niveaux de titres
 
-Un peu de texte de remplissage pour faire comme si la page était plus longue. *Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.*
 
 ## Remerciements {.appendix}
 
-J'aimerais remercier toute la cohorte du cours FAS1002 de l'automne 2022 pour leur ouverture et efforts tout au long de la session!
+Nous aimerions remercier notre enseignant Samuel Guay pour sa patience incroyable, son aide et ses astuces de programmation tout au long de la session ! 
