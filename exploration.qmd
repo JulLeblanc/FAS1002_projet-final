@@ -37,6 +37,7 @@ library(countrycode)
 library(cronR)
 library(modelsummary)
 library(patchwork)
+library(wesanderson)
 
 df_owid <- read_csv("data/processed/dat_CO2.csv", show_col_types = FALSE)
 
@@ -45,9 +46,9 @@ df_gapminder <- read_csv("data/processed/datgm.csv", show_col_types = FALSE)
 dat_join <- read_csv("data/processed/datultimate.csv", show_col_types = FALSE)
 ```
 
-## Statistiques descriptives
+# Statistiques descriptives
 
-### *Life Expectancy at Birth*
+## *Life Expectancy at Birth*
 
 La première est celle du *Life Expectancy* qui comprend au total 5 variables et plus de 56616 observations. Cette banque de données et mis à jour régulièrement et continent des observations pour :
 
@@ -63,57 +64,8 @@ Voici notamment un récapitulatif des données.
 skim(df_gapminder)
 ```
 
-Il est possible aussi d'observer l'évolution de l'espérance de vie moyenne en fonction des continents. Les grandes cassures dans le temps peuvent être attribuables à différentes périodes historiques.
 
-Notamment, la grand cassure avant les années 1920 peuvent être à la fois attribuables à la Première Guerre mondiale, mais également à l'épidémie de la Grippe espagnole. La même tendance est observable dans les années 1940 pour la Seconde Guerre mondiale et plus récemment, la légère fracture pour la pandémie de la COVID-19.
-
-```{r graph for life expectancy, warning=FALSE, error=FALSE, message=FALSE}
-graph <- df_gapminder |> 
-    group_by(continent,
-             year) |> 
-    mutate(mean_continent = mean(life_exp, na.rm = TRUE)) |> 
-    ungroup() |> 
-    group_by(year) |> 
-    mutate(mean_world = mean(life_exp, na.rm = TRUE))
-    
-
-p1 <- ggplot() +
-    geom_line(data = graph,
-             aes(x = year,
-                 y = mean_continent,
-                 color = continent)) +
-    scale_x_continuous(n.breaks = 12) +
-    scale_color_discrete(name = "Continents",
-                         labels = c("Afrique",
-                                    "Amériques",
-                                    "Asie",
-                                    "Europe",
-                                    "Océanie")) +
-    theme_bw() + 
-    labs(title = "Évolution de l'espérance de vie",
-         source = "https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions",
-         x = " ",
-         y = " ") 
-p1 
-
-
-
-p2 <-  ggplot(data = graph,
-              aes(x = year,
-                      y = mean_world)) +
-    geom_line() +
-    scale_x_continuous(n.breaks = 12) +
-    theme_bw() + 
-    labs(title = "Évolution de l'espérance de vie mondiale",
-         source = "https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions",
-         x = " ",
-         y = " ")
-
-p2
-
-```
-
-### *Our World in Data, Co2*
+## *Our World in Data, Co2*
 
 La banque de données est [*\@owid*](https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv), qui a comme but principal de décrire comment les émissions de Co2 et de gaz à effets de serres évoluent dans le temps.
 
@@ -146,10 +98,102 @@ Pour mieux comprendre les variables, le tableau suivant propose le codebook suiv
 | ghg_per_capita        | Total des émissions de gas à effet de serres par personne, mesuré en tonne de de millions, incluant l'UTCATF (numérique)                                                                                                                                  |
 | trade_co2             | Total annuel des émissions de C02, issu du commerce, mesuré en million de tonne. (Ici une valeur positive veut dire qu'un pays est un importeur net d'émission de CO2 ; une valeur négative veut dire qu'un pays est un exporteur net d'émission de CO2). |
 
+Voici notamment un récapitulatif des données :
+
 ```{r}
 skim(df_owid)
 
 ```
+
+## Combinaison des banques de données
+
+On peut également entreprendre des analyses via la combinaison des deux banques de données puisqu'elles ont comme variables communes les années, les continents ainsi que la majorité des pays observés.
+
+Voici un récapitulatif des données :
+
+```{r inner join, warning=FALSE, error=FALSE, message=FALSE}
+skim(dat_join)
+```
+
+# Tableaux
+
+## _Life Expectancy_
+
+## Moyenne d'espérance de vie
+
+Manipulation pour calculer la moyenne mondiale et par continent.
+```{r life expectancy average, warning=FALSE, error=FALSE, message=FALSE }
+graph <- df_gapminder |> 
+    group_by(continent,
+             year) |> 
+    mutate(mean_continent = mean(life_exp, na.rm = TRUE)) |> 
+    ungroup() |> 
+    group_by(year) |> 
+    mutate(mean_world = mean(life_exp, na.rm = TRUE))
+```
+
+
+Manipulation pour le graphique mondial
+```{r life exp world, warning=FALSE, message=FALSE, error=FALSE}
+graph_life_world <-  
+    ggplot(data = graph,
+           aes(x = year,
+               y = mean_world)) +
+    geom_line() +
+    scale_x_continuous(limits = c(1800, 2100),
+                       breaks = seq(1800, 2100, by = 25)) +
+    scale_y_continuous(limits = c(10, 90),
+                       breaks = seq(0, 90, by =10)) +
+    theme_minimal() + 
+    labs(title = "Évolution de l'espérance de vie mondiale",
+         caption = "https://www.gapminder.org/data/",
+         x = " ",
+         y = "Espérance de vie moyenne")
+
+graph_life_world
+
+```
+
+Manipulation pour le graphique de l'espérance de vie moyenne par continent
+```{r life exp by continent, warning=FALSE, message=FALSE, error=FALSE}
+graph_life_continent <- ggplot() +
+    geom_line(data = graph,
+             aes(x = year,
+                 y = mean_continent,
+                 color = continent)) +
+    scale_x_continuous(limits = c(1800, 2100),
+                       breaks = seq(1800, 2100, by = 25)) +
+    scale_y_continuous(limits = c(10, 90),
+                       breaks = seq(0, 90, by =10)) +
+    scale_color_manual(values= wes_palette("Royal2", n = 5),
+                       name = "Continents",
+                         labels = c("Afrique",
+                                    "Amériques",
+                                    "Asie",
+                                    "Europe",
+                                    "Océanie")) +
+    theme_minimal() +
+    labs(title = "Évolution de l'espérance de vie",
+         subtitle = "Par continents",
+         caption = "https://www.gapminder.org/data/",
+         x = " ",
+         y = "Espérance de vie moyenne") 
+
+graph_life_continent
+
+```
+
+
+
+
+
+Il est possible aussi d'observer l'évolution de l'espérance de vie moyenne en fonction des continents. Les grandes cassures dans le temps peuvent être attribuables à différentes périodes historiques.
+
+Notamment, la grand cassure avant les années 1920 peuvent être à la fois attribuables à la Première Guerre mondiale, mais également à l'épidémie de la Grippe espagnole. La même tendance est observable dans les années 1940 pour la Seconde Guerre mondiale et plus récemment, la légère fracture pour la pandémie de la COVID-19.
+
+
+
+#
 
 ```{r co2 evolution world, warning=FALSE, error=FALSE, message=FALSE}
 graph_owid_world <- df_owid |> 
@@ -162,10 +206,13 @@ ggplot(data = graph_owid_world,
        aes(x = year,
            y = co2)) +
     geom_line() +
-    scale_x_continuous(n.breaks = 12) +
-    scale_y_continuous(n.breaks = 5) +
+    scale_x_continuous(limits = c(1750, 2025),
+                       breaks = seq(1750, 2025, by = 25)) +
+    scale_y_continuous(limits = c(0, 40000),
+                       breaks = seq(0, 40000, by = 5000)) +
     geom_point(size = 0.3) +
-    labs(title = "Co2 total mondial") +
+    labs(title = "Co2 total mondial",
+         caption = "GapMinder") +
     theme_bw()
 
 
@@ -174,39 +221,26 @@ ggplot(data = graph_owid_world,
 Données respectives pour les pays et non les continents -- faire moyenne
 
 ```{r graph for co2 emission, warning=FALSE, error=FALSE, message=FALSE}
-graph_owid <- df_owid |> 
-    filter(is.na (continent) == FALSE,
-           is.na (co2) == FALSE) |> 
+graph_owid <- df_owid |>
+    filter(continent == c("Africa",
+                          "Asia",
+                          "Americas",
+                          "Europe",
+                          "Oceania")) |> 
     group_by(continent,
              year) |> 
     select(co2) |> 
-    summarise()
+    summarise(mean = mean(co2, na.rm = T))
 
 p3 <- ggplot(data = graph_owid,
              aes(x = year,
-                 y = co2,
-                 color = continent)) +
-    geom_line(stat = "identity",
-              alpha = 0.4) +
-    # scale_color_discrete(name = "Continents",
-    #                      labels = c("Afrique",
-    #                                 "Amériques",
-    #                                 "Asie",
-    #                                 "Europe",
-    #                                 "Océanie")) +
+                 y = mean,
+                 fill = continent)) +
+    geom_area() +
     theme_bw()
 p3
 ```
 
-
-```{r}
-ggplot(data = graph_owid,
-       aes(x = year,
-           y = co2,
-           colour = continent)) +
-    geom_point(size = 0.3) +
-    theme_bw()
-```
 
 Plus de CO2 en 2021
 
@@ -314,30 +348,24 @@ ggplot(data = life_exp_co2,
     theme_bw() 
 ```
 
-## Combinaison
 
-On peut également entreprendre des analyses via la combinaison des deux banques de données puisqu'elles ont comme variables communes les années, les continents ainsi que la majorité des pays observés.
 
-```{r inner join, warning=FALSE, error=FALSE, message=FALSE}
-skim(dat_join)
 
-```
+
+
 
 ```{r}
-rich_life <- dat_join|>
-    filter(year == c(1900:2021),
-           continent == c("Africa",
-                          "Asia",
-                          "Americas",
-                          "Europe",
-                          "Oceania")) |> 
-    group_by(year) |> 
-    select(year,
-           life_exp,
-           continent,
-           co2) |> 
-    summarise(mean_co2 = mean(co2, na.rm = T),
-              mean_life_exp = mean(life_exp, na.rm = T))
+# rich_life <- dat_join|>
+#     filter(year == c(1900:2021) |> 
+#     group_by(year) |> 
+#     select(year,
+#            life_exp,
+#            continent,
+#            co2) |> 
+#     summarise(mean_co2 = mean(co2, na.rm = T),
+#               mean_life_exp = mean(life_exp, na.rm = T))
+
+
 ```
 
 ```{r}

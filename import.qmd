@@ -7,7 +7,7 @@ description: |
 date: "2022-12-21"
 # Modifier les détails que vous voulez
 author:
-  - name: "Juliette Leblanc"
+  - name: " Cécile Amadoro et Juliette Leblanc"
     # Votre site web perso ou github
     url: https://github.com/JulLeblanc
     # les champs d'affiliation sont optionnels, vous pouvez les
@@ -51,7 +51,7 @@ La deuxième base de donnée est issue de Gapminder, une OBNL suèdoise, qui pro
 
 La base de donnée *CO2 & Greenhouse Gas Emissions* est utilisée. Elle permet de faire différentes explorations statistiques sur les émissions de CO2 dans 207 pays depuis le 19ème siècle.
 
-Ajouter lien web
+On peut retrouver les données [ici](https://ourworldindata.org/co2-emissions) ainsi que le projet associé à celles-ci.
 
 ```{r download co2, cache=TRUE, warning=FALSE, error=FALSE, show_col_types=FALSE}
 
@@ -63,15 +63,14 @@ fnameowid = paste(today(), "owid-co2-data.csv", sep = "_")
 fpathowid = path(basepath, fnameowid) 
 dataowid = download.file(url = urlowid, destfile = fpathowid)
 
-dat_owid = read_csv(fpathowid)
+dat_owid = read_csv(fpathowid, show_col_types = FALSE)
 
 #Automatisation du script
 
 if (!file.exists(fpathowid)) {
     file.remove(junk)
     download.file(url = urlowid,
-                  destfile = fpathowid,
-                  show_col_types = FALSE)
+                  destfile = fpathowid)
     paste("Le fichier",
           fpathowid,
           "n'existait pas, il a donc été téléchargé à l'instant.")
@@ -85,7 +84,9 @@ if (!file.exists(fpathowid)) {
 
 ## Jeu de données *Gapminder*
 
-La base de données "Life Expectancy at Birth" est utilisée. Elle permet aussi de faire des analyses statistiques sur la question de l'espérance de vie depuis le 19ème siècle. L'espérance de vie est aujourd'hui un des meilleurs indicateurs de développement d'un pays ainsi qu'une solide mesure de projection économique et démographique.Cette base de données contient au total 1505 observations
+La base de données _Life Expectancy at Birth_ est utilisée. Elle permet aussi de faire des analyses statistiques sur la question de l'espérance de vie depuis le 19ème siècle. L'espérance de vie est aujourd'hui un des meilleurs indicateurs de développement d'un pays ainsi qu'une solide mesure de projection économique et démographique. Cette base de données contient au total 1505 observations
+
+On peut retrouver les données [ici](https://www.gapminder.org/data/) ainsi que le projet associé à celles-ci.
 
 ```{r download lifeexpectancy, cache=TRUE, warning=FALSE, error=FALSE}
 #Données gapminder
@@ -104,7 +105,7 @@ fpathgm = path(basepathgm, fnamegm)
 
 write_csv(x = urlgapminder, file = fpathgm)
 
-datgm = read_csv(fpathgm)
+datgm = read_csv(fpathgm, show_col_types = FALSE)
 
 #Automatisation du script, fréquence de téléchargement mensuelle
 
