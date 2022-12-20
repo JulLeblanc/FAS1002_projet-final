@@ -25,13 +25,19 @@ citation: true
 bibliography: references.bib
 ---
 
+MANQUE RÉFÉRENCES À INCLURE
+
 # Introduction
 
-# *Life Expectancy*
+Le document ci-dessous présente une analyse visuelle et descriptives des banques de données utilisées. En premier lieu, une analyse des banques de données de manière séparées pour terminer avec une courte analyse des banques de données mise ensemble.
 
-Pour commencer, nous pouvons observer l'évolution de l'espérance de vie mondial.
+À noter que la répartition des pays en continent peut présenter un biais. Notamment puisqu'entre l'Amérique du Nord, central et du Sud, il peut y avoir des disparités au niveau du développement, émissions de co2, etc. La même logique s'applique pour l'Asie ainsi que pour l'Océanie qui ne compte que l'Australie et la Nouvelle-Zélande.
 
-La banque de données qui a commencé à cummuler des données en 1800.
+## *Life Expectancy*
+
+Pour commencer, nous pouvons observer l'évolution de l'espérance de vie mondiale.
+
+La banque de données qui a commencé à cummuler des données en 1800 et fait des prédictions basées sur la tendance actuelle jusqu'à 2100.
 
 ![](figures/graph_life_world.png)
 
@@ -41,19 +47,38 @@ Il est aussi possible d'observer certaines périodes historiques dans l'espéran
 
 Une deuxième cassure peut être observé encore une fois suite à un événement d'envergure mondiale, soit la Seconde Guerre soit dans les années 1940. Plus récemment, on observe également la cassure de la pandémie de la COVID-19 qui est marqué dans le début des années 2020.
 
-On peut également observé la tendance par continent. Est-ce que la population de certains continents vit plus longtemps que les autres et est-ce que cette tendance a changé dans le temps? 
+On peut également observé la tendance par continent. Est-ce que la population de certains continents vit plus longtemps que les autres et est-ce que cette tendance a changé dans le temps?
 
 On remarque qu'ici, la tendance d'augmentation générale de l'espérance de vie moyenne est aussi valable pour tous les continents. Par contre, certains se démarquent davantage que les autres.
 
 ![](figures/graph_life_continent.png)
 
+Notamment l'Europe qui semble avoir la meilleure espérance de vie et ce, même dans les prédictions. L'Afrique se retrouve au dernier rang, mais a connu une espérance de vie plus grande que les autres continents lors de la première cassure, soit la période de 1914 à 1920.
+
+## *Our World in Data*
+
+Par la suite, nous pouvons regarder la banque de données produites par *Our Wold in Data*, notamment celle qui capture des données sur les émissions de Co2.
+
+Celle-ci enmagasine des données de 1750 à aujourd'hui et est mise à jour régulièrement.
+
+Similairement à la démarche émise pour les données du *Life Expectancy* nous commençons par démontrer l'évolution des émissions de Co2 à un niveau planétaire.
+
+![](figures/graph_co2_world.png)
+
+L'échelle située à la droite du graphique estime l'émission de Co2 en milliard de tonnes. Similairement à la tendance observée pour l'espérance de vie moyenne, l'émission de Co2 était relativement stable de 1750 jusqu'au début du 20e siècle. Elle a quadruplée en 55 ans, passant d'environ 2,5 millards de tonne en 1900 à plus de 10 milliards de tonne dans les années 1960.
+
+L'augmentation de l'émission de Co2 mondiale a ensuite été rapide en peu de temps, comptabilisant aujourd'hui plus de 37 milliards de tonne de Co2 mondialement par année.
+
+Ton comme par l'espérance de vie, certains continents vont se démarquer des autres.
+
+![](figures/graph_co2_continent.png)
+
+On remarque ici que l'Asie a notamment connu un essort important et rapide, dépassant l'Europe et les Amériques alors qu'ils étaient ceux enregistrant les plus fortes émissions auparavant. L'Asie regroupe également 2 des 5 plus grands pollueurs du monde en 2021 soit la Chine et l'Inde.
 
 
+## Données combinées
 
 
-::: callout-important
-N'oubliez pas d'inclure vos références sur chacune des pages!
-:::
 
 Par exemple:
 
