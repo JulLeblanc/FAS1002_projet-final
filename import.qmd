@@ -53,7 +53,6 @@ La base de donnée *CO2 & Greenhouse Gas Emissions* est utilisée. Elle permet d
 
 On peut retrouver les données [ici](https://ourworldindata.org/co2-emissions) ainsi que le projet associé à celles-ci.
 
-
 ```{r download co2, cache=TRUE, warning=FALSE, error=FALSE, show_col_types=FALSE}
 
 #Données CO2 d'OWID
@@ -86,7 +85,7 @@ dailydowload <- function(fnameowid) { if (!file.exists(fpathowid)) {
 
 ## Jeu de données *Gapminder*
 
-La base de données _Life Expectancy at Birth_ est utilisée. Elle permet aussi de faire des analyses statistiques sur la question de l'espérance de vie depuis le 19ème siècle. L'espérance de vie est aujourd'hui un des meilleurs indicateurs de développement d'un pays ainsi qu'une solide mesure de projection économique et démographique. Cette base de données contient au total 1505 observations
+La base de données *Life Expectancy at Birth* est utilisée. Elle permet aussi de faire des analyses statistiques sur la question de l'espérance de vie depuis le 19ème siècle. L'espérance de vie est aujourd'hui un des meilleurs indicateurs de développement d'un pays ainsi qu'une solide mesure de projection économique et démographique. Cette base de données contient au total 1505 observations
 
 On peut retrouver les données [ici](https://www.gapminder.org/data/) ainsi que le projet associé à celles-ci.
 

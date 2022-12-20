@@ -25,7 +25,6 @@ citation: true
 bibliography: references.bib
 ---
 
-MANQUE RÉFÉRENCES À INCLURE
 
 # Introduction
 

@@ -7,6 +7,8 @@ Dans le cadre de ce travail final [^1], nous avons exploré deux banques de donn
 
 [^1]:Le travail a été réalisé en collaboration entre Cécile Amadoro et Juliette Leblanc
 
+Un bon travail de KISS (_keeping it short and simple_)
+
 Provenance des données:
 
 > La première banque de données provient de @owidenergy et se trouvent [ici](https://ourworldindata.org/co2-emissions)
