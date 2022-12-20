@@ -199,10 +199,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#life-expectancy-at-birth" id="toc-life-expectancy-at-birth" class="nav-link" data-scroll-target="#life-expectancy-at-birth"><em>Life Expectancy at Birth</em></a></li>
   <li><a href="#our-world-in-data-co2" id="toc-our-world-in-data-co2" class="nav-link" data-scroll-target="#our-world-in-data-co2"><em>Our World in Data, Co2</em></a></li>
+  <li><a href="#combinaison-des-banques-de-données" id="toc-combinaison-des-banques-de-données" class="nav-link" data-scroll-target="#combinaison-des-banques-de-données">Combinaison des banques de données</a></li>
   </ul></li>
-  <li><a href="#combinaison" id="toc-combinaison" class="nav-link" data-scroll-target="#combinaison">Combinaison</a></li>
+  <li><a href="#tableaux" id="toc-tableaux" class="nav-link" data-scroll-target="#tableaux">Tableaux</a>
+  <ul class="collapse">
+  <li><a href="#life-expectancy" id="toc-life-expectancy" class="nav-link" data-scroll-target="#life-expectancy"><em>Life Expectancy</em></a></li>
+  <li><a href="#moyenne-despérance-de-vie" id="toc-moyenne-despérance-de-vie" class="nav-link" data-scroll-target="#moyenne-despérance-de-vie">Moyenne d’espérance de vie</a></li>
+  </ul></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/VOTREUSERNAME/VOTRE-RÉPERTOIRE/edit/main/exploration.qmd" class="toc-action">Modifier cette page</a></p><p><a href="https://github.com/VOTREUSERNAME/VOTRE-RÉPERTOIRE/issues/new" class="toc-action">Faire part d'un problème</a></p><p><a href="https://github.com/VOTREUSERNAME/VOTRE-RÉPERTOIRE/blob/main/exploration.qmd" class="toc-action">Voir la source</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/JulLeblanc/FAS1002_projet-final/edit/main/exploration.qmd" class="toc-action">Modifier cette page</a></p><p><a href="https://github.com/JulLeblanc/FAS1002_projet-final/issues/new" class="toc-action">Faire part d'un problème</a></p><p><a href="https://github.com/JulLeblanc/FAS1002_projet-final/blob/main/exploration.qmd" class="toc-action">Voir la source</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -263,16 +269,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cronR)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>df_owid <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/processed/df_owid.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>df_gapminder <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/processed/df_gapminder.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wesanderson)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>df_owid <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/processed/dat_CO2.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>df_gapminder <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/processed/datgm.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>dat_join <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/processed/datultimate.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="statistiques-descriptives" class="level2">
-<h2 class="anchored" data-anchor-id="statistiques-descriptives">Statistiques descriptives</h2>
-<section id="life-expectancy-at-birth" class="level3">
-<h3 class="anchored" data-anchor-id="life-expectancy-at-birth"><em>Life Expectancy at Birth</em></h3>
+<section id="statistiques-descriptives" class="level1">
+<h1>Statistiques descriptives</h1>
+<section id="life-expectancy-at-birth" class="level2">
+<h2 class="anchored" data-anchor-id="life-expectancy-at-birth"><em>Life Expectancy at Birth</em></h2>
 <p>La première est celle du <em>Life Expectancy</em> qui comprend au total 5 variables et plus de 56616 observations. Cette banque de données et mis à jour régulièrement et continent des observations pour :</p>
 <ul>
 <li><p>Un total de 195 pays</p></li>
@@ -445,61 +454,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 </div>
-<p>Il est possible aussi d’observer l’évolution de l’espérance de vie moyenne en fonction des continents. Les grandes cassures dans le temps peuvent être attribuables à différentes périodes historiques.</p>
-<p>Notamment, la grand cassure avant les années 1920 peuvent être à la fois attribuables à la Première Guerre mondiale, mais également à l’épidémie de la Grippe espagnole. La même tendance est observable dans les années 1940 pour la Seconde Guerre mondiale et plus récemment, la légère fracture pour la pandémie de la COVID-19.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>graph <span class="ot">&lt;-</span> df_gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(continent,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>             year) <span class="sc">|&gt;</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mean_continent =</span> <span class="fu">mean</span>(life_exp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span> </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mean_world =</span> <span class="fu">mean</span>(life_exp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> graph,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mean_continent,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> continent)) <span class="sc">+</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">n.breaks =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"Continents"</span>,</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Afrique"</span>,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Amériques"</span>,</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Asie"</span>,</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Europe"</span>,</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Océanie"</span>)) <span class="sc">+</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Évolution de l'espérance de vie"</span>,</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">source =</span> <span class="st">"https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions"</span>,</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">" "</span>,</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">" "</span>) </span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(<span class="at">data =</span> graph,</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> mean_world)) <span class="sc">+</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">n.breaks =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Évolution de l'espérance de vie mondiale"</span>,</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>         <span class="at">source =</span> <span class="st">"https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions"</span>,</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">" "</span>,</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">" "</span>)</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>p2 <span class="sc">+</span> p1</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="exploration_files/figure-html/graph for life expectancy-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
 </section>
-<section id="our-world-in-data-co2" class="level3">
-<h3 class="anchored" data-anchor-id="our-world-in-data-co2"><em>Our World in Data, Co2</em></h3>
+<section id="our-world-in-data-co2" class="level2">
+<h2 class="anchored" data-anchor-id="our-world-in-data-co2"><em>Our World in Data, Co2</em></h2>
 <p>La banque de données est <a href="https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"><em>@owid</em></a>, qui a comme but principal de décrire comment les émissions de Co2 et de gaz à effets de serres évoluent dans le temps.</p>
 <p>La banque de données présentent plus de :</p>
 <ul>
@@ -507,31 +464,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Différentes mesures pour le Co2 comme l’émissions brutes, l’accumulation ou bien le rendement par énergie dépensé, etc.</p></li>
 <li><p>Les données enregistrées sont mise à jour de manière presqu’hebdomadaire et ont des observations débutants en 1750.</p></li>
 </ul>
-<p>Puisque la banque de données regroupent de nombreuses variables, une sélection des plus importantes pour les analyses qui suivront a été fait. Les variables qui ont été retenues sont celles du :</p>
-<ul>
-<li><p>Pays <code>country</code>,</p></li>
-<li><p>Années <code>year</code>,</p></li>
-<li><p>Continents <code>continent</code>,</p></li>
-<li><p>PIB <code>gdp</code>,</p></li>
-<li><p>Nombre d’habitants total <code>population</code>,</p></li>
-<li><p>Co2 <code>co2</code>,</p></li>
-</ul>
+<p>Pour mieux comprendre les variables, le tableau suivant propose le codebook suivant, adapté du <a href="https://github.com/owid/co2-data/blob/master/owid-co2-codebook.csv">codebook original</a> .</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description + Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Country</td>
+<td>pays (character)</td>
+</tr>
+<tr class="even">
+<td>Year</td>
+<td>année de l’observation (numérique)</td>
+</tr>
+<tr class="odd">
+<td>Iso_code</td>
+<td>code du pays selon la codification internationale 3166-1 (character)</td>
+</tr>
+<tr class="even">
+<td>Population</td>
+<td>Nombre total de la population selon le pays (numérique)</td>
+</tr>
+<tr class="odd">
+<td>GDP (PIB)</td>
+<td>Produit interieur brut mesuré en dollars (numérique)</td>
+</tr>
+<tr class="even">
+<td>CO2</td>
+<td>Mesure annuelle de la production totale de CO2 par pays, mesuré en en millions de tonnes et excluant l’<a href="https://fr.wikipedia.org/wiki/Utilisation_des_terres,_changement_d'affectation_des_terres_et_foresterie">UTCATF</a> (numérique)</td>
+</tr>
+<tr class="odd">
+<td>Cement_CO2_per_capita</td>
+<td>Mesure annuelle de la production totale de CO2 générée par le ciment, par personne, en millions de tonnes (numérique)</td>
+</tr>
+<tr class="even">
+<td>CO2_per_gdp</td>
+<td>Mesure annuelle de la production totale de CO2 selon le PIB, excluant l’UTCATF (numérique)</td>
+</tr>
+<tr class="odd">
+<td>coal_co2</td>
+<td>Mesure annuelle par pays de la production de CO2 générée par le charbon, en millions de tonnes (numérique)</td>
+</tr>
+<tr class="even">
+<td>coal_co2_per_capita</td>
+<td>Mesure annuelle de la production de CO2 générée par le charbon, mesurée en million de tonnes par personnes (numérique)</td>
+</tr>
+<tr class="odd">
+<td>methane</td>
+<td>Total annuel des émissions de méthane par pays, incluant l’UTCATF, mesuré en millions de tonnes (numérique)</td>
+</tr>
+<tr class="even">
+<td>methane_per_capita</td>
+<td>Total annuel des émissions de méthane par habitant, incluant l’UTCATF, mesuré en millions de tonnes (numérique)</td>
+</tr>
+<tr class="odd">
+<td>oil_co2</td>
+<td>Mesure annuelle par pays de la production de CO2 générée par le pétrole, en millions de tonnes (numérique)</td>
+</tr>
+<tr class="even">
+<td>oil_co2_per_capita</td>
+<td>Mesure annuelle de la production de CO2 générée par le pétrole, mesurée en million de tonnes par personnes (numérique)</td>
+</tr>
+<tr class="odd">
+<td>ghg_per_capita</td>
+<td>Total des émissions de gas à effet de serres par personne, mesuré en tonne de de millions, incluant l’UTCATF (numérique)</td>
+</tr>
+<tr class="even">
+<td>trade_co2</td>
+<td>Total annuel des émissions de C02, issu du commerce, mesuré en million de tonne. (Ici une valeur positive veut dire qu’un pays est un importeur net d’émission de CO2 ; une valeur négative veut dire qu’un pays est un exporteur net d’émission de CO2).</td>
+</tr>
+</tbody>
+</table>
+<p>Voici notamment un récapitulatif des données :</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>owid <span class="ot">&lt;-</span> df_owid <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(country,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>           year,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>           continent,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>           gdp,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>           population,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>           co2)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(owid)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(df_owid)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
@@ -539,7 +551,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Name</td>
-<td style="text-align: left;">owid</td>
+<td style="text-align: left;">df_owid</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Number of rows</td>
@@ -547,7 +559,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Number of columns</td>
-<td style="text-align: left;">6</td>
+<td style="text-align: left;">19</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">_______________________</td>
@@ -559,11 +571,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td style="text-align: left;">character</td>
-<td style="text-align: left;">2</td>
+<td style="text-align: left;">3</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">numeric</td>
-<td style="text-align: left;">4</td>
+<td style="text-align: left;">16</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">________________________</td>
@@ -611,11 +623,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">iso_code</td>
+<td style="text-align: right;">6661</td>
+<td style="text-align: right;">0.86</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">232</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">continent</td>
-<td style="text-align: right;">44891</td>
-<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">6583</td>
+<td style="text-align: right;">0.86</td>
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">9</td>
+<td style="text-align: right;">8</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">0</td>
@@ -625,12 +647,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Variable type: numeric</strong></p>
 <table class="table table-sm table-striped">
 <colgroup>
-<col style="width: 10%">
-<col style="width: 7%">
-<col style="width: 10%">
-<col style="width: 9%">
-<col style="width: 9%">
+<col style="width: 15%">
 <col style="width: 6%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 8%">
 <col style="width: 9%">
 <col style="width: 9%">
 <col style="width: 9%">
@@ -659,37 +681,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td style="text-align: right;">1.00</td>
 <td style="text-align: right;">1.925690e+03</td>
 <td style="text-align: right;">6.104000e+01</td>
-<td style="text-align: right;">1750</td>
-<td style="text-align: right;">1.882000e+03</td>
+<td style="text-align: right;">1750.00</td>
+<td style="text-align: right;">1882.00</td>
 <td style="text-align: right;">1.930000e+03</td>
 <td style="text-align: right;">1.977000e+03</td>
 <td style="text-align: right;">2.021000e+03</td>
 <td style="text-align: left;">▁▂▇▇▇</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">gdp</td>
-<td style="text-align: right;">31972</td>
-<td style="text-align: right;">0.31</td>
-<td style="text-align: right;">2.679977e+11</td>
-<td style="text-align: right;">2.104075e+12</td>
-<td style="text-align: right;">49980000</td>
-<td style="text-align: right;">7.530493e+09</td>
-<td style="text-align: right;">2.605900e+10</td>
-<td style="text-align: right;">1.134711e+11</td>
-<td style="text-align: right;">1.136302e+14</td>
-<td style="text-align: left;">▇▁▁▁▁</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">population</td>
 <td style="text-align: right;">7949</td>
 <td style="text-align: right;">0.83</td>
 <td style="text-align: right;">6.005374e+07</td>
 <td style="text-align: right;">3.280828e+08</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">3.808912e+05</td>
+<td style="text-align: right;">21.00</td>
+<td style="text-align: right;">380891.25</td>
 <td style="text-align: right;">2.509282e+06</td>
 <td style="text-align: right;">9.996447e+06</td>
 <td style="text-align: right;">7.909295e+09</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gdp</td>
+<td style="text-align: right;">31972</td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: right;">2.679977e+11</td>
+<td style="text-align: right;">2.104075e+12</td>
+<td style="text-align: right;">49980000.00</td>
+<td style="text-align: right;">7530492928.00</td>
+<td style="text-align: right;">2.605900e+10</td>
+<td style="text-align: right;">1.134711e+11</td>
+<td style="text-align: right;">1.136302e+14</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
 <tr class="even">
@@ -698,206 +720,182 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td style="text-align: right;">0.67</td>
 <td style="text-align: right;">3.799900e+02</td>
 <td style="text-align: right;">1.799880e+03</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1.200000e-01</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.12</td>
 <td style="text-align: right;">3.110000e+00</td>
 <td style="text-align: right;">4.366000e+01</td>
 <td style="text-align: right;">3.712385e+04</td>
 <td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">cement_co2_per_capita</td>
+<td style="text-align: right;">23809</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">6.000000e-02</td>
+<td style="text-align: right;">1.200000e-01</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">9.000000e-02</td>
+<td style="text-align: right;">2.570000e+00</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">co2_per_gdp</td>
+<td style="text-align: right;">30232</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">4.200000e-01</td>
+<td style="text-align: right;">5.600000e-01</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">2.800000e-01</td>
+<td style="text-align: right;">5.300000e-01</td>
+<td style="text-align: right;">3.761000e+01</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">coal_co2</td>
+<td style="text-align: right;">21454</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">1.544000e+02</td>
+<td style="text-align: right;">7.514200e+02</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">6.600000e-01</td>
+<td style="text-align: right;">1.648000e+01</td>
+<td style="text-align: right;">1.505151e+04</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">coal_co2_per_capita</td>
+<td style="text-align: right;">22102</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">1.100000e+00</td>
+<td style="text-align: right;">2.230000e+00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">9.000000e-02</td>
+<td style="text-align: right;">1.140000e+00</td>
+<td style="text-align: right;">3.423000e+01</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gas_co2</td>
+<td style="text-align: right;">21580</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">4.999000e+01</td>
+<td style="text-align: right;">3.090900e+02</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.240000e+00</td>
+<td style="text-align: right;">7.921830e+03</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gas_co2_per_capita</td>
+<td style="text-align: right;">22183</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">5.300000e-01</td>
+<td style="text-align: right;">2.290000e+00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">8.000000e-02</td>
+<td style="text-align: right;">5.331000e+01</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">methane</td>
+<td style="text-align: right;">40373</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">1.456500e+02</td>
+<td style="text-align: right;">6.509400e+02</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">2.11</td>
+<td style="text-align: right;">9.430000e+00</td>
+<td style="text-align: right;">3.766000e+01</td>
+<td style="text-align: right;">8.609920e+03</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">methane_per_capita</td>
+<td style="text-align: right;">40403</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">1.840000e+00</td>
+<td style="text-align: right;">2.550000e+00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">1.050000e+00</td>
+<td style="text-align: right;">1.750000e+00</td>
+<td style="text-align: right;">3.368000e+01</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">oil_co2</td>
+<td style="text-align: right;">21481</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">1.112300e+02</td>
+<td style="text-align: right;">6.240300e+02</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">1.240000e+00</td>
+<td style="text-align: right;">1.310000e+01</td>
+<td style="text-align: right;">1.234565e+04</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">oil_co2_per_capita</td>
+<td style="text-align: right;">22156</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">2.200000e+00</td>
+<td style="text-align: right;">1.491000e+01</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">3.800000e-01</td>
+<td style="text-align: right;">1.970000e+00</td>
+<td style="text-align: right;">8.244600e+02</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ghg_per_capita</td>
+<td style="text-align: right;">40404</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">7.540000e+00</td>
+<td style="text-align: right;">8.010000e+00</td>
+<td style="text-align: right;">-30.81</td>
+<td style="text-align: right;">2.57</td>
+<td style="text-align: right;">5.420000e+00</td>
+<td style="text-align: right;">9.860000e+00</td>
+<td style="text-align: right;">7.367000e+01</td>
+<td style="text-align: left;">▁▇▂▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">trade_co2</td>
+<td style="text-align: right;">42264</td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">-8.700000e+00</td>
+<td style="text-align: right;">2.692100e+02</td>
+<td style="text-align: right;">-2354.78</td>
+<td style="text-align: right;">-3.15</td>
+<td style="text-align: right;">1.480000e+00</td>
+<td style="text-align: right;">9.030000e+00</td>
+<td style="text-align: right;">2.211850e+03</td>
+<td style="text-align: left;">▁▁▇▁▁</td>
+</tr>
 </tbody>
 </table>
 </div>
 </div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>graph_owid_world <span class="ot">&lt;-</span> df_owid <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"World"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(co2,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>           year,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>           country)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> graph_owid_world,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> co2)) <span class="sc">+</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">n.breaks =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">n.breaks =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Co2 total mondial"</span>) <span class="sc">+</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="exploration_files/figure-html/co2 evolution world-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>graph_owid <span class="ot">&lt;-</span> df_owid <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">is.na</span> (continent) <span class="sc">==</span> <span class="cn">FALSE</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">is.na</span> (co2) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(continent,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>             year) <span class="sc">|&gt;</span> </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(co2)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> graph_owid,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> co2,</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> continent)) <span class="sc">+</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"Continents"</span>,</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Afrique"</span>,</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Amériques"</span>,</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Asie"</span>,</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Europe"</span>,</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Océanie"</span>)) <span class="sc">+</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>p3</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="exploration_files/figure-html/graph for co2 emission-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> graph_owid,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> co2,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> continent)) <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="exploration_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Plus de CO2 en 2021</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_owid <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(country,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>           co2) <span class="sc">|&gt;</span> </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(co2))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 260 × 2
-   country                          co2
-   &lt;chr&gt;                          &lt;dbl&gt;
- 1 World                         37124.
- 2 Non-OECD (GCP)                24398.
- 3 Asia                          21689.
- 4 Asia (GCP)                    18971.
- 5 Upper-middle-income countries 17039.
- 6 High-income countries         12516.
- 7 OECD (GCP)                    11704.
- 8 China                         11472.
- 9 Asia (excl. China and India)   7507.
-10 Lower-middle-income countries  6259.
-# … with 250 more rows</code></pre>
-</div>
-</div>
-<p>co2 en 2021 : world is 37 milliards de tonnes? Chine - 11 millards (Asie 21) USA - 5007</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>top_5 <span class="ot">&lt;-</span> df_owid <span class="sc">|&gt;</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">==</span> <span class="fu">c</span>(<span class="st">"China"</span>,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"United States"</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"India"</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Russia"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(year,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>           co2,</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>           country)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in country == c("China", "United States", "India", "Russia"): longer
-object length is not a multiple of shorter object length</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(top_5) <span class="sc">+</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> co2,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> country) <span class="sc">+</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_area</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_hue</span>(<span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> graph_owid_world,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> co2,</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> country),</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() </span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Ignoring unknown aesthetics: fill</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 17 rows containing missing values (position_stack).</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="exploration_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Pays riches qui produisent le plus de co2 ? apparently yes</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>rich <span class="ot">&lt;-</span> df_owid <span class="sc">|&gt;</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span> (country <span class="sc">==</span> <span class="fu">c</span>(<span class="st">"Upper-middle-income countries"</span>,</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"High-income countries"</span>,</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Lower-middle-income countries"</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Low-income countries"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(country,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>           co2,</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>           year,</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>           gdp)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in country == c("Upper-middle-income countries", "High-income
-countries", : longer object length is not a multiple of shorter object length</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rich,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> co2,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> country)) <span class="sc">+</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_area</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_line</span>(<span class="at">data =</span> graph_owid_world,</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> co2,</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> country),</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Ignoring unknown aesthetics: fill</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="exploration_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Industrie plus émettrices</p>
-<div class="cell">
-
-</div>
 </section>
-</section>
-<section id="combinaison" class="level2">
-<h2 class="anchored" data-anchor-id="combinaison">Combinaison</h2>
+<section id="combinaison-des-banques-de-données" class="level2">
+<h2 class="anchored" data-anchor-id="combinaison-des-banques-de-données">Combinaison des banques de données</h2>
 <p>On peut également entreprendre des analyses via la combinaison des deux banques de données puisqu’elles ont comme variables communes les années, les continents ainsi que la majorité des pays observés.</p>
+<p>Voici un récapitulatif des données :</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(<span class="at">x =</span> df_gapminder,</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> owid)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(dat)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(dat_join)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
@@ -905,15 +903,15 @@ countries", : longer object length is not a multiple of shorter object length</c
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Name</td>
-<td style="text-align: left;">dat</td>
+<td style="text-align: left;">dat_join</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Number of rows</td>
-<td style="text-align: left;">0</td>
+<td style="text-align: left;">30752</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Number of columns</td>
-<td style="text-align: left;">8</td>
+<td style="text-align: left;">21</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">_______________________</td>
@@ -925,11 +923,11 @@ countries", : longer object length is not a multiple of shorter object length</c
 </tr>
 <tr class="even">
 <td style="text-align: left;">character</td>
-<td style="text-align: left;">3</td>
+<td style="text-align: left;">4</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">numeric</td>
-<td style="text-align: left;">5</td>
+<td style="text-align: left;">17</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">________________________</td>
@@ -958,8 +956,8 @@ countries", : longer object length is not a multiple of shorter object length</c
 <th style="text-align: left;">skim_variable</th>
 <th style="text-align: right;">n_missing</th>
 <th style="text-align: right;">complete_rate</th>
-<th style="text-align: left;">min</th>
-<th style="text-align: left;">max</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
 <th style="text-align: right;">empty</th>
 <th style="text-align: right;">n_unique</th>
 <th style="text-align: right;">whitespace</th>
@@ -967,33 +965,43 @@ countries", : longer object length is not a multiple of shorter object length</c
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">geo</td>
+<td style="text-align: left;">country</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">24</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">179</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">country</td>
+<td style="text-align: left;">iso_code</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">179</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">continent</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
 <td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
 <td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">geo</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">179</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
@@ -1001,17 +1009,17 @@ countries", : longer object length is not a multiple of shorter object length</c
 <p><strong>Variable type: numeric</strong></p>
 <table class="table table-sm table-striped">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 14%">
-<col style="width: 19%">
-<col style="width: 7%">
+<col style="width: 15%">
+<col style="width: 6%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
 <col style="width: 4%">
-<col style="width: 4%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 7%">
-<col style="width: 7%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1032,71 +1040,528 @@ countries", : longer object length is not a multiple of shorter object length</c
 <tr class="odd">
 <td style="text-align: left;">year</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">life_exp</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">gdp</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: left;"></td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.932970e+03</td>
+<td style="text-align: right;">5.269000e+01</td>
+<td style="text-align: right;">1800.00</td>
+<td style="text-align: right;">1889.00</td>
+<td style="text-align: right;">1.934000e+03</td>
+<td style="text-align: right;">1.978000e+03</td>
+<td style="text-align: right;">2.021000e+03</td>
+<td style="text-align: left;">▁▇▇▇▇</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">population</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: left;"></td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1.724825e+07</td>
+<td style="text-align: right;">7.673945e+07</td>
+<td style="text-align: right;">2258.00</td>
+<td style="text-align: right;">632758.50</td>
+<td style="text-align: right;">2.798558e+06</td>
+<td style="text-align: right;">9.049654e+06</td>
+<td style="text-align: right;">1.425894e+09</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">gdp</td>
+<td style="text-align: right;">16892</td>
+<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">2.345079e+11</td>
+<td style="text-align: right;">9.604280e+11</td>
+<td style="text-align: right;">49980000.00</td>
+<td style="text-align: right;">7700199680.00</td>
+<td style="text-align: right;">2.681054e+10</td>
+<td style="text-align: right;">1.165083e+11</td>
+<td style="text-align: right;">1.815162e+13</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">co2</td>
+<td style="text-align: right;">10954</td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">8.444000e+01</td>
+<td style="text-align: right;">4.461100e+02</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">3.520000e+00</td>
+<td style="text-align: right;">2.757000e+01</td>
+<td style="text-align: right;">1.147237e+04</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cement_co2_per_capita</td>
+<td style="text-align: right;">14801</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">8.000000e-02</td>
+<td style="text-align: right;">1.400000e-01</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">2.000000e-02</td>
+<td style="text-align: right;">1.000000e-01</td>
+<td style="text-align: right;">2.570000e+00</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">co2_per_gdp</td>
+<td style="text-align: right;">17895</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;">3.800000e-01</td>
+<td style="text-align: right;">5.200000e-01</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">2.500000e-01</td>
+<td style="text-align: right;">4.800000e-01</td>
+<td style="text-align: right;">3.761000e+01</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">coal_co2</td>
+<td style="text-align: right;">12395</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">4.298000e+01</td>
+<td style="text-align: right;">2.651700e+02</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">4.200000e-01</td>
+<td style="text-align: right;">7.360000e+00</td>
+<td style="text-align: right;">7.955980e+03</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">coal_co2_per_capita</td>
+<td style="text-align: right;">12395</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">1.020000e+00</td>
+<td style="text-align: right;">2.280000e+00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">6.000000e-02</td>
+<td style="text-align: right;">9.100000e-01</td>
+<td style="text-align: right;">3.423000e+01</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gas_co2</td>
+<td style="text-align: right;">12389</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">1.376000e+01</td>
+<td style="text-align: right;">8.114000e+01</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">1.110000e+00</td>
+<td style="text-align: right;">1.674000e+03</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gas_co2_per_capita</td>
+<td style="text-align: right;">12389</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">6.100000e-01</td>
+<td style="text-align: right;">2.600000e+00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.000000e+00</td>
+<td style="text-align: right;">9.000000e-02</td>
+<td style="text-align: right;">5.331000e+01</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">methane</td>
+<td style="text-align: right;">25442</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">4.127000e+01</td>
+<td style="text-align: right;">1.134200e+02</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">2.26</td>
+<td style="text-align: right;">9.420000e+00</td>
+<td style="text-align: right;">3.138000e+01</td>
+<td style="text-align: right;">1.176340e+03</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">methane_per_capita</td>
+<td style="text-align: right;">25442</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">1.910000e+00</td>
+<td style="text-align: right;">2.690000e+00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">1.040000e+00</td>
+<td style="text-align: right;">1.830000e+00</td>
+<td style="text-align: right;">3.368000e+01</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">oil_co2</td>
+<td style="text-align: right;">12389</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">3.036000e+01</td>
+<td style="text-align: right;">1.500200e+02</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">1.440000e+00</td>
+<td style="text-align: right;">1.061000e+01</td>
+<td style="text-align: right;">2.644240e+03</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">oil_co2_per_capita</td>
+<td style="text-align: right;">12389</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">1.490000e+00</td>
+<td style="text-align: right;">4.220000e+00</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">3.600000e-01</td>
+<td style="text-align: right;">1.680000e+00</td>
+<td style="text-align: right;">3.467900e+02</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ghg_per_capita</td>
+<td style="text-align: right;">25443</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">7.690000e+00</td>
+<td style="text-align: right;">8.400000e+00</td>
+<td style="text-align: right;">-30.81</td>
+<td style="text-align: right;">2.49</td>
+<td style="text-align: right;">5.400000e+00</td>
+<td style="text-align: right;">1.029000e+01</td>
+<td style="text-align: right;">7.367000e+01</td>
+<td style="text-align: left;">▁▇▂▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">trade_co2</td>
+<td style="text-align: right;">27208</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">-6.200000e-01</td>
+<td style="text-align: right;">1.071200e+02</td>
+<td style="text-align: right;">-1526.51</td>
+<td style="text-align: right;">-1.17</td>
+<td style="text-align: right;">1.730000e+00</td>
+<td style="text-align: right;">8.620000e+00</td>
+<td style="text-align: right;">6.595500e+02</td>
+<td style="text-align: left;">▁▁▁▇▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">life_exp</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: left;"></td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">4.747000e+01</td>
+<td style="text-align: right;">1.698000e+01</td>
+<td style="text-align: right;">1.01</td>
+<td style="text-align: right;">32.89</td>
+<td style="text-align: right;">4.202000e+01</td>
+<td style="text-align: right;">6.327000e+01</td>
+<td style="text-align: right;">8.514000e+01</td>
+<td style="text-align: left;">▁▇▇▅▅</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+</section>
+</section>
+<section id="tableaux" class="level1">
+<h1>Tableaux</h1>
+<section id="life-expectancy" class="level2">
+<h2 class="anchored" data-anchor-id="life-expectancy"><em>Life Expectancy</em></h2>
+</section>
+<section id="moyenne-despérance-de-vie" class="level2">
+<h2 class="anchored" data-anchor-id="moyenne-despérance-de-vie">Moyenne d’espérance de vie</h2>
+<p>Manipulation pour calculer la moyenne mondiale et par continent.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>graph <span class="ot">&lt;-</span> df_gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(continent,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>             year) <span class="sc">|&gt;</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mean_continent =</span> <span class="fu">mean</span>(life_exp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mean_world =</span> <span class="fu">mean</span>(life_exp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Manipulation pour le graphique mondial</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>graph_life_world <span class="ot">&lt;-</span>  </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="at">data =</span> graph,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">y =</span> mean_world)) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1800</span>, <span class="dv">2100</span>),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1800</span>, <span class="dv">2100</span>, <span class="at">by =</span> <span class="dv">25</span>)) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">90</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="at">by =</span><span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Évolution de l'espérance de vie mondiale"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption =</span> <span class="st">"https://www.gapminder.org/data/"</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">" "</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Espérance de vie moyenne"</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>graph_life_world</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="exploration_files/figure-html/life exp world-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Manipulation pour le graphique de l’espérance de vie moyenne par continent</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>graph_life_continent <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> graph,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mean_continent,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1800</span>, <span class="dv">2100</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1800</span>, <span class="dv">2100</span>, <span class="at">by =</span> <span class="dv">25</span>)) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">90</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="at">by =</span><span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span> <span class="fu">wes_palette</span>(<span class="st">"Royal2"</span>, <span class="at">n =</span> <span class="dv">5</span>),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">"Continents"</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Afrique"</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Amériques"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Asie"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Europe"</span>,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"Océanie"</span>)) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Évolution de l'espérance de vie"</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"Par continents"</span>,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption =</span> <span class="st">"https://www.gapminder.org/data/"</span>,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">" "</span>,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Espérance de vie moyenne"</span>) </span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>graph_life_continent</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="exploration_files/figure-html/life exp by continent-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Il est possible aussi d’observer l’évolution de l’espérance de vie moyenne en fonction des continents. Les grandes cassures dans le temps peuvent être attribuables à différentes périodes historiques.</p>
+<p>Notamment, la grand cassure avant les années 1920 peuvent être à la fois attribuables à la Première Guerre mondiale, mais également à l’épidémie de la Grippe espagnole. La même tendance est observable dans les années 1940 pour la Seconde Guerre mondiale et plus récemment, la légère fracture pour la pandémie de la COVID-19.</p>
+</section>
+</section>
+<section id="section" class="level1">
+<h1></h1>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>graph_owid_world <span class="ot">&lt;-</span> df_owid <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"World"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(co2,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>           year,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>           country)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> graph_owid_world,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> co2)) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1750</span>, <span class="dv">2025</span>),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1750</span>, <span class="dv">2025</span>, <span class="at">by =</span> <span class="dv">25</span>)) <span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40000</span>),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">40000</span>, <span class="at">by =</span> <span class="dv">5000</span>)) <span class="sc">+</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Co2 total mondial"</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption =</span> <span class="st">"GapMinder"</span>) <span class="sc">+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="exploration_files/figure-html/co2 evolution world-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Données respectives pour les pays et non les continents – faire moyenne</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>graph_owid <span class="ot">&lt;-</span> df_owid <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="fu">c</span>(<span class="st">"Africa"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Asia"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Americas"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Europe"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"Oceania"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(continent,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>             year) <span class="sc">|&gt;</span> </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(co2) <span class="sc">|&gt;</span> </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(co2, <span class="at">na.rm =</span> T))</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> graph_owid,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mean,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> continent)) <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_area</span>() <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>p3</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="exploration_files/figure-html/graph for co2 emission-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Plus de CO2 en 2021</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_owid <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2021</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(country,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>           co2) <span class="sc">|&gt;</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(co2))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 260 × 2
+   country                          co2
+   &lt;chr&gt;                          &lt;dbl&gt;
+ 1 World                         37124.
+ 2 Non-OECD (GCP)                24398.
+ 3 Asia                          21689.
+ 4 Asia (GCP)                    18971.
+ 5 Upper-middle-income countries 17039.
+ 6 High-income countries         12516.
+ 7 OECD (GCP)                    11704.
+ 8 China                         11472.
+ 9 Asia (excl. China and India)   7507.
+10 Lower-middle-income countries  6259.
+# … with 250 more rows</code></pre>
+</div>
+</div>
+<p>co2 en 2021 : world is 37 milliards de tonnes? Chine - 11 millards (Asie 21) USA - 5007</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>top_5 <span class="ot">&lt;-</span> df_owid <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">==</span> <span class="fu">c</span>(<span class="st">"China"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"United States"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"India"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Russia"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"India"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(year,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>           co2,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>           country)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(top_5) <span class="sc">+</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> co2,</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> country) <span class="sc">+</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_area</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_hue</span>(<span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> graph_owid_world,</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> co2,</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> country),</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() </span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="exploration_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Sommes</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pourcentage <span class="ot">&lt;-</span>  df_owid <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">==</span> <span class="fu">c</span>(<span class="st">"China"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"United States"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"India"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Russia"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"India"</span>),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>           year <span class="sc">&gt;=</span> <span class="dv">2000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span> </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(year,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>           co2,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>           country) <span class="sc">|&gt;</span> </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sum =</span> <span class="fu">sum</span>(co2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pourcentage,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> sum)) <span class="sc">+</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="exploration_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Pays riches qui produisent le plus de co2 ? apparently yes</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rich <span class="ot">&lt;-</span> df_owid <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span> (country <span class="sc">==</span> <span class="fu">c</span>(<span class="st">"Upper-middle-income countries"</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"High-income countries"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Lower-middle-income countries"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Low-income countries"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(country,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>           co2,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>           year,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>           gdp)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> rich,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> co2,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> country)) <span class="sc">+</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_area</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_line</span>(<span class="at">data =</span> graph_owid_world,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> co2,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> country),</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="exploration_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>life_exp_co2 <span class="ot">&lt;-</span> df_gapminder <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span> (country <span class="sc">==</span> <span class="fu">c</span>(<span class="st">"China"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"United States"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"India"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Russia"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(life_exp,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>           country,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>           year)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> life_exp_co2,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> life_exp,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> country)) <span class="sc">+</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() </span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="exploration_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rich_life &lt;- dat_join|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     filter(year == c(1900:2021) |&gt; </span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     group_by(year) |&gt; </span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     select(year,</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#            life_exp,</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#            continent,</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#            co2) |&gt; </span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#     summarise(mean_co2 = mean(co2, na.rm = T),</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#               mean_life_exp = mean(life_exp, na.rm = T))</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot() +</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     geom_area(data = rich_life,</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#               aes(x = year,</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                   y = mean_life_exp,</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                   fill = continent))</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 
 
@@ -1368,7 +1833,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       <div class="nav-footer-center">
         <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="mailto:juliette.leblanc.1@umontreal.ca">Juliette Leblanc</a>
+    <a class="nav-link" href="mailto:juliette.leblanc.1@umontreal.ca">Cécile Amadoro et Juliette Leblanc</a>
   </li>  
 </ul>
       </div>

@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Juliette Leblanc">
+<meta name="author" content="Cécile Amadoro et Juliette Leblanc">
 <meta name="description" content="Cette page regroupe la première importation des données à l’état brute ainsi que les manipulation de bases.">
 
 <title>Projet Final - Importation</title>
@@ -204,7 +204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div class="quarto-title-meta-heading">Affiliation</div>
     
       <div class="quarto-title-meta-contents">
-      <a href="https://github.com/JulLeblanc">Juliette Leblanc</a> 
+      <a href="https://github.com/JulLeblanc">Cécile Amadoro et Juliette Leblanc</a> 
     </div>
       <div class="quarto-title-meta-contents">
           <p class="affiliation">
@@ -237,19 +237,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#our-world-in-data" id="toc-our-world-in-data" class="nav-link active" data-scroll-target="#our-world-in-data"><em>Our World in Data</em></a></li>
-  <li><a href="#gapminder" id="toc-gapminder" class="nav-link" data-scroll-target="#gapminder"><em>Gapminder</em></a></li>
-  <li><a href="#variables-dintérêts" id="toc-variables-dintérêts" class="nav-link" data-scroll-target="#variables-dintérêts">Variables d’intérêts</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#importation-quotidienne" id="toc-importation-quotidienne" class="nav-link" data-scroll-target="#importation-quotidienne">Importation quotidienne</a>
   <ul class="collapse">
-  <li><a href="#continent" id="toc-continent" class="nav-link" data-scroll-target="#continent">Continent</a></li>
+  <li><a href="#jeu-de-données-co2-our-world-in-data" id="toc-jeu-de-données-co2-our-world-in-data" class="nav-link" data-scroll-target="#jeu-de-données-co2-our-world-in-data">Jeu de données CO2 <em>Our World in Data</em></a></li>
+  <li><a href="#jeu-de-données-gapminder" id="toc-jeu-de-données-gapminder" class="nav-link" data-scroll-target="#jeu-de-données-gapminder">Jeu de données <em>Gapminder</em></a></li>
   </ul></li>
-  <li><a href="#recoder-certaines-variables" id="toc-recoder-certaines-variables" class="nav-link" data-scroll-target="#recoder-certaines-variables">Recoder certaines variables</a>
+  <li><a href="#manipulation-des-données" id="toc-manipulation-des-données" class="nav-link" data-scroll-target="#manipulation-des-données">Manipulation des données</a>
   <ul class="collapse">
-  <li><a href="#temps" id="toc-temps" class="nav-link" data-scroll-target="#temps">Temps</a></li>
+  <li><a href="#données-co2" id="toc-données-co2" class="nav-link" data-scroll-target="#données-co2">Données CO2</a></li>
+  <li><a href="#classement-par-continent" id="toc-classement-par-continent" class="nav-link" data-scroll-target="#classement-par-continent">Classement par continent</a></li>
+  <li><a href="#temps-écoulé" id="toc-temps-écoulé" class="nav-link" data-scroll-target="#temps-écoulé">Temps écoulé</a></li>
+  </ul></li>
+  <li><a href="#recoder-certaines-variables" id="toc-recoder-certaines-variables" class="nav-link" data-scroll-target="#recoder-certaines-variables">Recoder certaines variables</a></li>
+  <li><a href="#joindre-les-banques-de-données" id="toc-joindre-les-banques-de-données" class="nav-link" data-scroll-target="#joindre-les-banques-de-données">Joindre les banques de données</a></li>
   <li><a href="#exporter" id="toc-exporter" class="nav-link" data-scroll-target="#exporter">Exporter</a></li>
-  </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/VOTREUSERNAME/VOTRE-RÉPERTOIRE/edit/main/import.qmd" class="toc-action">Modifier cette page</a></p><p><a href="https://github.com/VOTREUSERNAME/VOTRE-RÉPERTOIRE/issues/new" class="toc-action">Faire part d'un problème</a></p><p><a href="https://github.com/VOTREUSERNAME/VOTRE-RÉPERTOIRE/blob/main/import.qmd" class="toc-action">Voir la source</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/JulLeblanc/FAS1002_projet-final/edit/main/import.qmd" class="toc-action">Modifier cette page</a></p><p><a href="https://github.com/JulLeblanc/FAS1002_projet-final/issues/new" class="toc-action">Faire part d'un problème</a></p><p><a href="https://github.com/JulLeblanc/FAS1002_projet-final/blob/main/import.qmd" class="toc-action">Voir la source</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -260,72 +264,179 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 
 </div>
-<p>Consignes manquantes: Pour l’importation des données, vous aurez à les télécharger de plusieurs sources (GitHub, Google Sheet ou Excel). Il y a plusieurs stratégies possibles, à vous de jouer! ○ Cependant, vous devrez faire plus que de seulement importer les données. Puisque tout peut disparaître sur Internet ou être mis à jour sans préavis, vous devrez également télécharger les données. Par contre, il n’est pas optimal de procéder aux téléchargements à chaque fois que nous roulons le code. Les données brutes devront être téléchargées dans le dossier data/raw/ en respectant les conditions: ■ Ainsi, pour les données qui proviennent de Our World in Data, vous devrez développer du code pour télécharger et sauvegarder les fichiers avec la date à laquelle le téléchargement a lieu. La fréquence du téléchargement devrait être quotidienne puisque les données sont mises à jour fréquemment. Pour vous simplifier la tâche, pensez à programmer également la suppression de l’ancien fichier une fois que le nouveau est téléchargé. En d’autres mots, ces données ne devraient être téléchargées qu’une seule fois par jour lorsque votre rapport est produit. ■ Pour les données des autres sources, le principe est le même, mais la fréquence du téléchargement devra être mensuelle, donc à chaque mois seulement. ■ ex: data/raw/owid</p>
-<p>#Importer les données</p>
-<section id="our-world-in-data" class="level2">
-<h2 class="anchored" data-anchor-id="our-world-in-data"><em>Our World in Data</em></h2>
-<p>J’utilise en premier la banque de données du <em>Co2 and Greenhouse Gaz Emissions</em>. Celle-ci sera mis à jour à tous les jours. Les données proviennent <a href="https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv">d’ici</a>.</p>
-<div class="cell" data-show_col_types="false" data-hash="import_cache/html/download co2_f978c59305e5276f4eea992d437a9b78">
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Le présent projet travaille avec deux bases de données : La première est issue de Our World in Data, un site qui publie gratuitement des bases de données et de la recherche sur les enjeux contemporains que le monde traverse (économie, écologie, climat, énergie, conflits etc).<br>
+La deuxième base de donnée est issue de Gapminder, une OBNL suèdoise, qui propose en libre accès d’importantes bases de données aussi sur les enjeux actuels, dans le but de prévenir et lutter contre la mésinformation.</p>
+</section>
+<section id="importation-quotidienne" class="level1">
+<h1>Importation quotidienne</h1>
+<section id="jeu-de-données-co2-our-world-in-data" class="level2">
+<h2 class="anchored" data-anchor-id="jeu-de-données-co2-our-world-in-data">Jeu de données CO2 <em>Our World in Data</em></h2>
+<p>La base de donnée <em>CO2 &amp; Greenhouse Gas Emissions</em> est utilisée. Elle permet de faire différentes explorations statistiques sur les émissions de CO2 dans 207 pays depuis le 19ème siècle.</p>
+<p>On peut retrouver les données <a href="https://ourworldindata.org/co2-emissions">ici</a> ainsi que le projet associé à celles-ci.</p>
+<div class="cell" data-show_col_types="false" data-hash="import_cache/html/download co2_10b226128ef960b1aa141e4143523ef5">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#option cache=TRUE c'est si le code ne change pas, il ne devrait pas redownloader le fichier</span></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Données CO2 d'OWID</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>url_owid <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>base_path <span class="ot">&lt;-</span> <span class="fu">path</span>(<span class="st">"data"</span>, <span class="st">"raw"</span>) <span class="co"># pour que nimporte qui puisse download avec le chemin relatif</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>fname_owid <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">today</span>(), <span class="st">"owid-co2-data.csv"</span>, <span class="at">sep =</span> <span class="st">"_"</span>) <span class="co"># name the file with today's date</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>urlowid <span class="ot">=</span> <span class="st">"https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>basepath <span class="ot">=</span>  <span class="fu">path</span>(<span class="st">"data"</span>, <span class="st">"raw"</span>) </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>fnameowid <span class="ot">=</span> <span class="fu">paste</span>(<span class="fu">today</span>(), <span class="st">"owid-co2-data.csv"</span>, <span class="at">sep =</span> <span class="st">"_"</span>) </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>fpathowid <span class="ot">=</span> <span class="fu">path</span>(basepath, fnameowid) </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>dataowid <span class="ot">=</span> <span class="fu">download.file</span>(<span class="at">url =</span> urlowid, <span class="at">destfile =</span> fpathowid)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>fpath_owid <span class="ot">&lt;-</span> <span class="fu">path</span>(base_path, fname_owid) </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>dat_owid <span class="ot">=</span> <span class="fu">read_csv</span>(fpathowid, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>data_owid <span class="ot">&lt;-</span> <span class="fu">download.file</span>(<span class="at">url =</span> url_owid, <span class="at">destfile =</span> fpath_owid)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Automatisation du script</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>df_owid <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(fpath_owid,  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(fpathowid)) {</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.remove</span>(junk)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">download.file</span>(<span class="at">url =</span> urlowid,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">destfile =</span> fpathowid)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">"Le fichier"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>          fpathowid,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>          <span class="st">"n'existait pas, il a donc été téléchargé à l'instant."</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Le fichier"</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                fpathowid,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                <span class="st">"existe déjà, il ne sera pas téléchargé à nouveau."</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>) }</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Le fichier data/raw/2022-12-20_owid-co2-data.csv existe déjà, il ne sera pas téléchargé à nouveau."</code></pre>
+</div>
 </div>
 </section>
-<section id="gapminder" class="level2">
-<h2 class="anchored" data-anchor-id="gapminder"><em>Gapminder</em></h2>
-<p>Pour la deuxième banque de données, je fais appel à celle produite par <em>Gapminder</em> qui se nomme <em>Life Expectancy at Birth</em>. Celle-ci seront re-téléchargé pour une mise à jour à tous les mois. Les données proviennent <a href="&quot;https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=176703676&quot;">d’ici</a></p>
-<div class="cell" data-hash="import_cache/html/download lifeexpectancy_209651794c334a5aa1af6a8b17d03f13">
+<section id="jeu-de-données-gapminder" class="level2">
+<h2 class="anchored" data-anchor-id="jeu-de-données-gapminder">Jeu de données <em>Gapminder</em></h2>
+<p>La base de données <em>Life Expectancy at Birth</em> est utilisée. Elle permet aussi de faire des analyses statistiques sur la question de l’espérance de vie depuis le 19ème siècle. L’espérance de vie est aujourd’hui un des meilleurs indicateurs de développement d’un pays ainsi qu’une solide mesure de projection économique et démographique. Cette base de données contient au total 1505 observations</p>
+<p>On peut retrouver les données <a href="https://www.gapminder.org/data/">ici</a> ainsi que le projet associé à celles-ci.</p>
+<div class="cell" data-hash="import_cache/html/download lifeexpectancy_b8f655b4aa1c3e822cfac83ca5241134">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>url_gapminder <span class="ot">&lt;-</span>  <span class="fu">gsheet2tbl</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=176703676"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>base_path <span class="ot">&lt;-</span> <span class="fu">path</span>(<span class="st">"data"</span>, <span class="st">"raw"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>fname_gap <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">today</span>(), <span class="st">"gapm.csv"</span>, <span class="at">sep =</span> <span class="st">"_"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>fpath_gap <span class="ot">&lt;-</span> <span class="fu">path</span>(base_path, fname_gap)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(<span class="at">x =</span> url_gapminder, <span class="at">file =</span> fpath_gap)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>df_gapminder <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(fpath_gap, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Données gapminder</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gsheet)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Utilisation de la fonction gsheet2tbl du package gsheet qui permet de convertir facilement une sheet google en dataframe</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>urlgapminder <span class="ot">=</span>  <span class="fu">gsheet2tbl</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1RheSon1-q4vFc3AGyupVPH6ptEByE-VtnjOCselU0PE/edit#gid=176703676"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#incorporation dans data/raw</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>basepathgm <span class="ot">=</span> <span class="fu">path</span>(<span class="st">"data"</span>, <span class="st">"raw"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>fnamegm <span class="ot">=</span> <span class="fu">paste</span>(<span class="fu">today</span>(), <span class="st">"gapm.csv"</span>, <span class="at">sep =</span> <span class="st">"_"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>fpathgm <span class="ot">=</span> <span class="fu">path</span>(basepathgm, fnamegm)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(<span class="at">x =</span> urlgapminder, <span class="at">file =</span> fpathgm)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>datgm <span class="ot">=</span> <span class="fu">read_csv</span>(fpathgm, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Automatisation du script, fréquence de téléchargement mensuelle</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(fpathgm)) {</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">file.remove</span>(junk)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">download.file</span>(<span class="at">url =</span> url,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">destfile =</span> fpathowid)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">"Le fichier"</span>,</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>          fpathowid,</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>          <span class="st">"n'existait pas, il a donc été téléchargé à l'instant."</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Le fichier"</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                fpathowid,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                <span class="st">"existe déjà, il ne sera pas téléchargé à nouveau."</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>) }</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Le fichier data/raw/2022-12-20_owid-co2-data.csv existe déjà, il ne sera pas téléchargé à nouveau."</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="manipulation-des-données" class="level1">
+<h1>Manipulation des données</h1>
+<section id="données-co2" class="level2">
+<h2 class="anchored" data-anchor-id="données-co2">Données CO2</h2>
+<p>La base de données CO2 contient 46.523 observations regroupé en 74 variables. Cette base de données propose de mieux comprendre les sources d’énergies dans 207 pays.Pour obtenir une meilleure lecture et analyse des données, il est apparu plus simple de traiter la base de données CO2 avec quelques variables et non dans sa totalité. Au total, 18 sur 74 variables ont été sélectionnées.</p>
+<p>La description de chacune de celles-ci sera expliqué dans le document exploration.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Transformation des données en tibble</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">as.tibble</span>(dat_owid)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 46,523 × 74
+   country      year iso_c…¹ popul…²   gdp cemen…³ cemen…⁴   co2 co2_g…⁵ co2_g…⁶
+   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Afghanistan  1850 AFG     3752993    NA      NA      NA    NA      NA      NA
+ 2 Afghanistan  1851 AFG     3769828    NA      NA      NA    NA      NA      NA
+ 3 Afghanistan  1852 AFG     3787706    NA      NA      NA    NA      NA      NA
+ 4 Afghanistan  1853 AFG     3806634    NA      NA      NA    NA      NA      NA
+ 5 Afghanistan  1854 AFG     3825655    NA      NA      NA    NA      NA      NA
+ 6 Afghanistan  1855 AFG     3844769    NA      NA      NA    NA      NA      NA
+ 7 Afghanistan  1856 AFG     3863976    NA      NA      NA    NA      NA      NA
+ 8 Afghanistan  1857 AFG     3883276    NA      NA      NA    NA      NA      NA
+ 9 Afghanistan  1858 AFG     3902671    NA      NA      NA    NA      NA      NA
+10 Afghanistan  1859 AFG     3922160    NA      NA      NA    NA      NA      NA
+# … with 46,513 more rows, 64 more variables: co2_including_luc &lt;dbl&gt;,
+#   co2_including_luc_growth_abs &lt;dbl&gt;, co2_including_luc_growth_prct &lt;dbl&gt;,
+#   co2_including_luc_per_capita &lt;dbl&gt;, co2_including_luc_per_gdp &lt;dbl&gt;,
+#   co2_including_luc_per_unit_energy &lt;dbl&gt;, co2_per_capita &lt;dbl&gt;,
+#   co2_per_gdp &lt;dbl&gt;, co2_per_unit_energy &lt;dbl&gt;, coal_co2 &lt;dbl&gt;,
+#   coal_co2_per_capita &lt;dbl&gt;, consumption_co2 &lt;dbl&gt;,
+#   consumption_co2_per_capita &lt;dbl&gt;, consumption_co2_per_gdp &lt;dbl&gt;, …</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Filtrage du tibble</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>dat_CO2 <span class="ot">=</span> dat_owid <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(country, year, iso_code, population, gdp, co2, cement_co2_per_capita, </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>           co2_per_gdp, coal_co2, coal_co2_per_capita, gas_co2, gas_co2_per_capita,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>           methane, methane_per_capita, oil_co2, oil_co2_per_capita, ghg_per_capita, trade_co2)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="variables-dintérêts" class="level1">
-<h1>Variables d’intérêts</h1>
-<section id="continent" class="level2">
-<h2 class="anchored" data-anchor-id="continent">Continent</h2>
+<section id="classement-par-continent" class="level2">
+<h2 class="anchored" data-anchor-id="classement-par-continent">Classement par continent</h2>
 <p>Dans les deux banques de données que nous utilisons, j’ai créé une variable qui regroupe les différents pays en sous-groupe des 5 continents soit : l’Afrique, l’Amérique, l’Asie, l’Europe et l’Océanie. Ceci me permettra de faire des comparaisons plus large en me référant au continent et non au pays.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_owid <span class="ot">&lt;-</span> df_owid <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">continent =</span> <span class="fu">case_when</span>(country <span class="sc">==</span> <span class="st">"Europe"</span> <span class="sc">~</span> <span class="st">"Europe"</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                                 country <span class="sc">==</span> <span class="st">"Africa"</span> <span class="sc">~</span><span class="st">"Afrique"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                 country <span class="sc">==</span> <span class="st">"Asia"</span> <span class="sc">~</span> <span class="st">"Asie"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                                 country <span class="sc">==</span> <span class="st">"Oceania"</span> <span class="sc">~</span> <span class="st">"Océanie"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                                 country <span class="sc">==</span> <span class="st">"South America"</span> <span class="sc">~</span> <span class="st">"Amériques"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                                 country <span class="sc">==</span> <span class="st">"North America"</span> <span class="sc">~</span> <span class="st">"Amériques"</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                                 country <span class="sc">==</span> <span class="st">"Central America </span><span class="sc">\\</span><span class="st">(GCP)"</span> <span class="sc">~</span> <span class="st">"Amériques"</span>))</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>df_gapminder <span class="ot">&lt;-</span> df_gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">continent =</span> <span class="fu">countrycode</span>(<span class="at">sourcevar =</span> df_gapminder<span class="sc">$</span>name,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">origin =</span> <span class="st">"country.name"</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">destination =</span> <span class="st">"continent"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dat_CO2 <span class="ot">&lt;-</span>  dat_CO2 <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">continent =</span> <span class="fu">countrycode</span>(<span class="at">sourcevar =</span> dat_owid<span class="sc">$</span>country,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">origin =</span> <span class="st">"country.name"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">destination =</span> <span class="st">"continent"</span>))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>datgm <span class="ot">&lt;-</span>  datgm <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">continent =</span> <span class="fu">countrycode</span>(<span class="at">sourcevar =</span> datgm<span class="sc">$</span>name,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">origin =</span> <span class="st">"country.name"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">destination =</span> <span class="st">"continent"</span>))</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="temps-écoulé" class="level2">
+<h2 class="anchored" data-anchor-id="temps-écoulé">Temps écoulé</h2>
+<p>Il est également intéressant de voir le temps écoulé entre la production de se rapport et la première année que des données ont été récoltées pour chacun des pays qui se trouvent dans le jeu de données de <em>Life Expectancy at Birth</em>.</p>
+<p>Cette variable prendra le nom de <code>time</code> dans la banque de données.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># datgm &lt;- datgm |&gt; </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     mutate(time_since = time) </span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># as.Date, format = "%Y")</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  as.numeric(difftime(as.POSIXct(today()),</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#                      as.POSIXct(as.Date(min(LifeExDate$time_since), format = "%Y-%m-%d"))))</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -337,62 +448,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_gapminder <span class="ot">&lt;-</span> df_gapminder <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">country =</span> name,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year =</span> time,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">life_exp =</span> <span class="st">`</span><span class="at">Life expectancy</span><span class="st">`</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>On peut également uniformiser pour la variable Co2 de la banque de donnée <em>Our World in Data</em>, notamment qui</p>
-<section id="temps" class="level2">
-<h2 class="anchored" data-anchor-id="temps">Temps</h2>
-<p>Il est également intéressant de voir le temps écoulé entre la production de se rapport et la première année que des données ont été récoltées pour chacun des pays qui se trouvent dans le jeu de données de <em>Life Expectancy at Birth</em>.</p>
-<p>Cette variable prendra le nom de <code>time</code> dans la banque de données.</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df_gapminder &lt;- df_gapminder |&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     mutate(time_since = as.Date(year, format = "%Y"))</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a> <span class="co"># mutate(jour_mois = "-01-01") %&gt;% #ajouter une colonne avec -MM-DD</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a> <span class="co">#     unite(time, jour_mois, col = time, sep = "") %&gt;% #combiner les deux colonnes</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a> <span class="co">#     mutate(year_as_date = as.Date(time, format = "%Y-%m-%d")) #transformer en format de date</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a> <span class="co">#     </span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a> <span class="co"># as.numeric(difftime(as.POSIXct(today()), </span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a> <span class="co">#                     as.POSIXct(as.Date(min(LifeExDate$year_as_date), format = "%Y-%m-%d"))))</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>datgm <span class="ot">&lt;-</span> datgm <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">country =</span> name,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">year =</span> time,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">life_exp =</span> <span class="st">`</span><span class="at">Life expectancy</span><span class="st">`</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="exporter" class="level2">
-<h2 class="anchored" data-anchor-id="exporter">Exporter</h2>
+<section id="joindre-les-banques-de-données" class="level1">
+<h1>Joindre les banques de données</h1>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>datultimate <span class="ot">=</span> <span class="fu">inner_join</span>(dat_CO2, datgm)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="exporter" class="level1">
+<h1>Exporter</h1>
 <p>Maintenant qu’une première manipulation des données a été fait, nous pouvons exporter celles-ci comme étant des données traitées dans le dossier <code>data/processed</code>.</p>
 <p>Les prochaines analyses auront comme point de départ les données traitées, donc qui ont été exportées dans le chemin relatif ci-dessus.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(df_owid,<span class="at">file =</span> <span class="st">"data/processed/df_owid.csv"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(df_gapminder, <span class="at">file =</span> <span class="st">"data/processed/df_gapminder.csv"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(dat_CO2,<span class="at">file =</span> <span class="st">"data/processed/dat_CO2.csv"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(datgm, <span class="at">file =</span> <span class="st">"data/processed/datgm.csv"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(datultimate, <span class="at">file =</span> <span class="st">"data/processed/datultimate.csv"</span>)</span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 
 
 </section>
-</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{leblanc2023,
-  author = {Juliette Leblanc},
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{cécileamadoroetjulietteleblanc2023,
+  author = {Cécile Amadoro et Juliette Leblanc},
   title = {Importation},
   date = {2023-09-12},
   url = {https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html},
   langid = {fr}
 }
-</code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">Veuillez citer ce travail comme suit&nbsp;:</div><div id="ref-leblanc2023" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Juliette Leblanc. 2023. <span>“Importation.”</span> September 12, 2023.
-<a href="https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html">https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html</a>.
+</code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">Veuillez citer ce travail comme suit&nbsp;:</div><div id="ref-cécileamadoroetjulietteleblanc2023" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Cécile Amadoro et Juliette Leblanc. 2023. <span>“Importation.”</span>
+September 12, 2023. <a href="https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html">https://VOTREUSERNAME.github.io/FAS1002_projet-final//import.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -649,7 +748,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       <div class="nav-footer-center">
         <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="mailto:juliette.leblanc.1@umontreal.ca">Juliette Leblanc</a>
+    <a class="nav-link" href="mailto:juliette.leblanc.1@umontreal.ca">Cécile Amadoro et Juliette Leblanc</a>
   </li>  
 </ul>
       </div>
