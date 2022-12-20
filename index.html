@@ -193,10 +193,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Sur cette page</h2>
    
   <ul>
-  <li><a href="#vous-pourrez-inclure-des-graphiques" id="toc-vous-pourrez-inclure-des-graphiques" class="nav-link active" data-scroll-target="#vous-pourrez-inclure-des-graphiques">Vous pourrez inclure des graphiques</a>
-  <ul class="collapse">
-  <li><a href="#toujours-très-important-de-mettre-les-bons-niveaux-de-titres" id="toc-toujours-très-important-de-mettre-les-bons-niveaux-de-titres" class="nav-link" data-scroll-target="#toujours-très-important-de-mettre-les-bons-niveaux-de-titres">Toujours très important de mettre les bons niveaux de titres</a></li>
-  </ul></li>
+  <li><a href="#présentation" id="toc-présentation" class="nav-link active" data-scroll-target="#présentation">Présentation</a></li>
+  <li><a href="#vous-pourrez-inclure-des-graphiques" id="toc-vous-pourrez-inclure-des-graphiques" class="nav-link" data-scroll-target="#vous-pourrez-inclure-des-graphiques">Vous pourrez inclure des graphiques</a></li>
   <li><a href="#remerciements" id="toc-remerciements" class="nav-link" data-scroll-target="#remerciements">Remerciements</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/JulLeblanc/FAS1002_projet-final/edit/main/index.qmd" class="toc-action">Modifier cette page</a></p><p><a href="https://github.com/JulLeblanc/FAS1002_projet-final/issues/new" class="toc-action">Faire part d'un problème</a></p><p><a href="https://github.com/JulLeblanc/FAS1002_projet-final/blob/main/index.qmd" class="toc-action">Voir la source</a></p></div></div></nav>
@@ -221,8 +219,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Vous pouvez faire le résumé de votre projet directement sur cette page et utiliser le document <a href="./intro.html">intro</a> pour décrire votre projet.</p>
-<p>Chaque page est en fait un fichier Quarto standard. <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<section id="présentation" class="level2">
+<h2 class="anchored" data-anchor-id="présentation">Présentation</h2>
+<p>Dans le cadre de ce travail final <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, nous avons exploré deux banques de données, provenant de deux sources distinctes, <em>Our World in Data</em> et <em>GapMinder</em>.</p>
+<p>Provenance des données:</p>
+<blockquote class="blockquote">
+<p>La première banque de données provient de <span class="citation" data-cites="owidenergy">@owidenergy</span> et se trouvent <a href="https://ourworldindata.org/co2-emissions">ici</a></p>
+</blockquote>
+<blockquote class="blockquote">
+<p>La seconde provient de <span class="citation" data-cites="gmlifeexpectancy">@gmlifeexpectancy</span> et se trouvent <a href="https://www.gapminder.org/">ici</a></p>
+</blockquote>
+<p>Les autres pages du site web sont consacrées première à <a href="./intro.html">l’analyse</a>, <a href="./import.html">l’importation</a> et la <a href="./exploration.html">manipualtion des données</a> pour créer les stastistiques descriptives ainsi que les analyses qui seront présentées dans la section <a href="./intro.html">analyse</a>.</p>
+<p>Si vous souhaitez reproduire les analyses, tout le matériel à cet effet est disponible. Nous vous recommandons de commencer par l’importation des données et ensuite l’exploration pour en arrivé finalement à l’analyse.</p>
+<p>NB : Le code utilisé se trouve dans les bribes, il ne suffit que de les ouvrir pour voir la démarche. Le code a été produit en <code>R</code>.</p>
+</section>
 <section id="vous-pourrez-inclure-des-graphiques" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="vous-pourrez-inclure-des-graphiques">Vous pourrez inclure des graphiques</h2>
 <p>Comme la classique pyramide à la ci-dessous par exemple:</p>
@@ -249,23 +259,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <aside>
 Quand même très cool, non? Vous pouvez mettre des annotations sur le côté!
 </aside>
-<section id="toujours-très-important-de-mettre-les-bons-niveaux-de-titres" class="level3">
-<h3 class="anchored" data-anchor-id="toujours-très-important-de-mettre-les-bons-niveaux-de-titres">Toujours très important de mettre les bons niveaux de titres</h3>
-<p>Un peu de texte de remplissage pour faire comme si la page était plus longue. <em>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</em></p>
-</section>
 </section>
 
 
 
 <div id="quarto-appendix" class="default"><section id="remerciements" class="level2 appendix"><h2 class="quarto-appendix-heading">Remerciements</h2><div class="quarto-appendix-contents">
 
-<p>J’aimerais remercier toute la cohorte du cours FAS1002 de l’automne 2022 pour leur ouverture et efforts tout au long de la session!</p>
+<p>Nous aimerions remercier notre enseignant Samuel Guay pour sa patience incroyable, son aide et ses astuces de programmation tout au long de la session !</p>
 
 
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Notes de bas de page</h2>
 
 <ol>
-<li id="fn1"><p>Avec des petits trucs sympa comme des notes de bas de page. Ces documents sont les mêmes que nous avons utilisés tout au long de la session.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Le travail a été réalisé en collaboration entre Cécile Amadoro et Juliette Leblanc<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
