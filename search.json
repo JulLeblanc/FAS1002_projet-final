@@ -88,7 +88,7 @@
     "href": "import.html#temps-écoulé",
     "title": "Importation",
     "section": "Temps écoulé",
-    "text": "Temps écoulé\nIl est également intéressant de voir le temps écoulé entre la production de se rapport et la première année que des données ont été récoltées pour chacun des pays qui se trouvent dans le jeu de données de Life Expectancy at Birth.\nCette variable prendra le nom de time dans la banque de données.\n\n\nCode\n# datgm <- datgm |> \n#     mutate(time_since = time) \n# \n# \n# as.Date, format = \"%Y\")\n# \n# \n# \n#  as.numeric(difftime(as.POSIXct(today()),\n#                      as.POSIXct(as.Date(min(LifeExDate$time_since), format = \"%Y-%m-%d\"))))"
+    "text": "Temps écoulé\nIl est également intéressant de voir le temps écoulé entre la production de se rapport et la première année que des données ont été récoltées pour chacun des pays qui se trouvent dans le jeu de données de Life Expectancy at Birth.\nCette variable prendra le nom de time dans la banque de données. Ne fonctionne pas (on a manqué de temps…)\n\n\nCode\n# datgm <- datgm |> \n#     mutate(time_since = \"01-01\") |>\n#     unite(time, time_since, col = time, sep = \"-\") |> \n#     mutate(total = as.Date(time, format = \"%Y/%m/%d\")) |> \n#     mutate(jour = difftime(as.POSIXct(today()),\n#                            as.POSIXct(as.Date(min(datgm$date), \n#                                               format = \"%Y-%m-%d\"))))"
   },
   {
     "objectID": "index.html",

@@ -435,20 +435,17 @@ La deuxième base de donnée est issue de Gapminder, une OBNL suèdoise, qui pro
 <section id="temps-écoulé" class="level2">
 <h2 class="anchored" data-anchor-id="temps-écoulé">Temps écoulé</h2>
 <p>Il est également intéressant de voir le temps écoulé entre la production de se rapport et la première année que des données ont été récoltées pour chacun des pays qui se trouvent dans le jeu de données de <em>Life Expectancy at Birth</em>.</p>
-<p>Cette variable prendra le nom de <code>time</code> dans la banque de données.</p>
+<p>Cette variable prendra le nom de <code>time</code> dans la banque de données. Ne fonctionne pas (on a manqué de temps…)</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># datgm &lt;- datgm |&gt; </span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     mutate(time_since = time) </span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># as.Date, format = "%Y")</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  as.numeric(difftime(as.POSIXct(today()),</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#                      as.POSIXct(as.Date(min(LifeExDate$time_since), format = "%Y-%m-%d"))))</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     mutate(time_since = "01-01") |&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     unite(time, time_since, col = time, sep = "-") |&gt; </span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     mutate(total = as.Date(time, format = "%Y/%m/%d")) |&gt; </span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     mutate(jour = difftime(as.POSIXct(today()),</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                            as.POSIXct(as.Date(min(datgm$date), </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                                               format = "%Y-%m-%d"))))</span></span></code><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
