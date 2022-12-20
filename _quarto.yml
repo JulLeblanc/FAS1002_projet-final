@@ -32,7 +32,7 @@ website:
       - exploration.qmd
     right:
       - href: a-propos.qmd
-        text: Index 
+        text: À propos 
 
 # footer
   page-footer:

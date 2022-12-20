@@ -20,24 +20,6 @@ Si vous souhaitez reproduire les analyses, tout le matériel à cet effet est di
 NB : Le code utilisé se trouve dans les bribes, il ne suffit que de les ouvrir pour voir la démarche. Le code a été produit en `R`.
 
 
-## Vous pourrez inclure des graphiques
-
-Comme la classique pyramide à la ci-dessous par exemple:
-
-```{r pie, fig.cap='Une très belle tarte', tidy=FALSE}
-par(mar = c(0, 1, 0, 1))
-pie(
-  c(280, 60, 20),
-  c('Ciel', 'Côté ensoleillé de la pyramide', 'Côté ombragé de la pyramide'),
-  col = c('#0292D8', '#F7EA39', '#C4B632'),
-  init.angle = -50, border = NA
-)
-```
-
-<aside>Quand même très cool, non? Vous pouvez mettre des annotations sur le côté!</aside>
-
-
-
 ## Remerciements {.appendix}
 
 Nous aimerions remercier notre enseignant Samuel Guay pour sa patience incroyable, son aide et ses astuces de programmation tout au long de la session ! 

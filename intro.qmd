@@ -7,7 +7,7 @@ description: |
 date: "2022-12-21"
 # Modifier les détails que vous voulez
 author:
-  - name: "Juliette Leblanc"
+  - name: "Cécile Amadora et Juliette Leblanc"
     # Votre site web perso ou github
     url: https://github.com/JulLeblanc
     # les champs d'affiliation sont optionnels, vous pouvez les
@@ -75,11 +75,15 @@ Ton comme par l'espérance de vie, certains continents vont se démarquer des au
 
 On remarque ici que l'Asie a notamment connu un essort important et rapide, dépassant l'Europe et les Amériques alors qu'ils étaient ceux enregistrant les plus fortes émissions auparavant. L'Asie regroupe également 2 des 5 plus grands pollueurs du monde en 2021 soit la Chine et l'Inde.
 
-
 ## Données combinées
 
+Pour les données combinées nous nous sommes posées une question bien simple soit : est-ce que le PIB d'un pays à un effet sur l'espérance de vie des ces citoyens ? Le PIB semble être un bon indicateur de développement économique (bien qu'il comprend ces biais), mais pourrait notamment nous indiquer une référence du développement du système de santé du pays, des installations sanitaires, etc.
 
+![](figures/graph_life_gdp.png)
 
+Dans ce graphique, on peut apercevoir sur l'axe des y l'espérance de vie moyenne et sur l'axe de x le PIB qui est exprimé en logarithmique. Chaque ligne représente un pays, chaque point une année, le tout regroupé par continent.
+
+On remarque ainsi qu'il y a une tendance positive, soit que plus le PIB est élevé, plus les habitants vivent longtemps. 
 Par exemple:
 
 > Les données proviennent entre autres de @owidenergy.

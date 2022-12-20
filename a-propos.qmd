@@ -7,9 +7,9 @@ toc: false
 
 ![](assets/img/FAS1002.png){fig-align="center" width="25%"}
 
-## Bio
+Le présent projet a été réalisé dans le cadre du [cours FAS1002](https://admission.umontreal.ca/cours-et-horaires/cours/fas-1002/).
 
-Le [cours FAS1002](https://admission.umontreal.ca/cours-et-horaires/cours/fas-1002/) est une introduction à la programmation en sciences sociales avec [R](https://www.r-project.org/), un langage de programmation et un environnement statistique populaire pour analyser de données. Principalement convoité pour ses fonctionnalités statistiques avancées, R s'avère autant utilisé en recherche qu'en industrie, ce qui confère un avantage concret à son apprentissage. À ce sujet, R se prête bien à l'apprentissage de la programmation en raison de:
+Il s'agit d'un cours d'introduction à la programmation en sciences sociales avec [R](https://www.r-project.org/), un langage de programmation et un environnement statistique populaire pour analyser de données. Principalement convoité pour ses fonctionnalités statistiques avancées, R s'avère autant utilisé en recherche qu'en industrie, ce qui confère un avantage concret à son apprentissage. À ce sujet, R se prête bien à l'apprentissage de la programmation en raison de:
 
 -   sa nature libre et gratuite;
 -   sa polyvalence de fonctionnalités;
@@ -21,10 +21,18 @@ Le [cours FAS1002](https://admission.umontreal.ca/cours-et-horaires/cours/fas-10
 
 </aside>
 
+Ce projet a été crée par deux étudiantes, Cécile Amadoro et Juliette Leblanc dans le cadre du cours FAS1002 et a été supervisé par Samuel Guay.
+
+Cécile est étudiante au baccalauréat en science politique et au microprogramme en analyse des mégadonnées en sciences humaines et sociales à l'Unviersité de Montréal. Ses recherches portent principalement sur les questions de sécurité internationale, et de la gouvernance numérique. Actuellement, avec l'aide de méthodes d'IA, elle travaille sur le discours haineux comme menace à la sécurité nationale et sur l'analyse des stratégies de cyberdéfense russe.
+
+Juliette est étudiante à la maîtrise en science politique et au microprogramme en analyse des mégadonnées en science humaines et sociales à l'Université de Montréal. Ses recherches portent sur l'influence potentielle des réseaux sociaux comme source d'information, notamment sur les plus jeunes membres de l'électorat. Elle s'intéresse également aux comportements électoraux, à l'opinion publiques et aux différentes méthodes de recherche, principalement quantitatives et expérimentales.
+
 ## Contact
 
 **Programme** \| [Microprogramme en analyse des mégadonnées en sciences humaines et sociales](https://admission.umontreal.ca/programmes/microprogramme-de-1er-cycle-en-analyse-des-megadonnees-en-sciences-humaines-et-sociales/structure-du-programme/)
 
+\| [Département de science politique - Faculté des Arts en Sciences](https://pol.umontreal.ca/accueil/)
+
 **Université** \| [Université de Montréal](https://umontreal.ca)
 
-**Courriel** \| fas1002\@samuelguay.ca
+**Courriel** \| cecile.amadoro\@umontreal.ca / juliette.leblanc.1\@umontreal.ca

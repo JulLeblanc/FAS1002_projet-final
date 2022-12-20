@@ -7,7 +7,7 @@ description: |
 date: "2022-12-21"
 # Modifier les détails que vous voulez
 author:
-  - name: "Juliette Leblanc"
+  - name: "Cécile Amadoro et Juliette Leblanc"
     # Votre site web perso ou github
     url: https://github.com/JulLeblanc
     # les champs d'affiliation sont optionnels, vous pouvez les
@@ -64,10 +64,9 @@ Voici notamment un récapitulatif des données.
 skim(df_gapminder)
 ```
 
-
 ## *Our World in Data, Co2*
 
-La banque de données est [*\@owid*](https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv), qui a comme but principal de décrire comment les émissions de Co2 et de gaz à effets de serres évoluent dans le temps.
+La banque de données est @ qui a comme but principal de décrire comment les émissions de Co2 et de gaz à effets de serres évoluent dans le temps.
 
 La banque de données présentent plus de :
 
@@ -80,7 +79,7 @@ La banque de données présentent plus de :
 Pour mieux comprendre les variables, le tableau suivant propose le codebook suivant, adapté du [codebook original](https://github.com/owid/co2-data/blob/master/owid-co2-codebook.csv) .
 
 | Variable              | Description + Type                                                                                                                                                                                                                                        |
-|-------------------|-----------------------------------------------------|
+|--------------------|----------------------------------------------------|
 | Country               | pays (character)                                                                                                                                                                                                                                          |
 | Year                  | année de l'observation (numérique)                                                                                                                                                                                                                        |
 | Iso_code              | code du pays selon la codification internationale 3166-1 (character)                                                                                                                                                                                      |
@@ -117,9 +116,10 @@ skim(dat_join)
 
 # Graphiques
 
-## _Life Expectancy_
+## *Life Expectancy*
 
 Manipulation pour calculer la moyenne mondiale et par continent.
+
 ```{r life expectancy average, warning=FALSE, error=FALSE, message=FALSE }
 life_exp_world <- df_gapminder |> 
     group_by(continent,
@@ -130,8 +130,8 @@ life_exp_world <- df_gapminder |>
     mutate(mean_world = mean(life_exp, na.rm = TRUE))
 ```
 
-
 Manipulation pour le graphique mondial
+
 ```{r life exp world, warning=FALSE, message=FALSE, error=FALSE}
 graph_life_world <-  
     ggplot(data = life_exp_world,
@@ -154,6 +154,7 @@ ggsave("graph_life_world.png", plot = graph_life_world, path = "figures")
 ```
 
 Manipulation pour le graphique de l'espérance de vie moyenne par continent
+
 ```{r life exp by continent, warning=FALSE, message=FALSE, error=FALSE}
 graph_life_continent <- ggplot() +
     geom_line(data = life_exp_world,
@@ -183,19 +184,14 @@ graph_life_continent
 ggsave("graph_life_continent.png", plot = graph_life_continent, path = "figures")
 ```
 
-
-
-
-
 Il est possible aussi d'observer l'évolution de l'espérance de vie moyenne en fonction des continents. Les grandes cassures dans le temps peuvent être attribuables à différentes périodes historiques.
 
 Notamment, la grand cassure avant les années 1920 peuvent être à la fois attribuables à la Première Guerre mondiale, mais également à l'épidémie de la Grippe espagnole. La même tendance est observable dans les années 1940 pour la Seconde Guerre mondiale et plus récemment, la légère fracture pour la pandémie de la COVID-19.
 
+## *Co2*
 
+Manipulation des données pour calculer l'émission de Co2 mondiale
 
-## _Co2_
-
-Manipulation des données pour calculer l'émission de Co2 mondiale 
 ```{r co2 evolution world, warning=FALSE, error=FALSE, message=FALSE}
 co2_world <- df_owid |> 
     filter(country == "World") |> 
@@ -207,6 +203,7 @@ co2_world$co2 <- co2_world[, "co2"]/1000
 ```
 
 Manipulation pour le graphique des émissions de co2 mondiale.
+
 ```{r graph world emission, warning=FALSE, error=FALSE, message=FALSE}
 graph_co2_world <- ggplot(data = co2_world,
        aes(x = year,
@@ -230,6 +227,7 @@ ggsave("graph_co2_world.png", graph_co2_world, path = "figures")
 ```
 
 Manipulation des données pour calculer l'émission de Co2 par continent :
+
 ```{r manipulation co2 continent, warning=FALSE, error=FALSE, message=FALSE}
 co2_continent <- df_owid |> 
     mutate(continent2 = case_when(country == "Africa" ~ "Afrique",
@@ -259,8 +257,8 @@ co2_continent$co2 <- co2_continent[, "co2"]/1000
 
 ```
 
-
 Manipulation pour le graphique des émissions de co2 par continent :
+
 ```{r graph for co2 emission, warning=FALSE, error=FALSE, message=FALSE}
 
 graph_co2_continent <- 
@@ -287,12 +285,12 @@ graph_co2_continent
 ggsave("graph_co2_continent.png", graph_co2_continent, path = "figures")
 ```
 
-
-## _Data_ combiné
+## *Data* combiné
 
 Manipulation pour voir si le PIB a une influence sur l'espérance de vie moyenne au fil des ans, par continent.
 
-Les données pour le PIB proviennent de _Our world in Data_ et celles pour l'espérance de vie de _Life Expectancy_ 
+Les données pour le PIB proviennent de *Our world in Data* et celles pour l'espérance de vie de *Life Expectancy*
+
 ```{r}
 graph_life_gdp <- dat_join |> 
     mutate(gdp = log(gdp)) |> 
@@ -318,18 +316,4 @@ graph_life_gdp
 ggsave("graph_life_gdp.png", graph_life_gdp, path = "figures")
 ```
 
- filter(continent != "Oceania") %>% 
-  mutate(across(where(is.numeric), log)) %>% 
-  ggplot(aes(x = lifeExp, y = gdpPercap)) + 
-  geom_point(aes(color = continent), size = 3, alpha = 0.8) +
-  # facet_wrap(~factor(continent)) +
-  hrbrthemes::theme_ft_rc() + 
-  ggtitle("GDP per capita and life expectancy") + 
-  theme(legend.title = element_blank(),
-        legend.text = element_text(size = 20),
-        plot.title = element_text(size = 30)) +
-  scale_color_manual(values= wes_palette("FantasticFox1", n = 4)) +
-
-
-
-
+filter(continent != "Oceania") %\>% mutate(across(where(is.numeric), log)) %\>% ggplot(aes(x = lifeExp, y = gdpPercap)) + geom_point(aes(color = continent), size = 3, alpha = 0.8) + \# facet_wrap(\~factor(continent)) + hrbrthemes::theme_ft_rc() + ggtitle("GDP per capita and life expectancy") + theme(legend.title = element_blank(), legend.text = element_text(size = 20), plot.title = element_text(size = 30)) + scale_color_manual(values= wes_palette("FantasticFox1", n = 4)) +
