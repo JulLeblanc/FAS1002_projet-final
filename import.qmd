@@ -138,7 +138,7 @@ as.tibble(dat_owid)
 
 #Filtrage du tibble
 
-dat_CO2 = dat_owid %>% 
+dat_CO2 <-  dat_owid %>% 
 
     select(country, year, iso_code, population, gdp, co2, cement_co2_per_capita, 
 

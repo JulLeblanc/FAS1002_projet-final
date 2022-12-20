@@ -119,7 +119,6 @@ skim(dat_join)
 
 ## _Life Expectancy_
 
-## Moyenne d'espérance de vie
 
 Manipulation pour calculer la moyenne mondiale et par continent.
 ```{r life expectancy average, warning=FALSE, error=FALSE, message=FALSE }
@@ -139,7 +138,7 @@ graph_life_world <-
     ggplot(data = graph,
            aes(x = year,
                y = mean_world)) +
-    geom_line() +
+    geom_line(color = "#B1746FFF") +
     scale_x_continuous(limits = c(1800, 2100),
                        breaks = seq(1800, 2100, by = 25)) +
     scale_y_continuous(limits = c(10, 90),
@@ -193,52 +192,88 @@ Notamment, la grand cassure avant les années 1920 peuvent être à la fois attr
 
 
 
-#
+## _Co2_
 
+Manipulation des données pour calculer l'émission de Co2 mondiale 
 ```{r co2 evolution world, warning=FALSE, error=FALSE, message=FALSE}
-graph_owid_world <- df_owid |> 
+co2_world <- df_owid |> 
     filter(country == "World") |> 
     select(co2,
            year,
            country)
 
-ggplot(data = graph_owid_world,
+co2_world$co2 <- co2_world[, "co2"]/1000
+```
+
+Manipulation pour le graphique des émissions de co2 mondiale.
+```{r graph world emission, warning=FALSE, error=FALSE, message=FALSE}
+graph_co2_world <- ggplot(data = co2_world,
        aes(x = year,
-           y = co2)) +
-    geom_line() +
+           y = co2$co2)) +
+    geom_line(color = "#B1746FFF") +
     scale_x_continuous(limits = c(1750, 2025),
                        breaks = seq(1750, 2025, by = 25)) +
-    scale_y_continuous(limits = c(0, 40000),
-                       breaks = seq(0, 40000, by = 5000)) +
-    geom_point(size = 0.3) +
-    labs(title = "Co2 total mondial",
-         caption = "GapMinder") +
-    theme_bw()
+    scale_y_continuous(limits = c(0, 40),
+                       breaks = seq(0, 40, by = 5)) +
+    geom_point(size = 0.3,
+               color = "#B1746FFF") +
+    labs(title = "Émission de Co2 mondial",
+         caption = "https://ourworldindata.org/co2-emissions",
+         x = "Années",
+         y = "En millards de tonnes") +
+    theme_minimal()
 
+graph_co2_world
+```
+
+Manipulation des données pour calculer l'émission de Co2 par continent :
+```{r manipulation co2 continent, warning=FALSE, error=FALSE, message=FALSE}
+
+co2_continent <- df_owid |> 
+    mutate(continent2 = case_when(country == "Africa" ~ "Afrique",
+                                  country == "Asia" ~ "Asie",
+                                  country == "Europe" ~ "Europe",
+                                  country == "Oceania" ~ "Océanie",
+                                  continent == "Americas" ~ "Amérique")) 
+
+
+co2_continent <- co2_continent |> 
+    filter(!is.na(continent2),
+           !is.na(co2)) |> 
+    select(year,
+           co2,
+           continent2) |> 
+    group_by(continent2)
+
+
+co2_continent$co2 <- co2_continent[, "co2"]/1000
 
 ```
 
-Données respectives pour les pays et non les continents -- faire moyenne
 
+Manipulation pour le graphique des émissions de co2 par continent :
 ```{r graph for co2 emission, warning=FALSE, error=FALSE, message=FALSE}
-graph_owid <- df_owid |>
-    filter(continent == c("Africa",
-                          "Asia",
-                          "Americas",
-                          "Europe",
-                          "Oceania")) |> 
-    group_by(continent,
-             year) |> 
-    select(co2) |> 
-    summarise(mean = mean(co2, na.rm = T))
 
-p3 <- ggplot(data = graph_owid,
-             aes(x = year,
-                 y = mean,
-                 fill = continent)) +
-    geom_area() +
-    theme_bw()
-p3
+graph_co2_continent <- 
+    ggplot(data = co2_continent,
+           aes(x = year,
+               y = co2$co2,
+               color = continent2)) +
+    geom_line() +
+    scale_color_manual(values= wes_palette("Royal2", n = 5),
+                       name = "Continents",
+                       labels = c("Afrique",
+                                  "Amériques",
+                                  "Asie",
+                                  "Europe",
+                                  "Océanie")) +
+    labs(title = "Émission de Co2 par continent",
+         caption = "https://ourworldindata.org/co2-emissions",
+         x = "Années",
+         y = "En millards de tonnes") +
+    theme_minimal()
+
+graph_co2_continent
 ```
 
 
@@ -256,78 +291,78 @@ df_owid |>
 co2 en 2021 : world is 37 milliards de tonnes? Chine - 11 millards (Asie 21) USA - 5007
 
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
-top_5 <- df_owid |> 
-    filter(country == c("China",
-                        "United States",
-                        "India",
-                        "Russia",
-                        "India")) |> 
-    select(year,
-           co2,
-           country)
-
-
-ggplot(top_5) +
-    aes(x = year,
-        y = co2,
-        fill = country) +
-    geom_area(alpha = 0.4) +
-    scale_fill_hue(direction = 1) +
-    geom_line(data = graph_owid_world,
-              aes(x = year,
-                  y = co2,
-                  fill = country),
-              alpha = 0.5) +
-    theme_bw() 
-    
+# top_5 <- df_owid |> 
+#     filter(country == c("China",
+#                         "United States",
+#                         "India",
+#                         "Russia",
+#                         "India")) |> 
+#     select(year,
+#            co2,
+#            country)
+# 
+# 
+# ggplot(top_5) +
+#     aes(x = year,
+#         y = co2,
+#         fill = country) +
+#     geom_area(alpha = 0.4) +
+#     scale_fill_hue(direction = 1) +
+#     geom_line(data = graph_owid_world,
+#               aes(x = year,
+#                   y = co2,
+#                   fill = country),
+#               alpha = 0.5) +
+#     theme_bw() 
+#     
 ```
 
 Sommes
 
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
-pourcentage <-  df_owid |> 
-    filter(country == c("China",
-                        "United States",
-                        "India",
-                        "Russia",
-                        "India"),
-           year >= 2000) |>
-        group_by(year) |> 
-    select(year,
-           co2,
-           country) |> 
-    mutate(sum = sum(co2, na.rm = TRUE))
-
-ggplot(pourcentage,
-       aes(x = year,
-           y = sum)) +
-    geom_line()
+# pourcentage <-  df_owid |> 
+#     filter(country == c("China",
+#                         "United States",
+#                         "India",
+#                         "Russia",
+#                         "India"),
+#            year >= 2000) |>
+#         group_by(year) |> 
+#     select(year,
+#            co2,
+#            country) |> 
+#     mutate(sum = sum(co2, na.rm = TRUE))
+# 
+# ggplot(pourcentage,
+#        aes(x = year,
+#            y = sum)) +
+#     geom_line()
 ```
 
 Pays riches qui produisent le plus de co2 ? apparently yes
 
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
-rich <- df_owid |> 
-    filter (country == c("Upper-middle-income countries",
-                         "High-income countries",
-                         "Lower-middle-income countries",
-                         "Low-income countries")) |> 
-    select(country,
-           co2,
-           year,
-           gdp)
-
-ggplot(data = rich,
-       aes(x = year,
-           y = co2,
-           fill = country)) +
-    geom_area(alpha = 0.3) +
-        geom_line(data = graph_owid_world,
-              aes(x = year,
-                  y = co2,
-                  fill = country),
-              alpha = 0.5) +
-    theme_bw()
+# rich <- df_owid |> 
+#     filter (country == c("Upper-middle-income countries",
+#                          "High-income countries",
+#                          "Lower-middle-income countries",
+#                          "Low-income countries")) |> 
+#     select(country,
+#            co2,
+#            year,
+#            gdp)
+# 
+# ggplot(data = rich,
+#        aes(x = year,
+#            y = co2,
+#            fill = country)) +
+#     geom_area(alpha = 0.3) +
+#         geom_line(data = graph_owid_world,
+#               aes(x = year,
+#                   y = co2,
+#                   fill = country),
+#               alpha = 0.5) +
+#     theme_bw()
 ```
 
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
