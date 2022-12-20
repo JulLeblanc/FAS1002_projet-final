@@ -186,18 +186,16 @@ datgm <-  datgm %>%
 Il est également intéressant de voir le temps écoulé entre la production de se rapport et la première année que des données ont été récoltées pour chacun des pays qui se trouvent dans le jeu de données de *Life Expectancy at Birth*.
 
 Cette variable prendra le nom de `time` dans la banque de données.
-
+Ne fonctionne pas (on a manqué de temps...)
 ```{r}
+
 # datgm <- datgm |> 
-#     mutate(time_since = time) 
-# 
-# 
-# as.Date, format = "%Y")
-# 
-# 
-# 
-#  as.numeric(difftime(as.POSIXct(today()),
-#                      as.POSIXct(as.Date(min(LifeExDate$time_since), format = "%Y-%m-%d"))))
+#     mutate(time_since = "01-01") |>
+#     unite(time, time_since, col = time, sep = "-") |> 
+#     mutate(total = as.Date(time, format = "%Y/%m/%d")) |> 
+#     mutate(jour = difftime(as.POSIXct(today()),
+#                            as.POSIXct(as.Date(min(datgm$date), 
+#                                               format = "%Y-%m-%d"))))
 
 ```
 
