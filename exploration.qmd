@@ -67,7 +67,6 @@ Il est possible aussi d'observer l'évolution de l'espérance de vie moyenne en 
 
 Notamment, la grand cassure avant les années 1920 peuvent être à la fois attribuables à la Première Guerre mondiale, mais également à l'épidémie de la Grippe espagnole. La même tendance est observable dans les années 1940 pour la Seconde Guerre mondiale et plus récemment, la légère fracture pour la pandémie de la COVID-19.
 
-
 ```{r graph for life expectancy, warning=FALSE, error=FALSE, message=FALSE}
 graph <- df_gapminder |> 
     group_by(continent,
@@ -114,7 +113,6 @@ p2
 
 ```
 
-
 ### *Our World in Data, Co2*
 
 La banque de données est [*\@owid*](https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv), qui a comme but principal de décrire comment les émissions de Co2 et de gaz à effets de serres évoluent dans le temps.
@@ -127,33 +125,30 @@ La banque de données présentent plus de :
 
 -   Les données enregistrées sont mise à jour de manière presqu'hebdomadaire et ont des observations débutants en 1750.
 
-Puisque la banque de données regroupent de nombreuses variables, une sélection des plus importantes pour les analyses qui suivront a été fait. Les variables qui ont été retenues sont celles du :
+Pour mieux comprendre les variables, le tableau suivant propose le codebook suivant, adapté du [codebook original](https://github.com/owid/co2-data/blob/master/owid-co2-codebook.csv) .
 
--   Pays `country`,
-
--   Années `year`,
-
--   Continents `continent`,
-
--   PIB `gdp`,
-
--   Nombre d'habitants total `population`,
-
--   Co2 `co2`,
-
-
-```{r}
-owid <- df_owid |> 
-    select(country,
-           year,
-           continent,
-           gdp,
-           population,
-           co2)
-```
+| Variable              | Description + Type                                                                                                                                                                                                                                        |
+|-------------------|-----------------------------------------------------|
+| Country               | pays (character)                                                                                                                                                                                                                                          |
+| Year                  | année de l'observation (numérique)                                                                                                                                                                                                                        |
+| Iso_code              | code du pays selon la codification internationale 3166-1 (character)                                                                                                                                                                                      |
+| Population            | Nombre total de la population selon le pays (numérique)                                                                                                                                                                                                   |
+| GDP (PIB)             | Produit interieur brut mesuré en dollars (numérique)                                                                                                                                                                                                      |
+| CO2                   | Mesure annuelle de la production totale de CO2 par pays, mesuré en en millions de tonnes et excluant l'[UTCATF](https://fr.wikipedia.org/wiki/Utilisation_des_terres,_changement_d'affectation_des_terres_et_foresterie) (numérique)                      |
+| Cement_CO2_per_capita | Mesure annuelle de la production totale de CO2 générée par le ciment, par personne, en millions de tonnes (numérique)                                                                                                                                     |
+| CO2_per_gdp           | Mesure annuelle de la production totale de CO2 selon le PIB, excluant l'UTCATF (numérique)                                                                                                                                                                |
+| coal_co2              | Mesure annuelle par pays de la production de CO2 générée par le charbon, en millions de tonnes (numérique)                                                                                                                                                |
+| coal_co2_per_capita   | Mesure annuelle de la production de CO2 générée par le charbon, mesurée en million de tonnes par personnes (numérique)                                                                                                                                    |
+| methane               | Total annuel des émissions de méthane par pays, incluant l'UTCATF, mesuré en millions de tonnes (numérique)                                                                                                                                               |
+| methane_per_capita    | Total annuel des émissions de méthane par habitant, incluant l'UTCATF, mesuré en millions de tonnes (numérique)                                                                                                                                           |
+| oil_co2               | Mesure annuelle par pays de la production de CO2 générée par le pétrole, en millions de tonnes (numérique)                                                                                                                                                |
+| oil_co2_per_capita    | Mesure annuelle de la production de CO2 générée par le pétrole, mesurée en million de tonnes par personnes (numérique)                                                                                                                                    |
+| ghg_per_capita        | Total des émissions de gas à effet de serres par personne, mesuré en tonne de de millions, incluant l'UTCATF (numérique)                                                                                                                                  |
+| trade_co2             | Total annuel des émissions de C02, issu du commerce, mesuré en million de tonne. (Ici une valeur positive veut dire qu'un pays est un importeur net d'émission de CO2 ; une valeur négative veut dire qu'un pays est un exporteur net d'émission de CO2). |
 
 ```{r}
-skim(owid)
+skim(df_owid)
+
 ```
 
 ```{r co2 evolution world, warning=FALSE, error=FALSE, message=FALSE}
@@ -173,8 +168,10 @@ ggplot(data = graph_owid_world,
     labs(title = "Co2 total mondial") +
     theme_bw()
 
+
 ```
 
+Données respectives pour les pays et non les continents -- faire moyenne
 
 ```{r graph for co2 emission, warning=FALSE, error=FALSE, message=FALSE}
 graph_owid <- df_owid |> 
@@ -182,7 +179,8 @@ graph_owid <- df_owid |>
            is.na (co2) == FALSE) |> 
     group_by(continent,
              year) |> 
-    select(co2)
+    select(co2) |> 
+    summarise()
 
 p3 <- ggplot(data = graph_owid,
              aes(x = year,
@@ -200,6 +198,7 @@ p3 <- ggplot(data = graph_owid,
 p3
 ```
 
+
 ```{r}
 ggplot(data = graph_owid,
        aes(x = year,
@@ -210,6 +209,7 @@ ggplot(data = graph_owid,
 ```
 
 Plus de CO2 en 2021
+
 ```{r}
 df_owid |> 
     filter(year == 2021) |> 
@@ -219,11 +219,7 @@ df_owid |>
 
 ```
 
-co2 en 2021 : world is 37 milliards de tonnes?
-Chine - 11 millards (Asie 21)
-USA - 5007
-
-
+co2 en 2021 : world is 37 milliards de tonnes? Chine - 11 millards (Asie 21) USA - 5007
 
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
 top_5 <- df_owid |> 
@@ -251,7 +247,9 @@ ggplot(top_5) +
     theme_bw() 
     
 ```
+
 Sommes
+
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
 pourcentage <-  df_owid |> 
     filter(country == c("China",
@@ -272,8 +270,8 @@ ggplot(pourcentage,
     geom_line()
 ```
 
-
 Pays riches qui produisent le plus de co2 ? apparently yes
+
 ```{r, warning=FALSE, error=FALSE, message=FALSE}
 rich <- df_owid |> 
     filter (country == c("Upper-middle-income countries",
@@ -324,6 +322,7 @@ On peut également entreprendre des analyses via la combinaison des deux banques
 skim(dat_join)
 
 ```
+
 ```{r}
 rich_life <- dat_join|>
     filter(year == c(1900:2021),
@@ -341,8 +340,6 @@ rich_life <- dat_join|>
               mean_life_exp = mean(life_exp, na.rm = T))
 ```
 
-
-
 ```{r}
 # ggplot() +
 #     geom_area(data = rich_life,
@@ -350,6 +347,3 @@ rich_life <- dat_join|>
 #                   y = mean_life_exp,
 #                   fill = continent))
 ```
-
-
-
